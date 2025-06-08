@@ -33,15 +33,42 @@
             <h3>Human Resource Information System</h3>
             </a>
             </br>
-            <form method="post" action="<?php echo site_url('home'); ?>">
+            <?php if ($this->session->flashdata('error')): ?>
+                <div class="alert alert-danger">
+                    <?= $this->session->flashdata('error') ?>
+                </div>
+            <?php endif; ?>
+            <?php if ($this->session->flashdata('session_expired')): ?>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+            <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+            <script>
+              document.addEventListener('DOMContentLoaded', function () {
+                Toastify({
+                  text: "<?php echo $this->session->flashdata('session_expired'); ?>",
+                  duration: 3000,
+                  gravity: "top", 
+                  position: "right", 
+                  style: {
+                    background: "#ffcc00", // warning color
+                    color: "#000", // black text for better contrast
+                    fontSize: "14px",
+                    borderRadius: "8px",
+                    padding: "10px 20px"
+                  }
+                }).showToast();
+              });
+            </script>
+            <?php endif; ?>
+
+            <form method="post" action="<?php echo site_url('auth4r9x'); ?>">
               <div class="mb-3">
                 <label class="form-label">Username</label>
-                <input type="email" class="form-control" name="email" placeholder="your@email.com" autocomplete="off">
+                <input type="text" class="form-control" name="username" placeholder="your@email.com" autocomplete="off">
               </div>
               <div class="mb-2">
                 <label class="form-label">Password</label>
                 <div class="input-group input-group-flat">
-                  <input type="password" class="form-control" name="password" placeholder="Your password" autocomplete="off">
+                  <input type="text" class="form-control" name="password" placeholder="Your password" autocomplete="off">
                 </div>
               </div>
               <div class="form-footer">
@@ -50,12 +77,9 @@
             </form>
 
           </div>
-          <div class="card-body">
+          <!-- <div class="card-body">
            <img src="assets/logo/company_logo.PNG" style="width: 100%; height: auto;" alt="Tabler" class="navbar-brand-image me-2">
-          </div>
-        </div>
-        <div class="text-center text-secondary mt-3">
-          Don't have account yet? <a href="./sign-up.html" tabindex="-1">Sign up</a>
+          </div> -->
         </div>
       </div>
     </div>
