@@ -12,13 +12,18 @@ class auth_ctrl extends CI_Controller {
     }
 
 	public function signin()
-	{
-		$this->load->view ('auth/signin');
-	}
+    {
+        $this->load->view('auth/signin');
+    }
+
 
 	public function goto_home()
 	{
+		
     	$this->load->view ('components/navbar');
+		$this->load->view ('admin/home');
+		$this->load->view ('components/footer');
+		
 	}
 
 }

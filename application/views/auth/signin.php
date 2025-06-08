@@ -34,26 +34,21 @@
             </a>
             </br>
             <form method="post" action="<?php echo site_url('home'); ?>">
-
               <div class="mb-3">
                 <label class="form-label">Username</label>
-                <input type="email" class="form-control" placeholder="your@email.com" autocomplete="off">
+                <input type="email" class="form-control" name="email" placeholder="your@email.com" autocomplete="off">
               </div>
               <div class="mb-2">
-                <label class="form-label">
-                  Password
-                 
-                </label>
+                <label class="form-label">Password</label>
                 <div class="input-group input-group-flat">
-                  <input type="password" class="form-control"  placeholder="Your password"  autocomplete="off">
-                  
+                  <input type="password" class="form-control" name="password" placeholder="Your password" autocomplete="off">
                 </div>
               </div>
-              
               <div class="form-footer">
                 <button type="submit" class="btn btn-primary w-100">Sign in</button>
               </div>
             </form>
+
           </div>
           <div class="card-body">
            <img src="assets/logo/company_logo.PNG" style="width: 100%; height: auto;" alt="Tabler" class="navbar-brand-image me-2">
