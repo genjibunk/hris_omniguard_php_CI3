@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>HRIS</title>
  
-    <link href="assets/dist/css/tabler.min.css?1692870487" rel="stylesheet"/>
-    <link href="assets/dist/css/tabler-flags.min.css?1692870487" rel="stylesheet"/>
-    <link href="assets/dist/css/tabler-payments.min.css?1692870487" rel="stylesheet"/>
-    <link href="assets/dist/css/tabler-vendors.min.css?1692870487" rel="stylesheet"/>
-    <link href="assets/dist/css/demo.min.css?1692870487" rel="stylesheet"/>
+    <link href="<?php echo base_url()."assets/"; ?>dist/css/tabler.min.css?1692870487" rel="stylesheet"/>
+    <link href="<?php echo base_url()."assets/"; ?>dist/css/tabler-flags.min.css?1692870487" rel="stylesheet"/>
+    <link href="<?php echo base_url()."assets/"; ?>dist/css/tabler-payments.min.css?1692870487" rel="stylesheet"/>
+    <link href="<?php echo base_url()."assets/"; ?>dist/css/tabler-vendors.min.css?1692870487" rel="stylesheet"/>
+    <link href="<?php echo base_url()."assets/"; ?>dist/css/demo.min.css?1692870487" rel="stylesheet"/>
     <style>
       @import url('https://rsms.me/inter/inter.css');
       :root {
@@ -33,7 +33,8 @@
             <h3>Human Resource Information System</h3>
             </a>
             </br>
-            <form action="./" method="get" autocomplete="off" novalidate>
+            <form method="post" action="<?php echo site_url('home'); ?>">
+
               <div class="mb-3">
                 <label class="form-label">Username</label>
                 <input type="email" class="form-control" placeholder="your@email.com" autocomplete="off">
@@ -65,7 +66,7 @@
     </div>
     <!-- Libs JS -->
     <!-- Tabler Core -->
-    <script src="assets/dist/js/tabler.min.js?1692870487" defer></script>
-    <script src="assets/dist/js/demo.min.js?1692870487" defer></script>
+    <script src="<?php echo base_url()."assets/"; ?>dist/js/tabler.min.js?1692870487" defer></script>
+    <script src="<?php echo base_url()."assets/"; ?>dist/js/demo.min.js?1692870487" defer></script>
   </body>
 </html>
