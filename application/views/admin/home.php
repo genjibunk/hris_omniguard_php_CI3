@@ -12,7 +12,7 @@
                 <div class="col">
  
                     <h2 class="page-title">
-                    Welcome : Mark Casas
+                    Welcome : Mark Casas (session fname & lname)
                     </h2>
 
                     </br>

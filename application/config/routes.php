@@ -57,3 +57,4 @@ $route['translate_uri_dashes'] = FALSE;
 $route['auth4r9x'] = 'auth_ctrl/do_signin';
 $route['dismiss_1vqn'] = 'auth_ctrl/signout';
 $route['base_8nvp'] = 'auth_ctrl/goto_home';
+$route['info_a7xk'] = 'admin_ctrl/information';

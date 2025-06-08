@@ -84,13 +84,13 @@
 
                   <span class="nav-link-icon d-md-none d-lg-inline-block">
 
-                    <svg class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M15 15l3.35 3.35" /><path d="M9 15l-3.35 3.35" /><path d="M5.65 5.65l3.35 3.35" /><path d="M18.35 5.65l-3.35 3.35" /></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-friends"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 5m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path><path d="M5 22v-5l-1 -1v-4a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4l-1 1v5"></path><path d="M17 5m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path><path d="M15 22v-4h-2l2 -6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1l2 6h-2v4"></path></svg>
                   
                   </span>
 
                   <span class="nav-link-title">
 
-                    Help
+                    Employee Records
 
                   </span>
 
@@ -98,32 +98,97 @@
 
                 <div class="dropdown-menu">
 
-                  <a class="dropdown-item" href="" rel="noopener">
+                  <a class="dropdown-item" href="<?php echo base_url();?>info_a7xk">
 
-                    Documentation
+                    Information
 
                   </a>
 
                   <a class="dropdown-item" href="">
 
-                    Changelog
+                    Absences & Credits
 
                   </a>
 
                   <a class="dropdown-item" href="" rel="noopener">
 
-                    Source code
+                    Attendance
 
                   </a>
 
-                  <a class="dropdown-item text-pink" href="" target="_blank" rel="noopener">
-                    
-                    <svg class="icon icon-inline me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" /></svg>
-                    Sponsor project!
+                  <a class="dropdown-item" href="" rel="noopener">
+
+                    Schedule
+
+                  </a>
+
+                  <a class="dropdown-item" href="" rel="noopener">
+
+                    Accounts
 
                   </a>
 
                 </div>
+
+              </li>
+
+              <li class="nav-item">
+
+                <a class="nav-link" href="<?php echo base_url();?>base_8nvp" >
+
+                  <span class="nav-link-icon d-md-none d-lg-inline-block">
+
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-buildings"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M4 21v-15c0 -1 1 -2 2 -2h5c1 0 2 1 2 2v15"></path><path d="M16 8h2c1 0 2 1 2 2v11"></path><path d="M3 21h18"></path><path d="M10 12v0"></path><path d="M10 16v0"></path><path d="M10 8v0"></path><path d="M7 12v0"></path><path d="M7 16v0"></path><path d="M7 8v0"></path><path d="M17 12v0"></path><path d="M17 16v0"></path></svg>
+                  
+                  </span>
+
+                  <span class="nav-link-title">
+
+                      Clients
+
+                  </span>
+
+                </a>
+
+              </li>
+
+              <li class="nav-item">
+
+                <a class="nav-link" href="<?php echo base_url();?>base_8nvp" >
+
+                  <span class="nav-link-icon d-md-none d-lg-inline-block">
+
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-report"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M8 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h5.697"></path><path d="M18 14v4h4"></path><path d="M18 11v-4a2 2 0 0 0 -2 -2h-2"></path><path d="M8 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"></path><path d="M18 18m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path><path d="M8 11h4"></path><path d="M8 15h3"></path></svg>
+                  
+                  </span>
+
+                  <span class="nav-link-title">
+
+                      Payroll
+
+                  </span>
+
+                </a>
+
+              </li>
+
+              <li class="nav-item">
+
+                <a class="nav-link" href="<?php echo base_url();?>base_8nvp" >
+
+                  <span class="nav-link-icon d-md-none d-lg-inline-block">
+
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file-invoice"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M14 3v4a1 1 0 0 0 1 1h4"></path><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"></path><path d="M9 7l1 0"></path><path d="M9 13l6 0"></path><path d="M13 17l2 0"></path></svg>
+
+                  </span>
+
+                  <span class="nav-link-title">
+
+                      Billing
+
+                  </span>
+
+                </a>
 
               </li>
 
