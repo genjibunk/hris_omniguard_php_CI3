@@ -15,7 +15,7 @@
                     Overview
                     </div>
                     <h2 class="page-title">
-                    Employee Records / Information
+                    Employee Records / Information <!-- <?php echo $this->session->userdata('userid'); ?>-->
                     </h2>
 
                 </div>
@@ -178,7 +178,7 @@
                                                                 </td>
 
                                                                 <td>
-                                                                    
+
                                                                     <?php
                                                                     $role = $data['role'];
                                                                     $badge_class = '';
