@@ -110,7 +110,13 @@
 
                   <a class="dropdown-item" href="">
 
-                    Absences & Credits
+                    Absences
+
+                  </a>
+
+                  <a class="dropdown-item" href="">
+
+                    Leave Credits
 
                   </a>
 
