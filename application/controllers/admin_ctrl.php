@@ -50,6 +50,16 @@ class admin_ctrl extends CI_Controller {
 
 	public function add_employee()
 	{
+		if (!$this->session->userdata('logged_in')) 
+
+		{
+
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+        	$this->load->view('auth/signin');
+			return;
+
+    	}
+
 		$this->load->helper('string');
 		$this->load->library(['session', 'upload']);
 
@@ -158,6 +168,16 @@ class admin_ctrl extends CI_Controller {
 
 	public function update_employee()
 	{
+		if (!$this->session->userdata('logged_in')) 
+
+		{
+
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+        	$this->load->view('auth/signin');
+			return;
+
+    	}
+
 		$id = $this->input->post('employee_id');
 
 		$this->db->select('photo');
@@ -231,6 +251,69 @@ class admin_ctrl extends CI_Controller {
 
 		redirect('info_a7xk');
 	}
+
+	public function leave_credits()
+	{
+        if (!$this->session->userdata('logged_in')) 
+
+		{
+
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+        	$this->load->view('auth/signin');
+			return;
+
+    	}
+
+		$this->load->view ('components/navbar');
+		$this->load->view ('admin/leave_credits');
+		$this->load->view ('components/footer');
+	}
+
+	public function insert_leavecredits_for_all()
+	{
+		$description = $this->input->post('description');
+		$year = $this->input->post('year');
+
+		// Set total based on description
+		switch ($description) {
+			case 'Service Incentive Leave (SIL)':
+				$total = 5;
+				break;
+			case 'Sick Leave':
+			case 'Vacation Leave':
+				$total = 15;
+				break;
+			default:
+				$total = 0;
+		}
+
+		// Get all employee IDs
+		$employees = $this->db->select('employee_data_id')->get('employee_data')->result();
+
+		foreach ($employees as $emp) {
+			// Check if leavecredits entry already exists
+			$exists = $this->db->get_where('leavecredits', [
+				'employee_data_id' => $emp->employee_data_id,
+				'description' => $description,
+				'year' => $year
+			])->row();
+
+			if (!$exists) {
+				// Insert leavecredits
+				$this->db->insert('leavecredits', [
+					'employee_data_id' => $emp->employee_data_id,
+					'description' => $description,
+					'year' => $year,
+					'total' => $total
+				]);
+			}
+		}
+
+		$this->session->set_flashdata('success', 'Leave credits added for all employees.');
+		redirect('token_m4tz');
+	}
+
+
 
 
 
