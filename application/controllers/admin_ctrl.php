@@ -67,6 +67,7 @@ class admin_ctrl extends CI_Controller {
 			'username' => $full_username,
 			'password_hash' => $password,
 			'role' => $position,
+			'role' => 'Inactive',
 			'created_at' => date('Y-m-d H:i:s')
 		];
 

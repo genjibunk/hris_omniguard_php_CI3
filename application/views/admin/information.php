@@ -133,9 +133,9 @@ $(document).ready(function() {
 
                                                             <tr>
                                                                 
-                                                                <td style="width: 10%;">
+                                                                <td style="width: 8%;">
                                                                     <?php if (!empty($data['photo'])): ?>
-                                                                        <img src="<?php echo base_url('uploads/photos/' . $data['photo']); ?>" alt="Employee Photo" style="width: 100%; height: auto; object-fit: cover; border-radius: 5px;">
+                                                                        <img src="<?php echo base_url('uploads/photos/' . $data['photo']); ?>" alt="Employee Photo" style="width: 100%; height: 80px; object-fit: cover; border-radius: 5px;">
                                                                     <?php else: ?>
                                                                         <span class="text-muted">No photo</span>
                                                                     <?php endif; ?>
