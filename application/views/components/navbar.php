@@ -253,6 +253,7 @@
     
     <script src="<?php echo base_url()."assets/"; ?>dist/js/tabler.min.js?1692870487" defer></script>
     <script src="<?php echo base_url()."assets/"; ?>dist/js/demo.min.js?1692870487" defer></script>
+    <script src="<?php echo base_url()."assets/"; ?>dist/js/search.js" defer></script>
    
   </body>
 </html>

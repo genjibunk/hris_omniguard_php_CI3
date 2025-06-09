@@ -87,7 +87,7 @@
                                                         Search:
                                                         <div class="ms-2 d-inline-block">
 
-                                                            <input type="text" class="form-control form-control-sm" aria-label="Search invoice">
+                                                            <input type="text" id="search-input" class="form-control" aria-label="Search invoice">
                                                         
                                                         </div>
 
@@ -226,8 +226,11 @@
                                             </div>
 
                                             <div class="card-footer d-flex align-items-center">
-                                                
-                                                
+
+                                                <ul class="pagination m-0 ms-auto" id="pagination-container">
+                                                    
+                                                </ul>
+
                                             </div>
 
                                         </div>
@@ -253,3 +256,4 @@
     </div>
 
 </div>
+
