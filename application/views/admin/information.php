@@ -15,7 +15,7 @@
                     Overview
                     </div>
                     <h2 class="page-title">
-                    Employee Records / Information <!-- <?php echo $this->session->userdata('userid'); ?>-->
+                    Employee Records / Information<!-- <?php echo $this->session->userdata('userid'); ?>-->
                     </h2>
 
                 </div>
@@ -63,7 +63,7 @@
 
                                     <div class="mt-3">
 
-                                        <a href="" class="btn btn-primary active" target="_blank" rel="noopener">New Employee</a>
+                                        <a href="<?php echo base_url();?>view_add_v3sw" class="btn btn-primary active">New Employee</a>
 
                                     </div>
 
@@ -105,6 +105,7 @@
 
                                                         <tr>
                                                         
+                                                            <th>Photo</th>
                                                             <th class="w-1">ID</th>
                                                             <th>Name</th>
                                                             <th>Contact</th>
@@ -123,6 +124,13 @@
 
                                                             <tr>
                                                                 
+                                                                <td style="width: 10%;">
+                                                                    <?php if (!empty($data['photo'])): ?>
+                                                                        <img src="<?php echo base_url('uploads/photos/' . $data['photo']); ?>" alt="Employee Photo" style="width: 100%; height: auto; object-fit: cover; border-radius: 5px;">
+                                                                    <?php else: ?>
+                                                                        <span class="text-muted">No photo</span>
+                                                                    <?php endif; ?>
+                                                                </td>
                                                                 <td><span class="text-secondary"><?php echo $data['user_code']; ?></span></td>
                                                                 <td><?php echo $data['last_name']; ?> , <?php echo $data['first_name']; ?> </td>
                                                                 <td><?php echo $data['contact_number']; ?></td>
