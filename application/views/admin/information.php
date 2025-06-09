@@ -1,4 +1,14 @@
+<script>
+$(document).ready(function() {
+    <?php if ($this->session->flashdata('success')): ?>
+        toastr.success("<?= $this->session->flashdata('success') ?>");
+    <?php endif; ?>
 
+    <?php if ($this->session->flashdata('error')): ?>
+        toastr.error("<?= $this->session->flashdata('error') ?>");
+    <?php endif; ?>
+});
+</script>
 <div class="page">
 
     <div class="page-wrapper">
@@ -106,7 +116,6 @@
                                                         <tr>
                                                         
                                                             <th>Photo</th>
-                                                            <th class="w-1">ID</th>
                                                             <th>Name</th>
                                                             <th>Contact</th>
                                                             <th>Position</th>
@@ -131,7 +140,6 @@
                                                                         <span class="text-muted">No photo</span>
                                                                     <?php endif; ?>
                                                                 </td>
-                                                                <td><span class="text-secondary"><?php echo $data['user_code']; ?></span></td>
                                                                 <td><?php echo $data['last_name']; ?> , <?php echo $data['first_name']; ?> </td>
                                                                 <td><?php echo $data['contact_number']; ?></td>
                                                                 <td>
@@ -214,7 +222,13 @@
 
                                                                 <td class="text-end">
 
-                                                                    <a class="btn btn-ghost-yellow" href="">
+                                                                    <?php
+                                                                    // Encrypt the ID
+                                                                    $encrypted_employee_data_id = base64_encode($this->encryption->encrypt($data['employee_data_id']));
+                                                                    
+                                                                    ?>
+                                        
+                                                                    <a class="btn btn-ghost-yellow" href="<?php echo site_url("open_z3bt/$encrypted_employee_data_id"); ?>" class="status status-blue ms-auto">
 
                                                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-folder"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 3a1 1 0 0 1 .608 .206l.1 .087l2.706 2.707h6.586a3 3 0 0 1 2.995 2.824l.005 .176v8a3 3 0 0 1 -2.824 2.995l-.176 .005h-14a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-11a3 3 0 0 1 2.824 -2.995l.176 -.005h4z"></path></svg>
 
@@ -222,7 +236,7 @@
 
                                                                     </a>
 
-                                                                </td>
+                                                                </td> 
 
                                                             </tr>
                                                         <?php endforeach; ?>
@@ -265,3 +279,4 @@
 
 </div>
 
+<script src="<?php echo base_url()."assets/"; ?>dist/js/search.js" defer></script>

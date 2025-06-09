@@ -52,7 +52,7 @@
 
             <a href="">
 
-              <img src="assets/logo/company_logo.PNG" style="width: 100%; height: auto;" alt="Tabler" class="navbar-brand-image me-2">
+              <img src="<?php echo base_url()."assets/"; ?>logo/company_logo.PNG" style="width: 100%; height: auto;" alt="Tabler" class="navbar-brand-image me-2">
 
             </a>
 
@@ -238,7 +238,7 @@
 
             <div>
 
-              <img src="assets/logo/hris_mainlogo.PNG" style="width: 40px; height: auto;" alt="Tabler" class="navbar-brand-image me-2">Human Resource Information System
+              <img src="<?php echo base_url()."assets/"; ?>logo/hris_mainlogo.PNG" style="width: 40px; height: auto;" alt="Tabler" class="navbar-brand-image me-2">Human Resource Information System
 
             </div>
 
@@ -257,8 +257,6 @@
     
     <script src="<?php echo base_url()."assets/"; ?>dist/js/tabler.min.js?1692870487" defer></script>
     <script src="<?php echo base_url()."assets/"; ?>dist/js/demo.min.js?1692870487" defer></script>
-    <script src="<?php echo base_url()."assets/"; ?>dist/js/search.js" defer></script>
-    <script src="<?php echo base_url()."assets/"; ?>dist/js/ph-address-selector.js"></script>
-   
+    
   </body>
 </html>
