@@ -123,16 +123,7 @@
                                                     }
                                                 });
 
-                                                removePhotoBtn.addEventListener('click', function () {
-                                                    resetPhotoInput();
-                                                });
-
-                                                function resetPhotoInput() {
-                                                    photoInput.value = '';
-                                                    photoPreview.src = '#';
-                                                    photoPreview.style.display = 'none';
-                                                    removePhotoBtn.style.display = 'none';
-                                                }
+                                                
                                             </script>
 
 
