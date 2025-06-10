@@ -1,3 +1,16 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<script>
+<?php if ($this->session->flashdata('success')): ?>
+    toastr.success("<?= $this->session->flashdata('success'); ?>");
+<?php endif; ?>
+
+<?php if ($this->session->flashdata('warning')): ?>
+    toastr.warning("<?= $this->session->flashdata('warning'); ?>");
+<?php endif; ?>
+</script>
+
 
 <div class="page">
 
@@ -105,11 +118,10 @@
 
                                                         <tr>
                                                         
-                                                            <th>Photo</th>
                                                             <th>Name</th>
-                                                            <th>Contact</th>
-                                                            <th>Position</th>
-                                                            <th>System role</th>
+                                                            <th>Leave type</th>
+                                                            <th>Total Credit</th>
+                                                            <th>Year</th>
                                                             
                                                             <th></th>
 
@@ -119,97 +131,14 @@
 
                                                     <tbody>
 
-                                                        <?php foreach($information as $data  ) : ?>
+                                                        <?php foreach($leavecredits as $data  ) : ?>
 
                                                             <tr>
-                                                                
-                                                                <td style="width: 8%;">
-                                                                    <?php if (!empty($data['photo'])): ?>
-                                                                        <img src="<?php echo base_url('uploads/photos/' . $data['photo']); ?>" alt="Employee Photo" style="width: 100%; height: 80px; object-fit: cover; border-radius: 5px;">
-                                                                    <?php else: ?>
-                                                                        <span class="text-muted">No photo</span>
-                                                                    <?php endif; ?>
-                                                                </td>
+
                                                                 <td><?php echo $data['last_name']; ?> , <?php echo $data['first_name']; ?> </td>
-                                                                <td><?php echo $data['contact_number']; ?></td>
-                                                                <td>
-
-                                                                    <?php
-                                                                        $badge_class = '';
-                                                                        $icon_svg = '';
-
-                                                                        switch ($data['position']) {
-                                                                            case 'Admin':
-                                                                                $badge_class = 'bg-lime-lt';
-                                                                                $icon_svg = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icon-tabler-user me-1" style="min-width:16px;">
-                                                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                                                    <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
-                                                                                    <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
-                                                                                </svg>';
-                                                                                break;
-
-                                                                            case 'Staff':
-                                                                                $badge_class = 'bg-blue-lt';
-                                                                                $icon_svg = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-users-minus me-1" style="min-width:16px;">
-                                                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                                                    <path d="M5 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
-                                                                                    <path d="M3 21v-2a4 4 0 0 1 4 -4h4c.948 0 1.818 .33 2.504 .88"></path>
-                                                                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                                                                    <path d="M16 19h6"></path>
-                                                                                </svg>';
-                                                                                break;
-
-                                                                            case 'Guard':
-                                                                                $badge_class = 'bg-orange-lt';
-                                                                                $icon_svg = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-user-shield me-1" style="min-width:16px;">
-                                                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                                                    <path d="M6 21v-2a4 4 0 0 1 4 -4h2"></path>
-                                                                                    <path d="M22 16c0 4 -2.5 6 -3.5 6s-3.5 -2 -3.5 -6c1 0 2.5 -.5 3.5 -1.5c1 1 2.5 1.5 3.5 1.5z"></path>
-                                                                                    <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
-                                                                                </svg>';
-                                                                                break;
-
-                                                                            default:
-                                                                                $badge_class = 'bg-light text-dark';
-                                                                                $icon_svg = '';
-                                                                                break;
-                                                                        }
-                                                                    ?>
-
-                                                                    <span class="badge <?php echo $badge_class; ?> me-1 d-flex align-items-center">
-                                                                        <?php echo $icon_svg; ?>
-                                                                        <?php echo htmlspecialchars($data['position']); ?>
-                                                                    </span>
-
-                                                                </td>
-
-                                                                <td>
-
-                                                                    <?php
-                                                                    $role = $data['role'];
-                                                                    $badge_class = '';
-
-                                                                    switch ($role) {
-                                                                        case 'Admin':
-                                                                            $badge_class = 'bg-success';
-                                                                            break;
-                                                                        case 'Staff':
-                                                                            $badge_class = 'bg-primary';
-                                                                            break;
-                                                                        case 'Operation':
-                                                                            $badge_class = 'bg-danger';
-                                                                            break;
-                                                                        case 'Guard':
-                                                                            $badge_class = 'bg-warning';
-                                                                            break;
-                                                                        default:
-                                                                            $badge_class = 'bg-secondary'; // fallback color
-                                                                    }
-                                                                    ?>
-                                                                    <span class="badge <?php echo $badge_class; ?> me-1"></span> <?php echo htmlspecialchars($role); ?>
-
-                                                                </td>
-
+                                                                <td><?php echo $data['description']; ?></td>
+                                                                <td><?php echo $data['total']; ?></td>
+                                                                <td><?php echo $data['year']; ?></td>
                                                                 <td class="text-end">
 
                                                                     <?php
@@ -218,7 +147,14 @@
                                                                     
                                                                     ?>
                                         
-                                                                    <a class="btn btn-ghost-yellow" href="<?php echo site_url("open_z3bt/$encrypted_employee_data_id"); ?>" class="status status-blue ms-auto">
+                                                                    <a href="#" class="btn btn-ghost-yellow openLeaveModal"
+                                                                        data-employee-id="<?= $data['employee_data_id']; ?>"
+                                                                        data-description="<?= $data['description']; ?>"
+                                                                        data-total="<?= $data['total']; ?>"
+                                                                        data-year="<?= $data['year']; ?>"
+                                                                        data-name="<?= $data['last_name'] . ', ' . $data['first_name']; ?>"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#leaveModal">
 
                                                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-folder"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 3a1 1 0 0 1 .608 .206l.1 .087l2.706 2.707h6.586a3 3 0 0 1 2.995 2.824l.005 .176v8a3 3 0 0 1 -2.824 2.995l-.176 .005h-14a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-11a3 3 0 0 1 2.824 -2.995l.176 -.005h4z"></path></svg>
 
@@ -322,7 +258,7 @@
                             <option value="2022">2022</option>
                             <option value="2023">2023</option>
                             <option value="2024">2024</option>
-                            <option value="2025">2025</option>
+                            <option value="2025" selected>2025</option>
                             <option value="2026">2026</option>
                             <option value="2027">2027</option>
                         </select>
@@ -344,3 +280,146 @@
     </div>
 
 </div>
+
+<div class="modal fade" id="leaveModal" tabindex="-1" aria-labelledby="leaveModalLabel" aria-hidden="true">
+
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form method="post" action="<?= base_url('admin_ctrl/update_or_delete') ?>">
+
+        <div class="modal-header">
+
+          <h5 class="modal-title" id="leaveModalLabel">Edit Leave Credit</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+        </div>
+
+        <div class="modal-body">
+
+            <input type="hidden" name="employee_data_id" id="modalEmployeeId">
+
+            <div class="mb-3">
+
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control" id="modalName" disabled>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">Leave Type</label>
+                <input type="text" class="form-control" name="description" id="modalDescription">
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">Total Credit</label>
+                <input type="number" class="form-control" name="total" id="modalTotal">
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">Year</label>
+                <input type="number" class="form-control" name="year" id="modalYear">
+
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+
+            <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+            <button type="submit" id="btnDelete" value="delete" class="btn btn-danger">Delete</button>
+            <button type="submit" id="btnUpdate"  value="update" class="btn btn-primary">Update</button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmationModalLabel">Confirm Action</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="confirmationMessage">
+        Are you sure you want to proceed?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirmActionBtn">Yes, Proceed</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+    document.querySelectorAll('.openLeaveModal').forEach(button => {
+    button.addEventListener('click', function () {
+        const employeeId = this.getAttribute('data-employee-id');
+        const name = this.getAttribute('data-name');
+        const description = this.getAttribute('data-description');
+        const total = this.getAttribute('data-total');
+        const year = this.getAttribute('data-year');
+
+        document.getElementById('modalEmployeeId').value = employeeId;
+        document.getElementById('modalName').value = name;
+        document.getElementById('modalDescription').value = description;
+        document.getElementById('modalTotal').value = total;
+        document.getElementById('modalYear').value = year;
+    });
+    });
+
+    let intendedAction = null;
+
+    document.addEventListener("DOMContentLoaded", function () {
+    const updateBtn = document.getElementById("btnUpdate");
+    const deleteBtn = document.getElementById("btnDelete");
+    const confirmBtn = document.getElementById("confirmActionBtn");
+    const confirmationModal = new bootstrap.Modal(document.getElementById("confirmationModal"));
+    const confirmationMessage = document.getElementById("confirmationMessage");
+    const form = document.querySelector("#leaveModal form");
+
+    updateBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        intendedAction = "update";
+        confirmationMessage.textContent = "Are you sure you want to update this leave credit?";
+        confirmationModal.show();
+    });
+
+    deleteBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        intendedAction = "delete";
+        confirmationMessage.textContent = "Are you sure you want to delete this leave credit?";
+        confirmationModal.show();
+    });
+
+    confirmBtn.addEventListener("click", function () {
+        if (intendedAction) {
+        // Set the intended action before submitting
+        const actionInput = document.createElement("input");
+        actionInput.type = "hidden";
+        actionInput.name = "action";
+        actionInput.value = intendedAction;
+        form.appendChild(actionInput);
+
+        form.submit();
+        }
+    });
+    });
+
+</script>
+
+<script src="<?php echo base_url()."assets/"; ?>dist/js/search.js" defer></script>

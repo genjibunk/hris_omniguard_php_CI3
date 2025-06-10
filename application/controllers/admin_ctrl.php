@@ -252,7 +252,7 @@ class admin_ctrl extends CI_Controller {
 		redirect('info_a7xk');
 	}
 
-	public function leave_credits()
+	public function leavecredits()
 	{
         if (!$this->session->userdata('logged_in')) 
 
@@ -264,8 +264,10 @@ class admin_ctrl extends CI_Controller {
 
     	}
 
+		$data['leavecredits'] = $this->admin_model->leavecredits();
+
 		$this->load->view ('components/navbar');
-		$this->load->view ('admin/leave_credits');
+		$this->load->view ('admin/leave_credits', $data);
 		$this->load->view ('components/footer');
 	}
 
@@ -274,7 +276,6 @@ class admin_ctrl extends CI_Controller {
 		$description = $this->input->post('description');
 		$year = $this->input->post('year');
 
-		// Set total based on description
 		switch ($description) {
 			case 'Service Incentive Leave (SIL)':
 				$total = 5;
@@ -287,11 +288,12 @@ class admin_ctrl extends CI_Controller {
 				$total = 0;
 		}
 
-		// Get all employee IDs
+		$inserted = 0;
+		$skipped = 0;
+
 		$employees = $this->db->select('employee_data_id')->get('employee_data')->result();
 
 		foreach ($employees as $emp) {
-			// Check if leavecredits entry already exists
 			$exists = $this->db->get_where('leavecredits', [
 				'employee_data_id' => $emp->employee_data_id,
 				'description' => $description,
@@ -299,26 +301,55 @@ class admin_ctrl extends CI_Controller {
 			])->row();
 
 			if (!$exists) {
-				// Insert leavecredits
 				$this->db->insert('leavecredits', [
 					'employee_data_id' => $emp->employee_data_id,
 					'description' => $description,
 					'year' => $year,
 					'total' => $total
 				]);
+				$inserted++;
+			} else {
+				$skipped++;
 			}
 		}
 
-		$this->session->set_flashdata('success', 'Leave credits added for all employees.');
+		if ($inserted > 0) {
+			$this->session->set_flashdata('success', "$inserted leave credits added.");
+		}
+		if ($skipped > 0) {
+			$this->session->set_flashdata('warning', "$skipped duplicate entries were skipped.");
+		}
+
 		redirect('token_m4tz');
 	}
 
+	public function update_or_delete()
+	{
+		$employee_id = $this->input->post('employee_data_id');
+		$description = $this->input->post('description');
+		$total = $this->input->post('total');
+		$year = $this->input->post('year');
+		$action = $this->input->post('action');
 
+		if ($action === 'update') {
+			$this->db->where([
+				'employee_data_id' => $employee_id,
+				'description' => $description,
+				'year' => $year
+			])->update('leavecredits', ['total' => $total]);
 
+			$this->session->set_flashdata('success', 'Leave credit updated.');
+		} elseif ($action === 'delete') {
+			$this->db->where([
+				'employee_data_id' => $employee_id,
+				'description' => $description,
+				'year' => $year
+			])->delete('leavecredits');
 
+			$this->session->set_flashdata('success', 'Leave credit deleted.');
+		}
 
-
-
-
+		redirect('token_m4tz');
+	}
 
 }

@@ -38,5 +38,19 @@ class admin_model extends CI_Model{
         return $query->row_array();
     }
 
+    public function leavecredits()
+    {
+
+        $query = $this->db
+        ->select('*')
+        ->from('leavecredits')
+        ->join('employee_data', 'leavecredits.employee_data_id = employee_data.employee_data_id', 'inner')
+        ->order_by('employee_data.last_name', 'ASC')
+        ->get();
+
+        return $query->result_array();
+        
+    }
+
 }
 ?>
