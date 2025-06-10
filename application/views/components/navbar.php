@@ -108,9 +108,9 @@
 
                   </a>
 
-                  <a class="dropdown-item" href="">
+                  <a class="dropdown-item" href="<?php echo base_url();?>tokenreq_m4tz">
 
-                    Absences
+                    Leave Requests
 
                   </a>
 

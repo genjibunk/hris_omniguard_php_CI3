@@ -128,14 +128,14 @@ class admin_ctrl extends CI_Controller {
 
 		$this->db->insert('employee_data', $employee_data);
 
-		// Complete transaction
+		
 		$this->db->trans_complete();
 
 		if ($this->db->trans_status() === FALSE) {
-			// Something failed, rollback
+			
 			$this->session->set_flashdata('error', 'Failed to add employee. Please try again.');
 		} else {
-			// Success
+			
 			$this->session->set_flashdata('success', 'Employee and user credentials successfully created.');
 		}
 
@@ -273,6 +273,16 @@ class admin_ctrl extends CI_Controller {
 
 	public function insert_leavecredits_for_all()
 	{
+		if (!$this->session->userdata('logged_in')) 
+
+		{
+
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+        	$this->load->view('auth/signin');
+			return;
+
+    	}
+
 		$description = $this->input->post('description');
 		$year = $this->input->post('year');
 
@@ -325,6 +335,16 @@ class admin_ctrl extends CI_Controller {
 
 	public function update_or_delete()
 	{
+		if (!$this->session->userdata('logged_in')) 
+
+		{
+
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+        	$this->load->view('auth/signin');
+			return;
+
+    	}
+
 		$employee_id = $this->input->post('employee_data_id');
 		$description = $this->input->post('description');
 		$total = $this->input->post('total');
@@ -351,5 +371,72 @@ class admin_ctrl extends CI_Controller {
 
 		redirect('token_m4tz');
 	}
+
+	public function leaverequest()
+	{
+        if (!$this->session->userdata('logged_in')) 
+
+		{
+
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+        	$this->load->view('auth/signin');
+			return;
+
+    	}
+
+		$data['leaverequest'] = $this->admin_model->leaverequest();
+
+		$this->load->view ('components/navbar');
+		$this->load->view ('admin/leave_request', $data);
+		$this->load->view ('components/footer');
+	}
+
+	public function leaverequest_status() 
+	{
+		$request_id = $this->input->post('request_id');
+		$employee_id = $this->input->post('employee_id');
+		$leave_type = $this->input->post('leave_type');
+		$total_to_deduct = $this->input->post('total');
+		$action = $this->input->post('action'); 
+		$decline_comment = $this->input->post('decline_comment');
+		$updated_by = $this->session->userdata('userid');
+
+		$current_year = date('Y');
+
+		if ($action === 'approve') {
+			
+			$this->db->where('leaverequest_id', $request_id);
+			$this->db->update('leaverequest', [
+				'status' => 'Approved',
+				'lr_updated_by' => $updated_by,
+				'remarks' => 'None',
+			]);
+
+			$this->db->set('total', "total - {$total_to_deduct}", false);
+			$this->db->where('employee_data_id', $employee_id);
+			$this->db->where('description', $leave_type);
+			$this->db->where('year', $current_year);
+			$this->db->update('leavecredits');
+
+			$this->session->set_flashdata('success', 'Leave approved and credits updated.');
+		} elseif ($action === 'decline') {
+			
+			$this->db->where('leaverequest_id', $request_id);
+			$this->db->update('leaverequest', [
+				'status' => 'Declined',
+				'lr_updated_by' => $updated_by,
+				'remarks' => $decline_comment,
+			]);
+
+			$this->session->set_flashdata('warning', 'Leave request declined.');
+		} else {
+			$this->session->set_flashdata('error', 'Invalid action specified.');
+		}
+
+		redirect('tokenreq_m4tz');
+	}
+
+
+
 
 }

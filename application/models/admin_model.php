@@ -52,5 +52,21 @@ class admin_model extends CI_Model{
         
     }
 
+    public function leaverequest()
+    {
+
+        $query = $this->db
+        ->select('a.*, b.employee_data_id, b.first_name, b.last_name, IFNULL(c.first_name, "") AS updated_by_first_name, IFNULL(c.last_name, "") AS updated_by_last_name')
+        ->from('leaverequest a')
+        ->join('employee_data b', 'a.lr_employee_data_id = b.employee_data_id', 'left')
+        ->join('employee_data c', 'a.lr_updated_by = c.employee_data_id', 'left')
+        ->order_by('b.last_name', 'ASC')
+        ->get();
+
+        return $query->result_array();
+
+        
+    }
+
 }
 ?>
