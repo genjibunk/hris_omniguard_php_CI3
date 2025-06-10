@@ -64,3 +64,5 @@ $route['open_z3bt/(:any)'] = 'admin_ctrl/open_information/$1';
 $route['alter_z3bt'] = 'admin_ctrl/update_employee';
 $route['token_m4tz'] = 'admin_ctrl/leavecredits';
 $route['tokenreq_m4tz'] = 'admin_ctrl/leaverequest';
+$route['cmpy_k5hc'] = 'admin_ctrl/companies';
+$route['clients_m9xp/(:any)'] = 'admin_ctrl/clients/$1';

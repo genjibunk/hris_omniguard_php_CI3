@@ -1,6 +1,3 @@
-<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
 <script>
 <?php if ($this->session->flashdata('success')): ?>
     toastr.success("<?= $this->session->flashdata('success'); ?>");
@@ -76,6 +73,8 @@
 
                                     <div class="mt-3">
 
+                                        <a href="<?php echo base_url();?>base_8nvp" class="btn btn-orange active">Back</a>
+
                                         <a href="" class="btn btn-primary active" data-bs-toggle="modal" data-bs-target="#modal-team">Set Credits</a>
 
                                     </div>
@@ -147,7 +146,7 @@
                                                                     
                                                                     ?>
                                         
-                                                                    <a href="#" class="btn btn-ghost-yellow openLeaveModal"
+                                                                    <a href="#" class="btn btn-ghost-azure openLeaveModal"
                                                                         data-employee-id="<?= $data['employee_data_id']; ?>"
                                                                         data-description="<?= $data['description']; ?>"
                                                                         data-total="<?= $data['total']; ?>"
@@ -156,9 +155,9 @@
                                                                         data-bs-toggle="modal"
                                                                         data-bs-target="#leaveModal">
 
-                                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-folder"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 3a1 1 0 0 1 .608 .206l.1 .087l2.706 2.707h6.586a3 3 0 0 1 2.995 2.824l.005 .176v8a3 3 0 0 1 -2.824 2.995l-.176 .005h-14a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-11a3 3 0 0 1 2.824 -2.995l.176 -.005h4z"></path></svg>
+                                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"></path><path d="M16 5l3 3"></path></svg>
 
-                                                                        Open
+                                                                        Update
 
                                                                     </a>
 

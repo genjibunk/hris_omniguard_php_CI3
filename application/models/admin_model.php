@@ -21,19 +21,15 @@ class admin_model extends CI_Model{
         
     }
 
-    public function open_information_employee_data($id = null)
+    public function open_information_employee_data($id)
     {
-        $this->db
+        $query = $this->db
             ->select('*')
             ->from('employee_data')
             ->join('userauth', 'employee_data.UserID = userauth.userauth_id', 'inner')
-            ->order_by('employee_data.employee_data_id', 'DESC');
-
-        if ($id !== null) {
-            $this->db->where('employee_data.employee_data_id', $id);
-        }
-
-        $query = $this->db->get();
+            ->where('employee_data.employee_data_id', $id)
+            ->order_by('employee_data.employee_data_id', 'DESC')
+            ->get();
 
         return $query->row_array();
     }
@@ -66,6 +62,31 @@ class admin_model extends CI_Model{
         return $query->result_array();
 
         
+    }
+
+    public function companies()
+    {
+
+        $query = $this->db
+        ->select('*')
+        ->from('companies')
+        ->get();
+
+        return $query->result_array();
+        
+    }
+
+    public function clients($id)
+    {
+        $query = $this->db
+            ->select('a.client_id, a.company_id, a.name, a.region, a.province, a.city, a.brgy, a.street, a.latitude, a.longitude, a.date_affiliate , a.created_at')
+            ->from('clients a')
+            ->join('companies b', 'b.company_id = a.company_id', 'inner')
+            ->where('a.company_id', $id)
+            ->order_by('a.name', 'ASC')
+            ->get();
+
+        return $query->result_array();
     }
 
 }

@@ -393,6 +393,16 @@ class admin_ctrl extends CI_Controller {
 
 	public function leaverequest_status() 
 	{
+		if (!$this->session->userdata('logged_in')) 
+
+		{
+
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+        	$this->load->view('auth/signin');
+			return;
+
+    	}
+
 		$request_id = $this->input->post('request_id');
 		$employee_id = $this->input->post('employee_id');
 		$leave_type = $this->input->post('leave_type');
@@ -436,7 +446,125 @@ class admin_ctrl extends CI_Controller {
 		redirect('tokenreq_m4tz');
 	}
 
+	public function companies()
+	{
+        if (!$this->session->userdata('logged_in')) 
 
+		{
 
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+        	$this->load->view('auth/signin');
+			return;
+
+    	}
+
+		$data['companies'] = $this->admin_model->companies();
+
+		$this->load->view ('components/navbar');
+		$this->load->view ('admin/companies', $data);
+		$this->load->view ('components/footer');
+	}
+
+	public function add_company()
+	{
+		if (!$this->session->userdata('logged_in')) 
+
+		{
+
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+        	$this->load->view('auth/signin');
+			return;
+
+    	}
+
+		$data = [
+			'name' => $this->input->post('name'),
+			'region'          => $this->input->post('region_name'),
+			'province'        => $this->input->post('province_name'),
+			'city'            => $this->input->post('city_name'),
+			'brgy'            => $this->input->post('barangay_name'),
+			'street'            => $this->input->post('Street'),
+			'date_affiliate' => $this->input->post('date_affiliate'),
+			'created_at' => date('Y-m-d H:i:s'),
+		];
+
+		$this->db->insert('companies', $data);
+		$this->session->set_flashdata('success', 'Company added successfully!');
+		redirect('cmpy_k5hc');
+	}
+
+	public function update_company()
+	{
+		if (!$this->session->userdata('logged_in')) 
+
+		{
+
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+        	$this->load->view('auth/signin');
+			return;
+
+    	}
+		
+		$id = $this->input->post('id');
+		$data = [
+			'name' => $this->input->post('name'),
+			'date_affiliate' => $this->input->post('date_affiliate'),
+			'region' => $this->input->post('region'),
+			'province' => $this->input->post('province'),
+			'city' => $this->input->post('city'),
+			'brgy' => $this->input->post('brgy'),
+			'street' => $this->input->post('street'),
+		];
+
+		$this->db->where('company_id', $id);
+		$this->db->update('companies', $data);
+
+		$this->session->set_flashdata('success', 'Company updated successfully.');
+		redirect('cmpy_k5hc');
+	}
+
+	public function clients($CID)
+	{
+        if (!$this->session->userdata('logged_in')) 
+
+		{
+
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+        	$this->load->view('auth/signin');
+			return;
+
+    	}
+
+		$decoded_CID = base64_decode($CID);
+        $id = $this->encryption->decrypt($decoded_CID);
+
+		$data['clients'] = $this->admin_model->clients($id);
+		$data['client_id'] = $id;
+
+		$this->load->view ('components/navbar');
+		$this->load->view ('admin/clients',$data);
+		$this->load->view ('components/footer');
+	}
+
+	public function insert_client()
+	{
+		$clients_data = [
+			'company_id' => $this->input->post('company_id'),
+			'name' => $this->input->post('name'),
+			'region' => $this->input->post('region_name'),
+			'province' => $this->input->post('province_name'),
+			'city' => $this->input->post('city_name'),
+			'brgy' => $this->input->post('barangay_name'),
+			'street' => $this->input->post('Street'),
+			'latitude' => $this->input->post('latitude'),
+			'longitude' => $this->input->post('longitude'),
+			'date_affiliate' => $this->input->post('date_affiliate')
+		];
+
+		$this->db->insert('clients', $clients_data);
+		$this->session->set_flashdata('success', 'Company added successfully!');
+		redirect('cmpy_k5hc');
+
+	}
 
 }
