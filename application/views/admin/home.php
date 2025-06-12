@@ -1,4 +1,8 @@
-
+<script>
+$(document).ready(function () {
+  toastr.success("<?= $this->session->flashdata('success') ?>");
+});
+</script>
 <div class="page">
 
     <div class="page-wrapper">

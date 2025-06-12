@@ -24,31 +24,116 @@ class auth_ctrl extends CI_Controller {
 
     }
 
-	public function do_signin()
-    {
+	// public function do_signin()
+	// {
+	// 	$username = $this->input->post('username');
+	// 	$password = $this->input->post('password');
 
-        $username = $this->input->post('username');
+	// 	if ($username === 'admin' && $password === 'admin123') 
+
+	// 	{
+	// 		$sessionData = [
+	// 			'logged_in' => true,
+	// 			'userid'    => 1,
+	// 			'username'  => $username,
+	// 		];
+
+	// 		$this->session->set_flashdata('success', 'Welcome back, ' . $username . '!');
+	// 		$this->session->set_userdata($sessionData);
+
+	// 		$this->load->view ('components/navbar');
+	// 		$this->load->view ('admin/home');
+	// 		$this->load->view ('components/footer');
+	// 	}
+
+	// 	else if($username === 'staff' && $password === 'staff123')
+
+	// 	{
+	// 		$sessionData = [
+	// 			'logged_in' => true,
+	// 			'userid'    => 1,
+	// 			'username'  => $username,
+	// 		];
+
+	// 		$this->session->set_flashdata('success', 'Welcome back, ' . $username . '!');
+	// 		$this->session->set_userdata($sessionData);
+
+	// 		$this->load->view ('staff/home');
+	// 		$this->load->view ('components/footer');
+	// 	} 
+
+	// 	else
+
+	// 	{
+	// 		$this->session->set_flashdata('error', 'Invalid credentials');
+	// 		$this->load->view('auth/signin');
+	// 	}
+	// }
+
+	public function do_signin()
+	{
+		$username = $this->input->post('username');
 		$password = $this->input->post('password');
 
-		// Example: Hardcoded login
-		if ($username === 'admin' && $password === 'admin123') {
-			$sessionData = [
-				'logged_in' => true,
-				'userid'    => 1,
-				'username'  => $username,
-			];
-			$this->session->set_userdata($sessionData);
+		$this->db->where('username', $username);
+		$query = $this->db->get('userauth');
 
-			$this->load->view ('components/navbar');
-			$this->load->view ('admin/home');
-			$this->load->view ('components/footer');
+		if ($query->num_rows() === 1) {
+			$user = $query->row();
+
+			if (password_verify($password, $user->password_hash)) {
+				if ($user->status === 'Active') {
+
+					$sessionData = [
+						'logged_in' => true,
+						'userid'    => $user->userauth_id,
+						'username'  => $user->username,
+						'role'      => $user->role
+					];
+					$this->session->set_userdata($sessionData);
+					$this->session->set_flashdata('success', 'Welcome back, ' . $user->username . '!');
+
+					if ($user->role === 'Admin') 
+
+					{
+
+						$this->load->view('components/navbar');
+						$this->load->view('admin/home');
+						$this->load->view('components/footer');
+
+					}
+
+					elseif ($user->role === 'Staff') 
+
+					{
+						$this->load->view('components/topbar');
+						$this->load->view('staff/home');
+
+					} 
+					else 
+
+					{
+						$this->session->set_flashdata('error', 'Access denied for role: ' . $user->role);
+						$this->load->view('auth/signin');
+						return;
+					}
+
+					return;
+
+				} else {
+					$this->session->set_flashdata('error', 'Account is inactive.');
+				}
+			} else {
+				$this->session->set_flashdata('error', 'Incorrect password.');
+			}
 		} else {
-			// Login failed
-			$this->session->set_flashdata('error', 'Invalid credentials');
-			$this->load->view('auth/signin');
+			$this->session->set_flashdata('error', 'User not found.');
 		}
 
-    }
+		$this->load->view('auth/signin');
+	}
+
+
 
 	public function signout()
     {
