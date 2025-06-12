@@ -16,7 +16,7 @@ $(document).ready(function () {
                 <div class="col">
  
                     <h2 class="page-title">
-                    Welcome : Mark Casas (session fname & lname)
+                    Welcome : <?php echo $open_information_employee_data['first_name']; ?> <?php echo $open_information_employee_data['last_name']; ?>
                     </h2>
 
                     </br>

@@ -56,8 +56,8 @@
                             <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
                                 <span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)"></span>
                                 <div class="d-none d-xl-block ps-2">
-                                <div>Paweł Kuna</div>
-                                <div class="mt-1 small text-secondary">UI Designer</div>
+                                <div><?php echo $open_information_employee_data['first_name']; ?> <?php echo $open_information_employee_data['last_name']; ?></div>
+                                <div class="mt-1 small text-secondary"><?php echo $open_information_employee_data['position']; ?></div>
                                 </div>
                             </a>
 
@@ -94,12 +94,18 @@
                                 <div id="icon" class="mb-2">Loading weather...</div>
                                 <div id="greeting" class="font-semibold">Loading...</div>
                                 <div id="datetime" class="text-sm text-gray-600"></div>
-                                
                             </div>
 
                             <center>
+                               <strong>Company:</strong>
+                                <em id="clientName" class="text-azure">
+                                    <?= $this->session->userdata('client_name') ?: 'Not verified yet' ?>
+                                </em>
+                                <br>
                                 <strong>Location:</strong>
-                                <em class="text-success">Verified</em>
+                                <em id="locationStatus" class="<?= $this->session->userdata('location_status') === 'Verified' ? 'text-lime' : 'text-danger' ?>">
+                                    <?= $this->session->userdata('location_status') ?: 'Not Verified' ?>
+                                </em>
                                 •
                                 <strong>Punch in</strong>
                                 <em>--:--:--</em>
@@ -108,9 +114,14 @@
                                 <em>--:--:--</em>
 
                                 </br></br>
-                                <a href="#" class="btn bg-lime-lt btn-pill w-20">
-
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-power"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6a7.75 7.75 0 1 0 10 0"></path><path d="M12 4l0 8"></path></svg>
+                                <a href="#" id="punchInBtn" class="btn bg-lime-lt btn-pill w-20 disabled" style="pointer-events: none; opacity: 0.6;">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-power">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <path d="M7 6a7.75 7.75 0 1 0 10 0"></path>
+                                        <path d="M12 4l0 8"></path>
+                                    </svg>
                                     Punch in
                                 </a>
 
@@ -135,7 +146,7 @@
                                 else if (hour < 18) greeting = "Good afternoon";
                                 else greeting = "Good evening";
 
-                                document.getElementById("greeting").textContent = `${greeting}, User!`;
+                                document.getElementById("greeting").textContent = `${greeting}, <?php echo $open_information_employee_data['first_name']; ?> <?php echo $open_information_employee_data['last_name']; ?>`;
                                 document.getElementById("datetime").textContent = `${day} • ${time}`;
                                 }
 
@@ -176,6 +187,95 @@
             </div>
 
         </div>
+
+<script>
+const userRole = "<?= $this->session->userdata('role') ?>";
+
+navigator.geolocation.getCurrentPosition(
+    function (position) {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        console.log("📍 User location:", lat, lon);
+
+        fetch("<?= base_url('auth_ctrl/verify_location') ?>", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ latitude: lat, longitude: lon }),
+        })
+        .then(async res => {
+            const contentType = res.headers.get("content-type");
+            if (!res.ok || !contentType || !contentType.includes("application/json")) {
+                throw new Error("Invalid JSON response or server error.");
+            }
+            return res.json();
+        })
+        .then(data => {
+            console.log("✅ Server response:", data);
+            const punchBtn = document.getElementById("punchInBtn");
+            const clientName = document.getElementById("clientName");
+            const locationStatus = document.getElementById("locationStatus");
+
+            if (data.status === "verified") {
+                alert("✅ Location verified! " + data.client_name);
+
+                // Update real-time text
+                clientName.textContent = data.client_name;
+                locationStatus.textContent = "Verified";
+                locationStatus.classList.remove("text-danger");
+                locationStatus.classList.add("text-lime");
+
+                // Enable button based on role
+                if (userRole === "Guard") {
+                    punchBtn.classList.remove("disabled");
+                    punchBtn.style.pointerEvents = "auto";
+                    punchBtn.style.opacity = "1";
+                }
+            } else if (data.status === "not_verified") {
+                alert("❌ Location mismatch!");
+
+                // Update real-time text
+                clientName.textContent = "Not verified yet";
+                locationStatus.textContent = "Not Verified";
+                locationStatus.classList.remove("text-lime");
+                locationStatus.classList.add("text-danger");
+
+                // Disable only if Guard
+                if (userRole === "Guard") {
+                    punchBtn.classList.add("disabled");
+                    punchBtn.style.pointerEvents = "none";
+                    punchBtn.style.opacity = "0.6";
+                }
+            } else {
+                alert("⚠️ " + data.message);
+            }
+
+            // Non-Guard role: always enable the button
+            if (userRole !== "Guard") {
+                punchBtn.classList.remove("disabled");
+                punchBtn.style.pointerEvents = "auto";
+                punchBtn.style.opacity = "1";
+            }
+        })
+        .catch(error => {
+            console.error("❌ Fetch error:", error);
+            alert("⚠️ Error verifying location.");
+        });
+    },
+    function (error) {
+        console.error("❌ Geolocation error:", error.message);
+        alert("❌ Location access denied");
+    },
+    {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0
+    }
+);
+</script>
+
+
 
         <script src="<?php echo base_url()."assets/"; ?>dist/libs/apexcharts/dist/apexcharts.min.js?1692870487" defer></script>
         <script src="<?php echo base_url()."assets/"; ?>dist/libs/jsvectormap/dist/js/jsvectormap.min.js?1692870487" defer></script>

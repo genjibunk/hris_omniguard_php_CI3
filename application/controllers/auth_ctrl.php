@@ -93,11 +93,15 @@ class auth_ctrl extends CI_Controller {
 					$this->session->set_userdata($sessionData);
 					$this->session->set_flashdata('success', 'Welcome back, ' . $user->username . '!');
 
+					$id = $user->userauth_id;
+					
+					$data['open_information_employee_data'] = $this->admin_model->open_information_employee_data($id);
+
 					if ($user->role === 'Admin') 
 
 					{
 
-						$this->load->view('components/navbar');
+						$this->load->view('components/navbar',$data);
 						$this->load->view('admin/home');
 						$this->load->view('components/footer');
 
@@ -106,10 +110,19 @@ class auth_ctrl extends CI_Controller {
 					elseif ($user->role === 'Staff') 
 
 					{
-						$this->load->view('components/topbar');
+						$this->load->view('components/topbar',$data);
 						$this->load->view('staff/home');
 
 					} 
+
+					elseif ($user->role === 'Guard') 
+
+					{
+						$this->load->view('components/topbar',$data);
+						$this->load->view('staff/home');
+
+					} 
+
 					else 
 
 					{
@@ -157,11 +170,101 @@ class auth_ctrl extends CI_Controller {
 
     	}
 
-		$this->load->view('components/navbar');
+		$id = $this->session->userdata('userid');
+		$data['open_information_employee_data'] = $this->admin_model->open_information_employee_data($id);
+
+		$this->load->view('components/navbar',$data);
     	$this->load->view('admin/home');
     	$this->load->view('components/footer');
 		
 		
 	}
+
+
+	public function verify_location()
+	{
+		header('Content-Type: application/json');
+
+		// Get raw input and decode JSON
+		$rawData = json_decode(file_get_contents("php://input"), true);
+
+		// Validate coordinates
+		$userLatitude = isset($rawData['latitude']) ? floatval($rawData['latitude']) : null;
+		$userLongitude = isset($rawData['longitude']) ? floatval($rawData['longitude']) : null;
+
+		if ($userLatitude === null || $userLongitude === null) {
+			echo json_encode([
+				"status" => "error",
+				"message" => "Invalid input: missing latitude or longitude"
+			]);
+			return;
+		}
+
+		// Get user ID from session
+		$user_id = $this->session->userdata('userid');
+
+		// Get expected location from DB
+		$expected = $this->staff_model->get_location_by_user_id($user_id);
+
+		if (!$expected) {
+			echo json_encode([
+				"status" => "error",
+				"message" => "No Schedule found"
+			]);
+			return;
+		}
+
+		// Convert expected coordinates to float
+		$expectedLat = floatval($expected['latitude']);
+		$expectedLon = floatval($expected['longitude']);
+
+		// Calculate distance
+		$radius = 100		; // meters
+		$distance = $this->calculate_distance($userLatitude, $userLongitude, $expectedLat, $expectedLon);
+
+		// Compare and set session values
+		if ($distance <= $radius) {
+			$this->session->set_userdata('client_name', $expected['name']);
+			$this->session->set_userdata('location_status', 'Verified');
+
+			echo json_encode([
+				"status" => "verified",
+				"client_name" => $expected['name']
+			]);
+		} else {
+			$this->session->set_userdata('location_status', 'Not Verified');
+
+			echo json_encode([
+				"status" => "not_verified"
+			]);
+		}
+	}
+
+
+
+	private function calculate_distance($lat1, $lon1, $lat2, $lon2)
+	{
+		$earthRadius = 6371000; // meters
+
+		$lat1 = deg2rad($lat1);
+		$lon1 = deg2rad($lon1);
+		$lat2 = deg2rad($lat2);
+		$lon2 = deg2rad($lon2);
+
+		$deltaLat = $lat2 - $lat1;
+		$deltaLon = $lon2 - $lon1;
+
+		$a = sin($deltaLat / 2) * sin($deltaLat / 2) +
+			cos($lat1) * cos($lat2) *
+			sin($deltaLon / 2) * sin($deltaLon / 2);
+
+		$c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+
+		return $earthRadius * $c;
+	}
+
+
+
+
 
 }
