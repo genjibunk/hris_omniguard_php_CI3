@@ -85,7 +85,7 @@
 
                                         <a href="<?php echo base_url();?>cmpy_k5hc" class="btn btn-orange active">Back</a>
 
-                                        <a href="#" class="btn btn-primary active" data-bs-toggle="modal" data-bs-target="#newClientModal">New Client</a>
+                                        <a href="#" class="btn btn-primary active" data-bs-toggle="modal" data-bs-target="#newClientModal">New Branch</a>
 
                                     </div>
 
