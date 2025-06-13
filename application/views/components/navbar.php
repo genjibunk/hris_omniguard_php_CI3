@@ -120,13 +120,13 @@
 
                   </a>
 
-                  <a class="dropdown-item" href="<?php echo base_url();?>token_m4tz">
+                  <a class="dropdown-item" href="<?php echo base_url();?>atnd_n5gw">
 
                     Attendance
 
                   </a>
 
-                  <a class="dropdown-item" href="" rel="noopener">
+                  <a class="dropdown-item" href="<?php echo base_url();?>roster_k0jb">
 
                     Schedule
 
@@ -260,6 +260,7 @@
     <script src="<?php echo base_url()."assets/"; ?>dist/libs/jsvectormap/dist/js/jsvectormap.min.js?1692870487" defer></script>
     <script src="<?php echo base_url()."assets/"; ?>dist/libs/jsvectormap/dist/maps/world.js?1692870487" defer></script>
     <script src="<?php echo base_url()."assets/"; ?>dist/libs/jsvectormap/dist/maps/world-merc.js?1692870487" defer></script>
+    
     
     <script src="<?php echo base_url()."assets/"; ?>dist/js/tabler.min.js?1692870487" defer></script>
     <script src="<?php echo base_url()."assets/"; ?>dist/js/demo.min.js?1692870487" defer></script>

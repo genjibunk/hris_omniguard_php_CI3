@@ -589,9 +589,185 @@ class admin_ctrl extends CI_Controller {
 
     	}
 
+		$data['attendance'] = $this->admin_model->attendance();
+
 		$this->load->view ('components/navbar');
-		$this->load->view ('admin/attendance');
+		$this->load->view ('admin/attendance', $data);
 		$this->load->view ('components/footer');
 	}
+
+	public function attendance_data($encrypted_employee_data_id)
+	{
+		if (!$this->session->userdata('logged_in')) 
+		{
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+			$this->load->view('auth/signin');
+			return;
+		}
+
+		$decoded_id = base64_decode($encrypted_employee_data_id);
+		$id = $this->encryption->decrypt($decoded_id);
+
+		$data['attendance_data'] = $this->admin_model->attendance_data($id);
+
+		$this->load->view('components/navbar');
+		$this->load->view('admin/attendance_data', $data);
+		$this->load->view('components/footer');
+	}
+
+	public function schedule()
+	{
+		if (!$this->session->userdata('logged_in')) 
+		{
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+			$this->load->view('auth/signin');
+			return;
+		}
+
+		$data['schedule'] = $this->admin_model->schedule();
+
+		$this->load->view('components/navbar');
+		$this->load->view('admin/schedule', $data);
+		$this->load->view('components/footer');
+	}
+
+	public function search_employees()
+	{
+		if (!$this->session->userdata('logged_in')) 
+
+		{
+
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+        	$this->load->view('auth/signin');
+			return;
+
+    	}
+
+		$term = $this->input->post('term');
+
+		$results = $this->admin_model->search_employees($term);
+
+		$formatted_results = [];
+
+		foreach ($results as $row) {
+			$formatted_results[] = [
+				'employee_data_id' => $row['employee_data_id'],
+				'full_name' => $row['first_name'] . ' ' . $row['last_name']
+			];
+		}
+
+		echo json_encode($formatted_results);
+	}
+	public function load_company()
+	{
+		if (!$this->session->userdata('logged_in')) 
+
+		{
+
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+        	$this->load->view('auth/signin');
+			return;
+
+    	}
+		
+		$results = $this->admin_model->get_all_company();
+
+		$formatted_results = [];
+
+		foreach ($results as $row) {
+			$formatted_results[] = [
+				'client_id' => $row['client_id'],
+				'full_name' => $row['companies']
+			];
+		}
+
+		echo json_encode($formatted_results);
+	}
+
+	public function save_schedule()
+	{
+		if (!$this->session->userdata('logged_in')) 
+
+		{
+
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+        	$this->load->view('auth/signin');
+			return;
+
+    	}
+
+		$client_id = $this->input->post('client_id');
+		$employee_ids = $this->input->post('employee_ids');
+		$date_from = $this->input->post('schedule_date_from');
+		$date_to = $this->input->post('schedule_date_to');
+		$time_in = $this->input->post('schedule_time_in');
+		$time_out = $this->input->post('schedule_time_out');
+
+		$this->db->trans_start();
+
+		$inserted = 0;
+		$skipped = 0;
+
+		foreach ($employee_ids as $employee_id) {
+			$data = [
+				'client_id' => $client_id,
+				'employee_data_id' => $employee_id,
+				'date_from' => $date_from,
+				'date_to' => $date_to,
+				'punchin' => $time_in,
+				'punchout' => $time_out,
+			];
+
+			if ($this->admin_model->insert_schedule($data)) {
+				$inserted++;
+			} else {
+				$skipped++;
+			}
+		}
+
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE) {
+			$this->session->set_flashdata('error', 'Failed to save schedule. Please try again.');
+		} else {
+			if ($inserted > 0) {
+				$this->session->set_flashdata('success', "$inserted schedule(s) saved.");
+			}
+			if ($skipped > 0) {
+				$this->session->set_flashdata('warning', "$skipped duplicate(s) skipped.");
+			}
+		}
+
+		redirect('roster_k0jb');
+	}
+
+
+	public function delete_schedule()
+	{
+		if (!$this->session->userdata('logged_in')) 
+
+		{
+
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+        	$this->load->view('auth/signin');
+			return;
+
+    	}
+
+		$schedule_id = $this->input->post('schedule_id');
+		$this->db->where('schedule_id', $schedule_id);
+		$deleted = $this->db->delete('schedule');
+
+
+		if ($deleted) {
+        $this->session->set_flashdata('success', 'Schedule deleted successfully.');
+		} else {
+			$this->session->set_flashdata('error', 'Failed to delete schedule.');
+		}
+
+		redirect('roster_k0jb');
+	}
+
+
 
 }

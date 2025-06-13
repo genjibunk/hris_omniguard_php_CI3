@@ -25,7 +25,7 @@
                     Overview
                     </div>
                     <h2 class="page-title">
-                    Employee Records / Leave Credits<!-- <?php echo $this->session->userdata('userid'); ?>-->
+                    Employee Records / Attendance<!-- <?php echo $this->session->userdata('userid'); ?>-->
                     </h2>
 
                 </div>
@@ -63,19 +63,17 @@
 
                                 <div class="col-10">
 
-                                    <h3 class="h1">Leave Credits</h3>
+                                    <h3 class="h1">Attendance</h3>
 
                                     <div class="markdown text-secondary">
 
-                                        Total allowable days an employee can take off work without loss of pay.
+                                        Documentation of who is present or absent on a given workday.
 
                                     </div>
 
                                     <div class="mt-3">
 
                                         <a href="<?php echo base_url();?>base_8nvp" class="btn btn-orange active">Back</a>
-
-                                        <a href="" class="btn btn-primary active" data-bs-toggle="modal" data-bs-target="#modal-team">Set Credits</a>
 
                                     </div>
 
@@ -118,10 +116,7 @@
                                                         <tr>
                                                         
                                                             <th>Name</th>
-                                                            <th>Leave type</th>
-                                                            <th>Total Credit</th>
-                                                            <th>Year</th>
-                                                            
+
                                                             <th></th>
 
                                                         </tr>
@@ -130,14 +125,20 @@
 
                                                     <tbody>
 
-                                                        <?php foreach($leavecredits as $data  ) : ?>
+                                                        <?php foreach($attendance as $data  ) : ?>
 
                                                             <tr>
 
-                                                                <td><?php echo $data['last_name']; ?> , <?php echo $data['first_name']; ?> </td>
-                                                                <td><?php echo $data['description']; ?></td>
-                                                                <td><?php echo $data['total']; ?></td>
-                                                                <td><?php echo $data['year']; ?></td>
+                                                                <td style="width: 8%;">
+                                                                    <?php if (!empty($data['photo'])): ?>
+                                                                        <img src="<?php echo base_url('uploads/photos/' . $data['photo']); ?>" alt="Employee Photo" style="width: 100%; height: 80px; object-fit: cover; border-radius: 5px;">
+                                                                    <?php else: ?>
+                                                                        <span class="text-muted">No photo</span>
+                                                                    <?php endif; ?>
+                                                                </td>
+
+                                                                <td><?php echo $data['first_name']; ?> , <?php echo $data['last_name']; ?> </td>
+                                                                
                                                                 <td class="text-end">
 
                                                                     <?php
@@ -146,20 +147,14 @@
                                                                     
                                                                     ?>
                                         
-                                                                    <a href="#" class="btn btn-ghost-azure openLeaveModal"
-                                                                        data-employee-id="<?= $data['employee_data_id']; ?>"
-                                                                        data-description="<?= $data['description']; ?>"
-                                                                        data-total="<?= $data['total']; ?>"
-                                                                        data-year="<?= $data['year']; ?>"
-                                                                        data-name="<?= $data['last_name'] . ', ' . $data['first_name']; ?>"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#leaveModal">
-
-                                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"></path><path d="M16 5l3 3"></path></svg>
-
-                                                                        Update
-
+                                                                    <a href="<?php echo site_url("atndfile_n5gw/$encrypted_employee_data_id"); ?>" class="btn btn-ghost-azure">
+                                                                        <svg  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-folder">
+                                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                                            <path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"></path>
+                                                                        </svg>
+                                                                    Open
                                                                     </a>
+
 
                                                                 </td> 
 
@@ -204,221 +199,5 @@
 
 </div>
 
-<!-- modals -->
-
-<div class="modal modal-blur fade" id="modal-team" tabindex="-1" role="dialog" aria-hidden="true">
-
-    <div class="modal-dialog modal-dialog-centered" role="document">
-
-        <div class="modal-content">
-
-            <div class="modal-header">
-
-                <h5 class="modal-title">Set Credits</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
-            </div>
-            
-            <form action="<?= base_url('admin_ctrl/insert_leavecredits_for_all') ?>" method="post">
-
-                <div class="modal-body">
-
-                    <div class="row mb-3 align-items-end">
-
-                        <div class="col-auto">
-                        
-                            <span class="avatar avatar-xl">
-
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-location-broken"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12.896 19.792l-2.896 -5.792l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5l-3.487 9.657"></path><path d="M21.5 21.5l-5 -5"></path><path d="M16.5 21.5l5 -5"></path></svg>
-                            
-                            </span>
-
-                        </div>
-
-                        <div class="col">
-
-                            <label class="form-label required">Credit Type</label>
-
-                            <select class="form-select" name="description" required>
-                                <option value="Service Incentive Leave (SIL)">Service Incentive Leave (SIL)</option>
-                                <option value="Sick Leave">Sick Leave</option>
-                                <option value="Vacation Leave">Vacation Leave</option>
-                            </select>
-
-                        </div>
-
-                    </div>
-
-                    <div>
-
-                        <label class="form-label required">Additional info</label>
-
-                        <select class="form-select" name="year" required>
-                            <option value="2022">2022</option>
-                            <option value="2023">2023</option>
-                            <option value="2024">2024</option>
-                            <option value="2025" selected>2025</option>
-                            <option value="2026">2026</option>
-                            <option value="2027">2027</option>
-                        </select>
-                    </div>
-
-                </div>
-
-                <div class="modal-footer">
-
-                    <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Set</button>
-                    
-                </div>
-
-            </form>
-
-        </div>
-
-    </div>
-
-</div>
-
-<div class="modal fade" id="leaveModal" tabindex="-1" aria-labelledby="leaveModalLabel" aria-hidden="true">
-
-  <div class="modal-dialog">
-
-    <div class="modal-content">
-
-      <form method="post" action="<?= base_url('admin_ctrl/update_or_delete') ?>">
-
-        <div class="modal-header">
-
-          <h5 class="modal-title" id="leaveModalLabel">Edit Leave Credit</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
-        </div>
-
-        <div class="modal-body">
-
-            <input type="hidden" name="employee_data_id" id="modalEmployeeId">
-
-            <div class="mb-3">
-
-                <label class="form-label">Name</label>
-                <input type="text" class="form-control" id="modalName" disabled>
-
-            </div>
-
-            <div class="mb-3">
-
-                <label class="form-label">Leave Type</label>
-                <input type="text" class="form-control" name="description" id="modalDescription">
-
-            </div>
-
-            <div class="mb-3">
-
-                <label class="form-label">Total Credit</label>
-                <input type="number" class="form-control" name="total" id="modalTotal">
-
-            </div>
-
-            <div class="mb-3">
-
-                <label class="form-label">Year</label>
-                <input type="number" class="form-control" name="year" id="modalYear">
-
-            </div>
-
-        </div>
-
-        <div class="modal-footer">
-
-            <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-            <button type="submit" id="btnDelete" value="delete" class="btn btn-danger">Delete</button>
-            <button type="submit" id="btnUpdate"  value="update" class="btn btn-primary">Update</button>
-
-        </div>
-
-      </form>
-
-    </div>
-
-  </div>
-
-</div>
-
-<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="confirmationModalLabel">Confirm Action</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body" id="confirmationMessage">
-        Are you sure you want to proceed?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-danger" id="confirmActionBtn">Yes, Proceed</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-
-    document.querySelectorAll('.openLeaveModal').forEach(button => {
-    button.addEventListener('click', function () {
-        const employeeId = this.getAttribute('data-employee-id');
-        const name = this.getAttribute('data-name');
-        const description = this.getAttribute('data-description');
-        const total = this.getAttribute('data-total');
-        const year = this.getAttribute('data-year');
-
-        document.getElementById('modalEmployeeId').value = employeeId;
-        document.getElementById('modalName').value = name;
-        document.getElementById('modalDescription').value = description;
-        document.getElementById('modalTotal').value = total;
-        document.getElementById('modalYear').value = year;
-    });
-    });
-
-    let intendedAction = null;
-
-    document.addEventListener("DOMContentLoaded", function () {
-    const updateBtn = document.getElementById("btnUpdate");
-    const deleteBtn = document.getElementById("btnDelete");
-    const confirmBtn = document.getElementById("confirmActionBtn");
-    const confirmationModal = new bootstrap.Modal(document.getElementById("confirmationModal"));
-    const confirmationMessage = document.getElementById("confirmationMessage");
-    const form = document.querySelector("#leaveModal form");
-
-    updateBtn.addEventListener("click", function (e) {
-        e.preventDefault();
-        intendedAction = "update";
-        confirmationMessage.textContent = "Are you sure you want to update this leave credit?";
-        confirmationModal.show();
-    });
-
-    deleteBtn.addEventListener("click", function (e) {
-        e.preventDefault();
-        intendedAction = "delete";
-        confirmationMessage.textContent = "Are you sure you want to delete this leave credit?";
-        confirmationModal.show();
-    });
-
-    confirmBtn.addEventListener("click", function () {
-        if (intendedAction) {
-        // Set the intended action before submitting
-        const actionInput = document.createElement("input");
-        actionInput.type = "hidden";
-        actionInput.name = "action";
-        actionInput.value = intendedAction;
-        form.appendChild(actionInput);
-
-        form.submit();
-        }
-    });
-    });
-
-</script>
 
 <script src="<?php echo base_url()."assets/"; ?>dist/js/search.js" defer></script>

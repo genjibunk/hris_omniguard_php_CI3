@@ -78,6 +78,7 @@ class admin_model extends CI_Model{
 
     public function clients($id)
     {
+
         $query = $this->db
             ->select('a.client_id, a.company_id, a.name, a.region, a.province, a.city, a.brgy, a.street, a.latitude, a.longitude, a.date_affiliate , a.created_at')
             ->from('clients a')
@@ -87,7 +88,108 @@ class admin_model extends CI_Model{
             ->get();
 
         return $query->result_array();
+
     }
+
+    public function attendance()
+    {
+
+        $query = $this->db
+            ->select('a.employee_data_id, MAX(b.first_name) AS first_name, MAX(b.last_name) AS last_name , photo')
+            ->from('attendance a')
+            ->join('employee_data b', 'a.employee_data_id = b.employee_data_id', 'inner')
+            ->group_by('a.employee_data_id')
+            ->order_by('b.first_name', 'ASC')
+            ->get();
+
+        return $query->result_array();
+
+    }
+
+    public function attendance_data($id)
+    {
+        $query = $this->db
+            ->select('a.client_id, a.employee_data_id, c.last_name, c.first_name , a.punchin, a.punchout, a.attendance_status, a.status, a.remarks, b.name')
+            ->from('attendance a')
+            ->join('clients b', 'a.client_id = b.client_id', 'inner')
+            ->join('employee_data c', 'a.employee_data_id = c.employee_data_id', 'inner')
+            ->where('a.employee_data_id', $id)
+            ->order_by('a.status', 'ASC')
+            ->get();
+
+        return $query->result_array();
+
+    }
+
+    public function search_employees($term)
+    {
+
+        $this->db->select('employee_data_id, first_name, last_name');
+        $this->db->from('employee_data');
+        $this->db->group_start();
+        $this->db->like('first_name', $term);
+        $this->db->or_like('last_name', $term);
+        $this->db->group_end();
+        $query = $this->db->get();
+
+        return $query->result_array();
+
+    }
+
+    public function get_all_company()
+    {
+
+        $query = $this->db
+            ->select('a.client_id, a.company_id, CONCAT(b.name, " - ", a.name) as companies')
+            ->from('clients a')
+            ->join('companies b', 'a.company_id = b.company_id', 'inner')
+            ->get();
+
+        return $query->result_array();
+
+    }
+
+    public function insert_schedule($data)
+    {
+        
+        $this->db->where('employee_data_id', $data['employee_data_id']);
+        $this->db->where('client_id', $data['client_id']);
+        $this->db->where('date_from', $data['date_from']);
+        $this->db->where('date_to', $data['date_to']);
+        $query = $this->db->get('schedule');
+
+        if ($query->num_rows() === 0) {
+            
+            return $this->db->insert('schedule', $data);
+        } else {
+            return false;
+        }
+
+    }
+
+    public function schedule()
+    {
+
+        $query = $this->db
+            ->select('   a.schedule_id,a.client_id, 
+            a.employee_data_id, 
+            a.date_from, 
+            a.date_to, 
+            a.punchin, 
+            a.punchout, 
+            CONCAT(b.name, " - ", c.name) AS company, 
+            d.first_name, 
+            d.last_name')
+            ->from('schedule a')
+            ->join('clients b', 'b.client_id = a.client_id', 'inner')
+            ->join('companies c', 'c.company_id = b.company_id', 'inner')
+            ->join('employee_data d', 'd.employee_data_id = a.employee_data_id', 'inner')
+            ->get();
+
+        return $query->result_array();
+
+    }
+
 
 }
 ?>
