@@ -54,12 +54,21 @@
                         <div class="nav-item dropdown">
 
                             <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-                                <span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)"></span>
+                                <span class="avatar avatar-sm">
+                                    <?php if (!empty($open_information_employee_data['photo'])): ?>
+                                        <img src="<?= base_url('uploads/photos/' . $open_information_employee_data['photo']); ?>" 
+                                            alt="Employee Photo" 
+                                            style="width: 100%; height: 100%; object-fit: cover; border-radius: 5px;">
+                                    <?php else: ?>
+                                        <span class="text-muted">No photo</span>
+                                    <?php endif; ?>
+                                </span>
                                 <div class="d-none d-xl-block ps-2">
-                                <div><?php echo $open_information_employee_data['first_name']; ?> <?php echo $open_information_employee_data['last_name']; ?></div>
-                                <div class="mt-1 small text-secondary"><?php echo $open_information_employee_data['position']; ?></div>
+                                    <div><?= $open_information_employee_data['first_name'] . ' ' . $open_information_employee_data['last_name']; ?></div>
+                                    <div class="mt-1 small text-secondary"><?= $open_information_employee_data['position']; ?></div>
                                 </div>
                             </a>
+
 
                         </div>
 
@@ -114,7 +123,9 @@
                                 <em>--:--:--</em>
 
                                 </br></br>
-                                <!-- <a href="#" id="punchInBtn" class="btn bg-lime-lt btn-pill w-20 disabled" style="pointer-events: none; opacity: 0.6;">
+
+                                <a href="#" id="punchInBtn" class="btn bg-lime-lt btn-pill w-20 disabled"
+                                style="pointer-events: none; opacity: 0.6;" onclick="togglePunch(this)">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                         class="icon icon-tabler icons-tabler-outline icon-tabler-power">
@@ -122,19 +133,8 @@
                                         <path d="M7 6a7.75 7.75 0 1 0 10 0"></path>
                                         <path d="M12 4l0 8"></path>
                                     </svg>
-                                    Punch in
-                                </a> -->
-                                <a href="#" id="punchInBtn" class="btn bg-lime-lt btn-pill w-20 disabled"
-   style="pointer-events: none; opacity: 0.6;" onclick="togglePunch(this)">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-         class="icon icon-tabler icons-tabler-outline icon-tabler-power">
-        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-        <path d="M7 6a7.75 7.75 0 1 0 10 0"></path>
-        <path d="M12 4l0 8"></path>
-    </svg>
-    <span id="punchText">Punch in</span>
-</a>
+                                    <span id="punchText">Punch in</span>
+                                </a>
 
 
                             </center>
