@@ -548,6 +548,16 @@ class admin_ctrl extends CI_Controller {
 
 	public function insert_client()
 	{
+		if (!$this->session->userdata('logged_in')) 
+
+		{
+
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+        	$this->load->view('auth/signin');
+			return;
+
+    	}
+
 		$clients_data = [
 			'company_id' => $this->input->post('company_id'),
 			'name' => $this->input->post('name'),
@@ -565,6 +575,23 @@ class admin_ctrl extends CI_Controller {
 		$this->session->set_flashdata('success', 'Company added successfully!');
 		redirect('cmpy_k5hc');
 
+	}
+
+	public function attendance()
+	{
+        if (!$this->session->userdata('logged_in')) 
+
+		{
+
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+        	$this->load->view('auth/signin');
+			return;
+
+    	}
+
+		$this->load->view ('components/navbar');
+		$this->load->view ('admin/attendance');
+		$this->load->view ('components/footer');
 	}
 
 }

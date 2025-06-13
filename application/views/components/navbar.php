@@ -120,7 +120,7 @@
 
                   </a>
 
-                  <a class="dropdown-item" href="" rel="noopener">
+                  <a class="dropdown-item" href="<?php echo base_url();?>token_m4tz">
 
                     Attendance
 

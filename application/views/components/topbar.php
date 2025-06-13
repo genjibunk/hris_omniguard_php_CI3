@@ -114,7 +114,7 @@
                                 <em>--:--:--</em>
 
                                 </br></br>
-                                <a href="#" id="punchInBtn" class="btn bg-lime-lt btn-pill w-20 disabled" style="pointer-events: none; opacity: 0.6;">
+                                <!-- <a href="#" id="punchInBtn" class="btn bg-lime-lt btn-pill w-20 disabled" style="pointer-events: none; opacity: 0.6;">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                         class="icon icon-tabler icons-tabler-outline icon-tabler-power">
@@ -123,7 +123,19 @@
                                         <path d="M12 4l0 8"></path>
                                     </svg>
                                     Punch in
-                                </a>
+                                </a> -->
+                                <a href="#" id="punchInBtn" class="btn bg-lime-lt btn-pill w-20 disabled"
+   style="pointer-events: none; opacity: 0.6;" onclick="togglePunch(this)">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+         class="icon icon-tabler icons-tabler-outline icon-tabler-power">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <path d="M7 6a7.75 7.75 0 1 0 10 0"></path>
+        <path d="M12 4l0 8"></path>
+    </svg>
+    <span id="punchText">Punch in</span>
+</a>
+
 
                             </center>
 
@@ -217,41 +229,59 @@ navigator.geolocation.getCurrentPosition(
             const clientName = document.getElementById("clientName");
             const locationStatus = document.getElementById("locationStatus");
 
+            // CASE: Location Verified
             if (data.status === "verified") {
                 alert("✅ Location verified! " + data.client_name);
 
-                // Update real-time text
+                // Update display
                 clientName.textContent = data.client_name;
                 locationStatus.textContent = "Verified";
                 locationStatus.classList.remove("text-danger");
                 locationStatus.classList.add("text-lime");
 
-                // Enable button based on role
+                // Enable button for Guard
                 if (userRole === "Guard") {
                     punchBtn.classList.remove("disabled");
                     punchBtn.style.pointerEvents = "auto";
                     punchBtn.style.opacity = "1";
                 }
-            } else if (data.status === "not_verified") {
+            } 
+            // CASE: Location mismatch
+            else if (data.status === "not_verified") {
                 alert("❌ Location mismatch!");
 
-                // Update real-time text
                 clientName.textContent = "Not verified yet";
                 locationStatus.textContent = "Not Verified";
                 locationStatus.classList.remove("text-lime");
                 locationStatus.classList.add("text-danger");
 
-                // Disable only if Guard
+                // Disable for Guard only
                 if (userRole === "Guard") {
                     punchBtn.classList.add("disabled");
                     punchBtn.style.pointerEvents = "none";
                     punchBtn.style.opacity = "0.6";
                 }
-            } else {
+            } 
+            // CASE: No Schedule Found
+            else if (data.status === "error" && data.message === "No Schedule found") {
+                alert("⚠️ No schedule found for today!");
+
+                clientName.textContent = "No schedule";
+                locationStatus.textContent = "Unavailable";
+                locationStatus.classList.remove("text-lime");
+                locationStatus.classList.add("text-danger");
+
+                // Disable button for all
+                punchBtn.classList.add("disabled");
+                punchBtn.style.pointerEvents = "none";
+                punchBtn.style.opacity = "0.6";
+            } 
+            // CASE: Other error
+            else {
                 alert("⚠️ " + data.message);
             }
 
-            // Non-Guard role: always enable the button
+            // Non-Guard: always enable button
             if (userRole !== "Guard") {
                 punchBtn.classList.remove("disabled");
                 punchBtn.style.pointerEvents = "auto";
@@ -276,6 +306,67 @@ navigator.geolocation.getCurrentPosition(
 </script>
 
 
+<script>
+function togglePunch(button) {
+    const punchText = document.getElementById("punchText");
+    const action = punchText.textContent.trim().toLowerCase() === "punch in" ? "in" : "out";
+
+    fetch("<?= base_url('staff_ctrl/record_attendance') ?>", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: "action=" + action
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.message);
+
+        // Toggle button text and color
+        if (action === "in") {
+            punchText.textContent = "Punch out";
+            button.classList.remove("bg-lime-lt");
+            button.classList.add("bg-red-lt");
+        } else {
+            punchText.textContent = "Punch in";
+            button.classList.remove("bg-red-lt");
+            button.classList.add("bg-lime-lt");
+        }
+    })
+    .catch(err => {
+        console.error("❌ Error punching:", err);
+        alert("❌ Error saving punch data.");
+    });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    fetch("<?= base_url('staff_ctrl/check_punch_status') ?>")
+        .then(res => res.json())
+        .then(data => {
+            const punchText = document.getElementById("punchText");
+            const punchBtn = document.getElementById("punchInBtn");
+
+            punchBtn.classList.remove("disabled");
+            punchBtn.style.pointerEvents = "auto";
+            punchBtn.style.opacity = "1";
+
+            if (data.status === "punchin") {
+                punchText.textContent = "Punch in";
+                punchBtn.classList.remove("bg-red-lt");
+                punchBtn.classList.add("bg-lime-lt");
+            } else if (data.status === "punchout") {
+                punchText.textContent = "Punch out";
+                punchBtn.classList.remove("bg-lime-lt");
+                punchBtn.classList.add("bg-red-lt");
+            }
+        })
+        .catch(err => {
+            console.error("Error checking punch status:", err);
+        });
+});
+
+
+</script>
 
         <script src="<?php echo base_url()."assets/"; ?>dist/libs/apexcharts/dist/apexcharts.min.js?1692870487" defer></script>
         <script src="<?php echo base_url()."assets/"; ?>dist/libs/jsvectormap/dist/js/jsvectormap.min.js?1692870487" defer></script>

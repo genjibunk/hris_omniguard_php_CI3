@@ -110,6 +110,7 @@ class auth_ctrl extends CI_Controller {
 					elseif ($user->role === 'Staff') 
 
 					{
+						
 						$this->load->view('components/topbar',$data);
 						$this->load->view('staff/home');
 
@@ -183,12 +184,20 @@ class auth_ctrl extends CI_Controller {
 
 	public function verify_location()
 	{
+		if (!$this->session->userdata('logged_in')) 
+
+		{
+
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+        	$this->load->view('auth/signin');
+			return;
+
+    	}
+
 		header('Content-Type: application/json');
 
-		// Get raw input and decode JSON
 		$rawData = json_decode(file_get_contents("php://input"), true);
 
-		// Validate coordinates
 		$userLatitude = isset($rawData['latitude']) ? floatval($rawData['latitude']) : null;
 		$userLongitude = isset($rawData['longitude']) ? floatval($rawData['longitude']) : null;
 
@@ -200,10 +209,8 @@ class auth_ctrl extends CI_Controller {
 			return;
 		}
 
-		// Get user ID from session
 		$user_id = $this->session->userdata('userid');
-
-		// Get expected location from DB
+		
 		$expected = $this->staff_model->get_location_by_user_id($user_id);
 
 		if (!$expected) {
@@ -214,18 +221,16 @@ class auth_ctrl extends CI_Controller {
 			return;
 		}
 
-		// Convert expected coordinates to float
 		$expectedLat = floatval($expected['latitude']);
 		$expectedLon = floatval($expected['longitude']);
 
-		// Calculate distance
-		$radius = 100		; // meters
+		$radius = 100;
 		$distance = $this->calculate_distance($userLatitude, $userLongitude, $expectedLat, $expectedLon);
 
-		// Compare and set session values
 		if ($distance <= $radius) {
 			$this->session->set_userdata('client_name', $expected['name']);
 			$this->session->set_userdata('location_status', 'Verified');
+			$this->session->set_userdata('client_id', $expected['client_id']);
 
 			echo json_encode([
 				"status" => "verified",
@@ -244,7 +249,7 @@ class auth_ctrl extends CI_Controller {
 
 	private function calculate_distance($lat1, $lon1, $lat2, $lon2)
 	{
-		$earthRadius = 6371000; // meters
+		$earthRadius = 6371000;
 
 		$lat1 = deg2rad($lat1);
 		$lon1 = deg2rad($lon1);

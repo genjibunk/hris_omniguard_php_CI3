@@ -66,3 +66,4 @@ $route['token_m4tz'] = 'admin_ctrl/leavecredits';
 $route['tokenreq_m4tz'] = 'admin_ctrl/leaverequest';
 $route['cmpy_k5hc'] = 'admin_ctrl/companies';
 $route['clients_m9xp/(:any)'] = 'admin_ctrl/clients/$1';
+$route['atnd_n5gw'] = 'admin_ctrl/companies';
