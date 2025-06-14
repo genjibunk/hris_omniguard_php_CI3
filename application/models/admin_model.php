@@ -171,19 +171,33 @@ class admin_model extends CI_Model{
     {
 
         $query = $this->db
-            ->select('   a.schedule_id,a.client_id, 
+            ->select('a.schedule_id,a.client_id, 
             a.employee_data_id, 
             a.date_from, 
             a.date_to, 
             a.punchin, 
             a.punchout, 
-            CONCAT(b.name, " - ", c.name) AS company, 
+            CONCAT(c.name, " - ", b.name) AS company, 
             d.first_name, 
             d.last_name')
             ->from('schedule a')
             ->join('clients b', 'b.client_id = a.client_id', 'inner')
             ->join('companies c', 'c.company_id = b.company_id', 'inner')
             ->join('employee_data d', 'd.employee_data_id = a.employee_data_id', 'inner')
+            ->get();
+
+        return $query->result_array();
+
+    }
+
+    public function accounts()
+    {
+
+        $query = $this->db
+            ->select('b.* , concat(a.first_name, " " , a.last_name) AS name , a.position')
+            ->from('employee_data a')
+            ->join('userauth b', 'a.UserID = b.userauth_id', 'inner')
+            ->order_by('b.userauth_id', 'ASC')
             ->get();
 
         return $query->result_array();

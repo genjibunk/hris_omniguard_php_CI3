@@ -72,13 +72,7 @@
                                         An organized timeline used to manage employee shifts or work routines.
 
                                     </div>
-
-                                    <div class="mt-3">
-
-                                        <a href="<?php echo base_url();?>base_8nvp" class="btn btn-orange active">Back</a>
-
-                                    </div>
-
+                                    
                                     </br>
 
                                 </div>
@@ -91,82 +85,89 @@
 
                                             <form id="scheduleForm" method="POST" action="<?= base_url('admin_ctrl/save_schedule') ?>">
 
-                                            <div class="mb-3">
+                                                <div class="mb-3">
 
-                                                <label class="form-label">Branch Name</label>
-                                                <select id="clientDropdown" name="client_id" class="form-control" required>
-                                                    <option value="">-- Select Branch --</option>
-                                                </select>
+                                                    <label class="form-label">Branch Name</label>
+                                                    <select id="clientDropdown" name="client_id" class="form-control" required>
+                                                        <option value="">-- Select Branch --</option>
+                                                    </select>
 
-                                            </div> 
+                                                </div> 
 
-                                            <div class="mb-3">
+                                                <div class="mb-3">
 
-                                                <label class="form-label">Employee Name</label>
-                                                <select id="employeeSearch" name="employee_ids[]" multiple="multiple" class="form-control" required>
-                                                <option value="">-- Select Client --</option>
-                                                </select>
+                                                    <label class="form-label">Employee Name</label>
+                                                    <select id="employeeSearch" name="employee_ids[]" multiple="multiple" class="form-control" required>
+                                                    <option value="">-- Select Client --</option>
+                                                    </select>
 
-                                            </div>
+                                                </div>
 
 
-                                            <div class="row">
+                                                <div class="row">
 
-                                                <div class="col-lg-6">
+                                                    <div class="col-lg-6">
 
-                                                    <div class="mb-3">
+                                                        <div class="mb-3">
 
-                                                        <label class="form-label">Date From</label>
-                                                        <input type="date" class="form-control" id="schedule_date_from" name="schedule_date_from" required>
+                                                            <label class="form-label">Date From</label>
+                                                            <input type="date" class="form-control" id="schedule_date_from" name="schedule_date_from" required>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="col-lg-6">
+
+                                                        <div class="mb-3">
+
+                                                            <label class="form-label">Date To</label>
+                                                            <input type="date" class="form-control" id="schedule_date_to" name="schedule_date_to" required>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="col-lg-6">
+
+                                                        <div class="mb-3">
+
+                                                            <label class="form-label">Time In</label>
+                                                            <input type="time" class="form-control" id="schedule_time_in" name="schedule_time_in" required>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="col-lg-6">
+
+                                                        <div class="mb-3">
+
+                                                            <label class="form-label">Time Out</label>
+                                                            <input type="time" class="form-control" id="schedule_time_out" name="schedule_time_out" required>
+
+                                                        </div>
 
                                                     </div>
 
                                                 </div>
 
-                                                <div class="col-lg-6">
-
-                                                    <div class="mb-3">
-
-                                                        <label class="form-label">Date To</label>
-                                                        <input type="date" class="form-control" id="schedule_date_to" name="schedule_date_to" required>
-
-                                                    </div>
-
+                                                <div class="mt-3">
+                                                    <a href="<?php echo base_url();?>base_8nvp" class="btn btn-orange active">Back</a>
+                                                    <button type="submit" class="btn btn-success">Save Schedule</button>
                                                 </div>
-
-                                                <div class="col-lg-6">
-
-                                                    <div class="mb-3">
-
-                                                        <label class="form-label">Time In</label>
-                                                        <input type="time" class="form-control" id="schedule_time_in" name="schedule_time_in" required>
-
-                                                    </div>
-
-                                                </div>
-
-                                                <div class="col-lg-6">
-
-                                                    <div class="mb-3">
-
-                                                        <label class="form-label">Time Out</label>
-                                                        <input type="time" class="form-control" id="schedule_time_out" name="schedule_time_out" required>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-
-                                            <div class="mt-3">
-                                                <button type="submit" class="btn btn-success">Save Schedule</button>
-                                            </div>
 
                                             </form>
 
                                         </div>
 
-                                        <div class="card-body border-bottom py-3">
+                                    </div>
+
+                                    <br><br>
+
+                                    <div class="card">
+
+                                        <div class="card-body">
 
                                             <div class="d-flex">
 
@@ -183,25 +184,16 @@
 
                                             </div>
 
-                                        </div> 
-
-                                        <div class="table-responsive">
+                                            <div class="table-responsive">
 
                                                 <table class="table card-table table-vcenter text-nowrap datatable">
 
                                                     <thead>
 
                                                         <tr>
-                                                        
-                                                            <th>Name</th>
-                                                            <th>Punch in</th>
-                                                            <th>Punch out</th>
-                                                            <th>Status</th>
-                                                            <th>System Status</th>
-                                                            <th>Remarks</th>
-
-                                                            <th></th>
-
+                                                            <th>Details</th>
+                                                            <th>
+                                                            </th>
                                                         </tr>
 
                                                     </thead>
@@ -212,14 +204,36 @@
 
                                                             <tr>
 
-                                                                <td><?php echo $data['first_name']; ?> , <?php echo $data['last_name']; ?> ( <?php echo $data['company']; ?> )</td>
-                                                                <td><?php echo $data['date_from']; ?> </td>
-                                                                <td><?php echo $data['date_to']; ?> </td>
-                                                                <td><?php echo $data['punchin']; ?> </td>
-                                                                <td><?php echo $data['punchout']; ?> </td>
-                                                                
-                                                                
-                                                                
+                                                                <td>
+
+                                                                    <span style="font-weight:bold">Employee : </span><span style="font-style:italic"><?php echo $data['first_name']; ?> , <?php echo $data['last_name']; ?></span><br>
+                                                                    <span style="font-weight:bold">Date : </span>
+                                                                        <span style="font-style:italic">
+                                                                            <?php
+                                                                                $date_from = $data['date_from'];
+                                                                                $date_to   = $data['date_to'];
+
+                                                                                $from = new DateTime($date_from);
+                                                                                $to   = new DateTime($date_to);
+
+                                                                                if ($date_from === $date_to) {
+                                                                                    
+                                                                                    echo $from->format('F j, Y');
+                                                                                } else {
+
+                                                                                    echo $from->format('F j') . ' - ' . $to->format('j, Y');
+                                                                                }
+
+                                                                            ?>
+                                                                        </span>
+                                                                    
+                                                                    <br>
+
+                                                                    <span style="font-weight:bold">Time : </span><span style="font-style:italic"><?php echo $data['punchin']; ?> - <?php echo $data['punchout']; ?></span><br>
+                                                                    <span style="font-weight:bold">Location : </span><span style="font-style:italic; color:blue"><?php echo $data['company']; ?></span>
+
+                                                                </td>
+           
                                                                 <td class="text-end">
 
                                                                     <a href="#" 
@@ -249,14 +263,16 @@
 
                                                 </table>
 
-                                        </div>
+                                            </div>
 
-                                        <div class="card-footer d-flex align-items-center">
+                                            <div class="card-footer d-flex align-items-center">
 
-                                            <ul class="pagination m-0 ms-auto" id="pagination-container">
-                                                    
-                                            </ul>
+                                                <ul class="pagination m-0 ms-auto" id="pagination-container">
+                                                        
+                                                </ul>
 
+                                            </div>
+                                            
                                         </div>
 
                                     </div>

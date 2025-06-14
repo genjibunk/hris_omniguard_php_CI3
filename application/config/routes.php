@@ -69,3 +69,4 @@ $route['clients_m9xp/(:any)'] = 'admin_ctrl/clients/$1';
 $route['atnd_n5gw'] = 'admin_ctrl/attendance';
 $route['atndfile_n5gw/(:any)'] = 'admin_ctrl/attendance_data/$1';
 $route['roster_k0jb'] = 'admin_ctrl/schedule';
+$route['accounts_j8vq'] = 'admin_ctrl/accounts';

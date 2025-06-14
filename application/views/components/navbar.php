@@ -132,7 +132,7 @@
 
                   </a>
 
-                  <a class="dropdown-item" href="" rel="noopener">
+                  <a class="dropdown-item" href="<?php echo base_url();?>accounts_j8vq">
 
                     Accounts
 

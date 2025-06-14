@@ -768,6 +768,39 @@ class admin_ctrl extends CI_Controller {
 		redirect('roster_k0jb');
 	}
 
+	public function accounts()
+	{
+		if (!$this->session->userdata('logged_in')) 
+		{
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+			$this->load->view('auth/signin');
+			return;
+		}
+
+		$data['accounts'] = $this->admin_model->accounts();
+
+		$this->load->view('components/navbar');
+		$this->load->view('admin/accounts', $data);
+		$this->load->view('components/footer');
+	}
+
+	public function update_auth() 
+	{
+		$id     = $this->input->post('userauth_id');
+		$role   = $this->input->post('role');
+		$status = $this->input->post('status');
+
+		$this->db->where('userauth_id', $id);
+		$this->db->update('userauth', [
+			'role'   => $role,
+			'status' => $status
+		]);
+
+		$this->session->set_flashdata('success', 'User updated successfully.');
+		redirect('accounts_j8vq');
+	}
+
+
 
 
 }
