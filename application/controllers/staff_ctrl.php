@@ -21,23 +21,23 @@ class staff_ctrl extends CI_Controller {
             return;
         }
 
-        header('Content-Type: application/json'); // Ensures JSON response
+        header('Content-Type: application/json');
         date_default_timezone_set('Asia/Manila');
 
         $employee_data_id = $this->session->userdata('userid');
         $client_id = $this->session->userdata('client_id');
         $action = $this->input->post('action');
-        $current_datetime = date("Y-m-d H:i:s"); // ✅ Full datetime
+        $current_datetime = date("Y-m-d H:i:s");
 
         if ($action === 'in') {
             $this->db->insert('attendance', [
                 'client_id' => $client_id,
                 'employee_data_id' => $employee_data_id,
                 'punchin' => $current_datetime,
-                'punchout' => '0000-00-00 00:00:00', // Placeholder
+                'punchout' => '0000-00-00 00:00:00',
                 'attendance_status' => 'No Punch out',
                 'status' => '-',
-                'created_at' => $current_datetime // Optional: track when record was created
+                'created_at' => $current_datetime 
             ]);
             echo json_encode(['status' => 'success', 'message' => '✅ Punched in at ' . $current_datetime]);
         } elseif ($action === 'out') {
@@ -88,6 +88,46 @@ class staff_ctrl extends CI_Controller {
             echo json_encode(['status' => 'punchin']); // Start again from Punch In
         }
     }
+
+    public function goto_home()
+	{
+		if (!$this->session->userdata('logged_in')) 
+		{
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+			$this->load->view('auth/signin');
+			return;
+		}
+
+        $id = $this->session->userdata('userid');
+
+		$data['open_information_employee_data'] = $this->staff_model->open_information_employee_data($id);
+
+		$this->load->view('components/topbar',$data);
+		$this->load->view('staff/home');
+		$this->load->view('components/footer');
+	}
+
+    public function attendance()
+	{
+		if (!$this->session->userdata('logged_in')) 
+		{
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+			$this->load->view('auth/signin');
+			return;
+		}
+
+        $id = $this->session->userdata('userid');
+
+		$data['open_information_employee_data'] = $this->staff_model->open_information_employee_data($id);
+        $data['attendance'] = $this->staff_model->attendance($id);
+
+
+		$this->load->view('components/topbar',$data);
+		$this->load->view('staff/attendance', $data);
+		$this->load->view('components/footer');
+
+    
+	}
 
 
 

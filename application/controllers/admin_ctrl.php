@@ -786,6 +786,13 @@ class admin_ctrl extends CI_Controller {
 
 	public function update_auth() 
 	{
+		if (!$this->session->userdata('logged_in')) 
+		{
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+			$this->load->view('auth/signin');
+			return;
+		}
+		
 		$id     = $this->input->post('userauth_id');
 		$role   = $this->input->post('role');
 		$status = $this->input->post('status');

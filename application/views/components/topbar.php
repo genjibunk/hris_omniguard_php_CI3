@@ -1,33 +1,6 @@
 <!doctype html>
 
 <html lang="en">
-    <head>
-
-        <meta charset="utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-        <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-        <title>HRIS</title>
-    
-        <link href="<?php echo base_url()."assets/"; ?>dist/css/tabler.min.css?1692870487" rel="stylesheet"/>
-        <link href="<?php echo base_url()."assets/"; ?>dist/css/tabler-flags.min.css?1692870487" rel="stylesheet"/>
-        <link href="<?php echo base_url()."assets/"; ?>dist/css/tabler-payments.min.css?1692870487" rel="stylesheet"/>
-        <link href="<?php echo base_url()."assets/"; ?>dist/css/tabler-vendors.min.css?1692870487" rel="stylesheet"/>
-        <link href="<?php echo base_url()."assets/"; ?>dist/css/demo.min.css?1692870487" rel="stylesheet"/>
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-        <style>
-        @import url('https://rsms.me/inter/inter.css');
-        :root {
-            --tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
-        }
-        body {
-            font-feature-settings: "cv03", "cv04", "cv11";
-        }
-        </style>
-
-    </head>
 
     <body class="layout-navbar-sticky">
 
@@ -200,181 +173,165 @@
 
         </div>
 
-<script>
-const userRole = "<?= $this->session->userdata('role') ?>";
+        <script>
+        const userRole = "<?= $this->session->userdata('role') ?>";
 
-navigator.geolocation.getCurrentPosition(
-    function (position) {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
-        console.log("📍 User location:", lat, lon);
+        navigator.geolocation.getCurrentPosition(
+            function (position) {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                console.log("📍 User location:", lat, lon);
 
-        fetch("<?= base_url('auth_ctrl/verify_location') ?>", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
+                fetch("<?= base_url('auth_ctrl/verify_location') ?>", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ latitude: lat, longitude: lon }),
+                })
+                .then(async res => {
+                    const contentType = res.headers.get("content-type");
+                    if (!res.ok || !contentType || !contentType.includes("application/json")) {
+                        throw new Error("Invalid JSON response or server error.");
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    console.log("Server response:", data);
+                    const punchBtn = document.getElementById("punchInBtn");
+                    const clientName = document.getElementById("clientName");
+                    const locationStatus = document.getElementById("locationStatus");
+
+                    if (data.status === "verified") {
+                        alert("Location verified! " + data.client_name);
+
+                        clientName.textContent = data.client_name;
+                        locationStatus.textContent = "Verified";
+                        locationStatus.classList.remove("text-danger");
+                        locationStatus.classList.add("text-lime");
+
+                        if (userRole === "Guard") {
+                            punchBtn.classList.remove("disabled");
+                            punchBtn.style.pointerEvents = "auto";
+                            punchBtn.style.opacity = "1";
+                        }
+                    } 
+
+                    else if (data.status === "not_verified") {
+                        alert("Location mismatch!");
+
+                        clientName.textContent = "Not verified yet";
+                        locationStatus.textContent = "Not Verified";
+                        locationStatus.classList.remove("text-lime");
+                        locationStatus.classList.add("text-danger");
+
+                        if (userRole === "Guard") {
+                            punchBtn.classList.add("disabled");
+                            punchBtn.style.pointerEvents = "none";
+                            punchBtn.style.opacity = "0.6";
+                        }
+                    } 
+
+                    else if (data.status === "error" && data.message === "No Schedule found") {
+                        alert("⚠️ No schedule found for today!");
+
+                        clientName.textContent = "Main office";
+                        locationStatus.textContent = "Not required";
+                        locationStatus.classList.remove("text-lime");
+                        locationStatus.classList.add("text-danger");
+
+                        punchBtn.classList.add("disabled");
+                        punchBtn.style.pointerEvents = "none";
+                        punchBtn.style.opacity = "0.6";
+                    } 
+
+                    else {
+                        alert("⚠️ " + data.message);
+                    }
+
+                    if (userRole !== "Guard") {
+                        punchBtn.classList.remove("disabled");
+                        punchBtn.style.pointerEvents = "auto";
+                        punchBtn.style.opacity = "1";
+                    }
+                })
+                .catch(error => {
+                    console.error("Fetch error:", error);
+                    alert("⚠️ Error verifying location.");
+                });
             },
-            body: JSON.stringify({ latitude: lat, longitude: lon }),
-        })
-        .then(async res => {
-            const contentType = res.headers.get("content-type");
-            if (!res.ok || !contentType || !contentType.includes("application/json")) {
-                throw new Error("Invalid JSON response or server error.");
+            function (error) {
+                console.error("Geolocation error:", error.message);
+                alert("Location access denied");
+            },
+            {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0
             }
-            return res.json();
-        })
-        .then(data => {
-            console.log("✅ Server response:", data);
-            const punchBtn = document.getElementById("punchInBtn");
-            const clientName = document.getElementById("clientName");
-            const locationStatus = document.getElementById("locationStatus");
+        );
+        </script>
 
-            // CASE: Location Verified
-            if (data.status === "verified") {
-                alert("✅ Location verified! " + data.client_name);
 
-                // Update display
-                clientName.textContent = data.client_name;
-                locationStatus.textContent = "Verified";
-                locationStatus.classList.remove("text-danger");
-                locationStatus.classList.add("text-lime");
+        <script>
+        function togglePunch(button) {
+            const punchText = document.getElementById("punchText");
+            const action = punchText.textContent.trim().toLowerCase() === "punch in" ? "in" : "out";
 
-                // Enable button for Guard
-                if (userRole === "Guard") {
+            fetch("<?= base_url('staff_ctrl/record_attendance') ?>", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: "action=" + action
+            })
+            .then(res => res.json())
+            .then(data => {
+                alert(data.message);
+
+                if (action === "in") {
+                    punchText.textContent = "Punch out";
+                    button.classList.remove("bg-lime-lt");
+                    button.classList.add("bg-red-lt");
+                } else {
+                    punchText.textContent = "Punch in";
+                    button.classList.remove("bg-red-lt");
+                    button.classList.add("bg-lime-lt");
+                }
+            })
+            .catch(err => {
+                console.error("❌ Error punching:", err);
+                alert("❌ Error saving punch data.");
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch("<?= base_url('staff_ctrl/check_punch_status') ?>")
+                .then(res => res.json())
+                .then(data => {
+                    const punchText = document.getElementById("punchText");
+                    const punchBtn = document.getElementById("punchInBtn");
+
                     punchBtn.classList.remove("disabled");
                     punchBtn.style.pointerEvents = "auto";
                     punchBtn.style.opacity = "1";
-                }
-            } 
-            // CASE: Location mismatch
-            else if (data.status === "not_verified") {
-                alert("❌ Location mismatch!");
 
-                clientName.textContent = "Not verified yet";
-                locationStatus.textContent = "Not Verified";
-                locationStatus.classList.remove("text-lime");
-                locationStatus.classList.add("text-danger");
-
-                // Disable for Guard only
-                if (userRole === "Guard") {
-                    punchBtn.classList.add("disabled");
-                    punchBtn.style.pointerEvents = "none";
-                    punchBtn.style.opacity = "0.6";
-                }
-            } 
-            // CASE: No Schedule Found
-            else if (data.status === "error" && data.message === "No Schedule found") {
-                alert("⚠️ No schedule found for today!");
-
-                clientName.textContent = "No schedule";
-                locationStatus.textContent = "Unavailable";
-                locationStatus.classList.remove("text-lime");
-                locationStatus.classList.add("text-danger");
-
-                // Disable button for all
-                punchBtn.classList.add("disabled");
-                punchBtn.style.pointerEvents = "none";
-                punchBtn.style.opacity = "0.6";
-            } 
-            // CASE: Other error
-            else {
-                alert("⚠️ " + data.message);
-            }
-
-            // Non-Guard: always enable button
-            if (userRole !== "Guard") {
-                punchBtn.classList.remove("disabled");
-                punchBtn.style.pointerEvents = "auto";
-                punchBtn.style.opacity = "1";
-            }
-        })
-        .catch(error => {
-            console.error("❌ Fetch error:", error);
-            alert("⚠️ Error verifying location.");
+                    if (data.status === "punchin") {
+                        punchText.textContent = "Punch in";
+                        punchBtn.classList.remove("bg-red-lt");
+                        punchBtn.classList.add("bg-lime-lt");
+                    } else if (data.status === "punchout") {
+                        punchText.textContent = "Punch out";
+                        punchBtn.classList.remove("bg-lime-lt");
+                        punchBtn.classList.add("bg-red-lt");
+                    }
+                })
+                .catch(err => {
+                    console.error("Error checking punch status:", err);
+                });
         });
-    },
-    function (error) {
-        console.error("❌ Geolocation error:", error.message);
-        alert("❌ Location access denied");
-    },
-    {
-        enableHighAccuracy: true,
-        timeout: 10000,
-        maximumAge: 0
-    }
-);
-</script>
 
-
-<script>
-function togglePunch(button) {
-    const punchText = document.getElementById("punchText");
-    const action = punchText.textContent.trim().toLowerCase() === "punch in" ? "in" : "out";
-
-    fetch("<?= base_url('staff_ctrl/record_attendance') ?>", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: "action=" + action
-    })
-    .then(res => res.json())
-    .then(data => {
-        alert(data.message);
-
-        // Toggle button text and color
-        if (action === "in") {
-            punchText.textContent = "Punch out";
-            button.classList.remove("bg-lime-lt");
-            button.classList.add("bg-red-lt");
-        } else {
-            punchText.textContent = "Punch in";
-            button.classList.remove("bg-red-lt");
-            button.classList.add("bg-lime-lt");
-        }
-    })
-    .catch(err => {
-        console.error("❌ Error punching:", err);
-        alert("❌ Error saving punch data.");
-    });
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-    fetch("<?= base_url('staff_ctrl/check_punch_status') ?>")
-        .then(res => res.json())
-        .then(data => {
-            const punchText = document.getElementById("punchText");
-            const punchBtn = document.getElementById("punchInBtn");
-
-            punchBtn.classList.remove("disabled");
-            punchBtn.style.pointerEvents = "auto";
-            punchBtn.style.opacity = "1";
-
-            if (data.status === "punchin") {
-                punchText.textContent = "Punch in";
-                punchBtn.classList.remove("bg-red-lt");
-                punchBtn.classList.add("bg-lime-lt");
-            } else if (data.status === "punchout") {
-                punchText.textContent = "Punch out";
-                punchBtn.classList.remove("bg-lime-lt");
-                punchBtn.classList.add("bg-red-lt");
-            }
-        })
-        .catch(err => {
-            console.error("Error checking punch status:", err);
-        });
-});
-
-
-</script>
-
-        <script src="<?php echo base_url()."assets/"; ?>dist/libs/apexcharts/dist/apexcharts.min.js?1692870487" defer></script>
-        <script src="<?php echo base_url()."assets/"; ?>dist/libs/jsvectormap/dist/js/jsvectormap.min.js?1692870487" defer></script>
-        <script src="<?php echo base_url()."assets/"; ?>dist/libs/jsvectormap/dist/maps/world.js?1692870487" defer></script>
-        <script src="<?php echo base_url()."assets/"; ?>dist/libs/jsvectormap/dist/maps/world-merc.js?1692870487" defer></script>
-        
-        <script src="<?php echo base_url()."assets/"; ?>dist/js/tabler.min.js?1692870487" defer></script>
-        <script src="<?php echo base_url()."assets/"; ?>dist/js/demo.min.js?1692870487" defer></script>
+        </script>
     
     </body>
 

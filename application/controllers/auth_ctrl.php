@@ -24,52 +24,6 @@ class auth_ctrl extends CI_Controller {
 
     }
 
-	// public function do_signin()
-	// {
-	// 	$username = $this->input->post('username');
-	// 	$password = $this->input->post('password');
-
-	// 	if ($username === 'admin' && $password === 'admin123') 
-
-	// 	{
-	// 		$sessionData = [
-	// 			'logged_in' => true,
-	// 			'userid'    => 1,
-	// 			'username'  => $username,
-	// 		];
-
-	// 		$this->session->set_flashdata('success', 'Welcome back, ' . $username . '!');
-	// 		$this->session->set_userdata($sessionData);
-
-	// 		$this->load->view ('components/navbar');
-	// 		$this->load->view ('admin/home');
-	// 		$this->load->view ('components/footer');
-	// 	}
-
-	// 	else if($username === 'staff' && $password === 'staff123')
-
-	// 	{
-	// 		$sessionData = [
-	// 			'logged_in' => true,
-	// 			'userid'    => 1,
-	// 			'username'  => $username,
-	// 		];
-
-	// 		$this->session->set_flashdata('success', 'Welcome back, ' . $username . '!');
-	// 		$this->session->set_userdata($sessionData);
-
-	// 		$this->load->view ('staff/home');
-	// 		$this->load->view ('components/footer');
-	// 	} 
-
-	// 	else
-
-	// 	{
-	// 		$this->session->set_flashdata('error', 'Invalid credentials');
-	// 		$this->load->view('auth/signin');
-	// 	}
-	// }
-
 	public function do_signin()
 	{
 		$username = $this->input->post('username');
@@ -113,6 +67,7 @@ class auth_ctrl extends CI_Controller {
 						
 						$this->load->view('components/topbar',$data);
 						$this->load->view('staff/home');
+						$this->load->view('components/footer');
 
 					} 
 
@@ -121,6 +76,7 @@ class auth_ctrl extends CI_Controller {
 					{
 						$this->load->view('components/topbar',$data);
 						$this->load->view('staff/home');
+						$this->load->view('components/footer');
 
 					} 
 
@@ -214,9 +170,13 @@ class auth_ctrl extends CI_Controller {
 		$expected = $this->staff_model->get_location_by_user_id($user_id);
 
 		if (!$expected) {
+
+			$this->session->set_userdata('client_id', '1');
+			
 			echo json_encode([
 				"status" => "error",
 				"message" => "No Schedule found"
+				
 			]);
 			return;
 		}

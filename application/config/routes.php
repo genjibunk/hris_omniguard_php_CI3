@@ -53,7 +53,7 @@ $route['default_controller'] = 'auth_ctrl/signin';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-
+// admin
 $route['auth4r9x'] = 'auth_ctrl/do_signin';
 $route['dismiss_1vqn'] = 'auth_ctrl/signout';
 $route['base_8nvp'] = 'auth_ctrl/goto_home';
@@ -70,3 +70,7 @@ $route['atnd_n5gw'] = 'admin_ctrl/attendance';
 $route['atndfile_n5gw/(:any)'] = 'admin_ctrl/attendance_data/$1';
 $route['roster_k0jb'] = 'admin_ctrl/schedule';
 $route['accounts_j8vq'] = 'admin_ctrl/accounts';
+
+// staff
+$route['sbase_8nvp'] = 'staff_ctrl/goto_home';
+$route['satnd_n5gw'] = 'staff_ctrl/attendance';
