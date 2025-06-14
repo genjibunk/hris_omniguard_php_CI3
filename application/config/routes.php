@@ -74,3 +74,6 @@ $route['accounts_j8vq'] = 'admin_ctrl/accounts';
 // staff
 $route['sbase_8nvp'] = 'staff_ctrl/goto_home';
 $route['satnd_n5gw'] = 'staff_ctrl/attendance';
+$route['sroster_k0jb'] = 'staff_ctrl/schedule';
+$route['stokenreq_m4tz'] = 'staff_ctrl/leave_request';
+

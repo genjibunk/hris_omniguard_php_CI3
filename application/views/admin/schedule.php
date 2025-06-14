@@ -72,7 +72,6 @@
                                         An organized timeline used to manage employee shifts or work routines.
 
                                     </div>
-                                    
                                     </br>
 
                                 </div>

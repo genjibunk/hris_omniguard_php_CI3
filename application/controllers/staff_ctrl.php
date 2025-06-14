@@ -129,6 +129,98 @@ class staff_ctrl extends CI_Controller {
     
 	}
 
+    public function schedule()
+	{
+		if (!$this->session->userdata('logged_in')) 
+		{
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+			$this->load->view('auth/signin');
+			return;
+		}
+
+        $id = $this->session->userdata('userid');
+
+		$data['open_information_employee_data'] = $this->staff_model->open_information_employee_data($id);
+        $data['schedule'] = $this->staff_model->schedule($id);
+
+
+		$this->load->view('components/topbar',$data);
+		$this->load->view('staff/schedule', $data);
+		$this->load->view('components/footer');
+
+    
+	}
+
+    public function leave_request()
+	{
+		if (!$this->session->userdata('logged_in')) 
+		{
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+			$this->load->view('auth/signin');
+			return;
+		}
+
+        $id = $this->session->userdata('userid');
+
+		$data['open_information_employee_data'] = $this->staff_model->open_information_employee_data($id);
+        $data['leaverequest'] = $this->staff_model->leave_request($id);
+
+
+		$this->load->view('components/topbar',$data);
+		$this->load->view('staff/leave_request', $data);
+		$this->load->view('components/footer');
+
+    
+	}
+
+    public function delete_leaverequest()
+
+    {
+        $id = $this->input->post('leaverequest_id');
+        if ($this->staff_model->delete_leaverequest($id)) {
+            $this->session->set_flashdata('success', 'Leave request deleted successfully.');
+        } else {
+            $this->session->set_flashdata('error', 'Failed to delete leave request.');
+        }
+        redirect('stokenreq_m4tz');
+    }
+
+    public function add_leaverequest()
+    {
+        $data = [
+            'employee_data_id' => $this->input->post('employee_data_id'),
+            'leavetype'        => $this->input->post('leavetype'),
+            'date_from'        => $this->input->post('date_from'),
+            'date_to'          => $this->input->post('date_to'),
+            'total'            => $this->input->post('total'),
+            'created_at'       => date('Y-m-d H:i:s')
+        ];
+
+        $this->db->insert('leaverequest', $data);
+        $this->session->set_flashdata('success', 'New leave request submitted.');
+        redirect('stokenreq_m4tz'); // Update this as needed
+    }
+
+
+    public function insert_leave_request() {
+    $data = [
+        'lr_employee_data_id'  => $this->session->userdata('userid'),
+        'leavetype'         => $this->input->post('leave_type'),
+        'date_from'         => $this->input->post('leave_date_from'),
+        'date_to'           => $this->input->post('leave_date_to'),
+        'total'             => $this->input->post('total_days')
+    ];
+
+    $this->db->insert('leaverequest', $data);
+
+    $this->session->set_flashdata('success', 'Leave request submitted successfully.');
+    redirect('stokenreq_m4tz'); // Replace with actual route
+}
+
+
+
+
+
 
 
 
