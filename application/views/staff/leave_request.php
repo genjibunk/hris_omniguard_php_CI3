@@ -123,7 +123,7 @@
                                                                     <span style="font-weight:bold">Approver : </span>
                                                                     <span style="font-style:italic"><?php echo $data['updated_by_last_name']; ?> <?php echo $data['updated_by_first_name']; ?></span><br><br>
 
-                                                                    <?php if ($data['status'] === 'Pending') : ?>
+                                                                    <!-- <?php if ($data['status'] === 'Pending') : ?>
                                                                         <a href="#" class="btn btn-red openDeleteModal" data-leaverequest-id="<?= $data['leaverequest_id'] ?>">
                                                                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
                                                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -147,7 +147,7 @@
                                                                             </svg>
                                                                             Remove
                                                                         </button>
-                                                                    <?php endif; ?>
+                                                                    <?php endif; ?> -->
 
                                                                 </td>
                                                             </tr>
