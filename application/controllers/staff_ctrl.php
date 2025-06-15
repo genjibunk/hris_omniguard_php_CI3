@@ -101,6 +101,7 @@ class staff_ctrl extends CI_Controller {
         $id = $this->session->userdata('userid');
 
 		$data['open_information_employee_data'] = $this->staff_model->open_information_employee_data($id);
+        $data['punchinout'] = $this->staff_model->punchinout($id);
 
 		$this->load->view('components/topbar',$data);
 		$this->load->view('staff/home');
@@ -120,7 +121,7 @@ class staff_ctrl extends CI_Controller {
 
 		$data['open_information_employee_data'] = $this->staff_model->open_information_employee_data($id);
         $data['attendance'] = $this->staff_model->attendance($id);
-
+        $data['punchinout'] = $this->staff_model->punchinout($id);
 
 		$this->load->view('components/topbar',$data);
 		$this->load->view('staff/attendance', $data);
@@ -142,7 +143,7 @@ class staff_ctrl extends CI_Controller {
 
 		$data['open_information_employee_data'] = $this->staff_model->open_information_employee_data($id);
         $data['schedule'] = $this->staff_model->schedule($id);
-
+        $data['punchinout'] = $this->staff_model->punchinout($id);
 
 		$this->load->view('components/topbar',$data);
 		$this->load->view('staff/schedule', $data);
@@ -164,7 +165,7 @@ class staff_ctrl extends CI_Controller {
 
 		$data['open_information_employee_data'] = $this->staff_model->open_information_employee_data($id);
         $data['leaverequest'] = $this->staff_model->leave_request($id);
-
+        $data['punchinout'] = $this->staff_model->punchinout($id);
 
 		$this->load->view('components/topbar',$data);
 		$this->load->view('staff/leave_request', $data);
@@ -213,18 +214,25 @@ class staff_ctrl extends CI_Controller {
     public function insert_leave_request()
 
     {
-    $data = [
-        'lr_employee_data_id'  => $this->session->userdata('userid'),
-        'leavetype'         => $this->input->post('leave_type'),
-        'date_from'         => $this->input->post('leave_date_from'),
-        'date_to'           => $this->input->post('leave_date_to'),
-        'total'             => $this->input->post('total_days')
-    ];
 
-    $this->db->insert('leaverequest', $data);
+        if (!$this->session->userdata('logged_in')) 
+		{
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+			$this->load->view('auth/signin');
+			return;
+		}
+        $data = [
+            'lr_employee_data_id'  => $this->session->userdata('userid'),
+            'leavetype'         => $this->input->post('leave_type'),
+            'date_from'         => $this->input->post('leave_date_from'),
+            'date_to'           => $this->input->post('leave_date_to'),
+            'total'             => $this->input->post('total_days')
+        ];
 
-    $this->session->set_flashdata('success', 'Leave request submitted successfully.');
-    redirect('stokenreq_m4tz');
+        $this->db->insert('leaverequest', $data);
+
+        $this->session->set_flashdata('success', 'Leave request submitted successfully.');
+        redirect('stokenreq_m4tz');
 
     }
 
@@ -240,7 +248,7 @@ class staff_ctrl extends CI_Controller {
         $id = $this->session->userdata('userid');
 
 		$data['open_information_employee_data'] = $this->staff_model->open_information_employee_data($id);
-
+        $data['punchinout'] = $this->staff_model->punchinout($id);
 
 		$this->load->view('components/topbar',$data);
 		$this->load->view('staff/profile', $data);
@@ -328,6 +336,27 @@ class staff_ctrl extends CI_Controller {
 		}
 
 		redirect('sopen_z3bt');
+	}
+
+    public function payslip()
+	{
+		if (!$this->session->userdata('logged_in')) 
+		{
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+			$this->load->view('auth/signin');
+			return;
+		}
+
+        $id = $this->session->userdata('userid');
+
+		$data['open_information_employee_data'] = $this->staff_model->open_information_employee_data($id);
+        $data['punchinout'] = $this->staff_model->punchinout($id);
+
+		$this->load->view('components/topbar',$data);
+		$this->load->view('staff/payslip');
+		$this->load->view('components/footer');
+
+    
 	}
 
 

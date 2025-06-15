@@ -119,10 +119,11 @@
                                 </em>
                                 •
                                 <strong>Punch in</strong>
-                                <em>--:--:--</em>
+                                <em><?php echo !empty($punchinout['punchin']) ? $punchinout['punchin'] : '--:--:--'; ?></em>
                                 •
                                 <strong>Punch out</strong>
-                                <em>--:--:--</em>
+                                <em><?php echo !empty($punchinout['punchout']) ? $punchinout['punchout'] : '--:--:--'; ?></em>
+
 
                                 </br></br>
 

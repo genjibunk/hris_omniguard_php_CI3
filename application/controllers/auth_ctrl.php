@@ -50,6 +50,7 @@ class auth_ctrl extends CI_Controller {
 					$id = $user->userauth_id;
 					
 					$data['open_information_employee_data'] = $this->admin_model->open_information_employee_data($id);
+					$data['punchinout'] = $this->staff_model->punchinout($id);
 
 					if ($user->role === 'Admin') 
 
@@ -137,7 +138,6 @@ class auth_ctrl extends CI_Controller {
 		
 	}
 
-
 	public function verify_location()
 	{
 		if (!$this->session->userdata('logged_in')) 
@@ -204,8 +204,6 @@ class auth_ctrl extends CI_Controller {
 			]);
 		}
 	}
-
-
 
 	private function calculate_distance($lat1, $lon1, $lat2, $lon2)
 	{

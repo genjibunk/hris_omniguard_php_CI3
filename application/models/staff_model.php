@@ -47,6 +47,23 @@ class staff_model extends CI_Model{
         return $query->result_array();
     }
 
+    public function punchinout($id)
+    {
+        $query = $this->db
+            ->select('a.attendance_id, a.employee_data_id, a.client_id , a.punchin, a.punchout, a.attendance_status, a.status, a.remarks, b.name AS clientname , c.name AS companyname , CONCAT(d.first_name ," , ", d.last_name) AS employeename')
+            ->from('attendance a')
+            ->join('clients b', 'b.client_id = a.client_id', 'inner')
+            ->join('companies c', 'c.company_id = b.company_id', 'inner')
+            ->join('employee_data d', 'd.employee_data_id = a.employee_data_id', 'inner')
+            ->where('a.employee_data_id', $id)
+            ->where('a.punchout', 0)
+            ->order_by('a.attendance_id', 'DESC')
+            ->limit(1)
+            ->get();
+
+        return $query->row_array();;
+    }
+
     public function schedule($id)
     {
         $query = $this->db
