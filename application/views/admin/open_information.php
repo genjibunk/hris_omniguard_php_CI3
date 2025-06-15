@@ -94,7 +94,7 @@
 
                                     <div class="col-12">
 
-                                        <form method="post" enctype="multipart/form-data" action="<?php echo base_url('admin_ctrl/update_employee'); ?>">
+                                        <form method="post" enctype="multipart/form-data" action="<?php echo base_url('Admin_ctrl/update_employee'); ?>">
 
                                             <input type="hidden" name="employee_id" value="<?php echo $encrypted_employee_data_id; ?>">
 

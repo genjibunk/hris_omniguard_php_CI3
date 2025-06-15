@@ -289,7 +289,7 @@
 
 <div class="modal fade" id="newClientModal" tabindex="-1" aria-labelledby="newClientModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
-    <form method="post" action="<?= base_url('admin_ctrl/insert_client') ?>">
+    <form method="post" action="<?= base_url('Admin_ctrl/insert_client') ?>">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">New Client</h5>
@@ -387,7 +387,7 @@
             e.preventDefault();
 
             $.ajax({
-                url: "<?= base_url('admin_ctrl/update_clients') ?>",
+                url: "<?= base_url('Admin_ctrl/update_clients') ?>",
                 type: "POST",
                 data: $(this).serialize(),
                 dataType: "json",

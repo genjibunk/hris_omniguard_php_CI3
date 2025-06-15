@@ -217,7 +217,7 @@
 
 <div class="modal fade" id="approveModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <form method="post" action="<?= base_url('admin_ctrl/leaverequest_status') ?>" id="leaveRequestForm">
+    <form method="post" action="<?= base_url('Admin_ctrl/leaverequest_status') ?>" id="leaveRequestForm">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Update Leave Request</h5>

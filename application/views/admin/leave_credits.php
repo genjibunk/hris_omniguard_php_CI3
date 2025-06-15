@@ -228,7 +228,7 @@
 
             </div>
             
-            <form action="<?= base_url('admin_ctrl/insert_leavecredits_for_all') ?>" method="post">
+            <form action="<?= base_url('Admin_ctrl/insert_leavecredits_for_all') ?>" method="post">
 
                 <div class="modal-body">
 
@@ -295,7 +295,7 @@
 
     <div class="modal-content">
 
-      <form method="post" action="<?= base_url('admin_ctrl/update_or_delete') ?>">
+      <form method="post" action="<?= base_url('Admin_ctrl/update_or_delete') ?>">
 
         <div class="modal-header">
 

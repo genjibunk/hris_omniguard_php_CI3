@@ -225,7 +225,7 @@
 
             </div>
             
-            <form action="<?= base_url('staff_ctrl/insert_leave_request') ?>" method="post" id="leaveRequestForm">
+            <form action="<?= base_url('Staff_ctrl/insert_leave_request') ?>" method="post" id="leaveRequestForm">
 
                 <div class="modal-body">
 
@@ -324,7 +324,7 @@
 <!-- Delete Confirmation Modal -->
 <div class="modal modal-blur fade" id="modal-danger" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-    <form method="post" action="<?= base_url('staff_ctrl/delete_leaverequest') ?>">
+    <form method="post" action="<?= base_url('Staff_ctrl/delete_leaverequest') ?>">
       <div class="modal-content">
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         <div class="modal-status bg-danger"></div>

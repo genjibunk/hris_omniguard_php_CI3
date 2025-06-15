@@ -94,7 +94,7 @@
 
                                     <div class="col-12">
 
-                                        <form method="post" enctype="multipart/form-data" action="<?php echo base_url('staff_ctrl/update_employee'); ?>">
+                                        <form method="post" enctype="multipart/form-data" action="<?php echo base_url('Staff_ctrl/update_employee'); ?>">
 
                                             <input type="hidden" name="employee_id" value="<?php echo $open_information_employee_data['employee_data_id']; ?>">
 

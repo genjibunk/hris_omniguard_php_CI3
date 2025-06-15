@@ -35,7 +35,7 @@
         <div class="card card-md">
           <div class="card-body">
             <a href="#" class="navbar-brand navbar-brand-autodark d-flex align-items-center text-decoration-none">
-            <img src="assets/logo/hris_mainlogo.PNG" style="width: 60px; height: auto; min-w-[60px]" alt="Tabler" class="navbar-brand-image me-2">
+            <img src="assets/logo/hris_mainlogo.png" style="width: 60px; height: auto; min-w-[60px]" alt="Tabler" class="navbar-brand-image me-2">
 
             Human Resource Information System
        
@@ -79,7 +79,7 @@
               <div class="mb-2">
                 <label class="form-label">Password</label>
                 <div class="input-group input-group-flat">
-                  <input type="text" class="form-control" name="password" placeholder="Your password" autocomplete="off">
+                  <input type="password" class="form-control" name="password" placeholder="Your password" autocomplete="off">
                 </div>
               </div>
               <div class="form-footer">

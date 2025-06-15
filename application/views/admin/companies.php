@@ -232,7 +232,7 @@
 
     <div class="modal-dialog modal-lg">
 
-        <form method="post" action="<?= base_url('admin_ctrl/add_company') ?>">
+        <form method="post" action="<?= base_url('Admin_ctrl/add_company') ?>">
 
             <div class="modal-content">
 
@@ -357,7 +357,7 @@
 
     <div class="modal-dialog modal-lg">
 
-        <form method="post" action="<?= base_url('admin_ctrl/update_company') ?>">
+        <form method="post" action="<?= base_url('Admin_ctrl/update_company') ?>">
 
             <div class="modal-content">
 

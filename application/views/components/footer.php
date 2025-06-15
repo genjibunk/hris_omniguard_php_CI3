@@ -11,12 +11,12 @@
 
                     <li class="list-inline-item">
                         Copyright &copy; 2025
-                        <a href="." class="link-secondary">Omniguard Security Agency Inc</a>.
+                        <a href="" class="link-secondary">Omniguard Security Agency Inc</a>.
                         All rights reserved.
                     </li>
                     <li class="list-inline-item">
-                        <a href="./changelog.html" class="link-secondary" rel="noopener">
-                        v1.0.3-beta
+                        <a href="" class="link-secondary" rel="noopener">
+                        v1.0.1
                         </a>
                     </li>
 

@@ -45,7 +45,7 @@
 
                         <div>
 
-                        <img src="<?php echo base_url()."assets/"; ?>logo/hris_mainlogo.PNG" style="width: 40px; height: auto;" alt="Tabler" class="navbar-brand-image me-2">Human Resource Information System
+                        <img src="<?php echo base_url()."assets/"; ?>logo/hris_mainlogo.png" style="width: 40px; height: auto;" alt="Tabler" class="navbar-brand-image me-2">Human Resource Information System
 
                         </div>
 
@@ -212,7 +212,7 @@
                 const lon = position.coords.longitude;
                 console.log("📍 User location:", lat, lon);
 
-                fetch("<?= base_url('auth_ctrl/verify_location') ?>", {
+                fetch("<?= base_url('Auth_ctrl/verify_location') ?>", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -308,7 +308,7 @@
             const punchText = document.getElementById("punchText");
             const action = punchText.textContent.trim().toLowerCase() === "punch in" ? "in" : "out";
 
-            fetch("<?= base_url('staff_ctrl/record_attendance') ?>", {
+            fetch("<?= base_url('Staff_ctrl/record_attendance') ?>", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
@@ -336,7 +336,7 @@
         }
 
         document.addEventListener("DOMContentLoaded", function () {
-            fetch("<?= base_url('staff_ctrl/check_punch_status') ?>")
+            fetch("<?= base_url('Staff_ctrl/check_punch_status') ?>")
                 .then(res => res.json())
                 .then(data => {
                     const punchText = document.getElementById("punchText");

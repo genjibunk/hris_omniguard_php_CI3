@@ -92,7 +92,7 @@
                                     
                                         <div class="card-body">
 
-                                            <form id="scheduleForm" method="POST" action="<?= base_url('admin_ctrl/save_schedule') ?>">
+                                            <form id="scheduleForm" method="POST" action="<?= base_url('Admin_ctrl/save_schedule') ?>">
 
                                                 <div class="mb-3">
 
@@ -312,7 +312,7 @@ $(document).ready(function() {
         placeholder: "Search and select employees",
         minimumInputLength: 2,
         ajax: {
-            url: "<?php echo base_url('admin_ctrl/search_employees'); ?>",
+            url: "<?php echo base_url('Admin_ctrl/search_employees'); ?>",
             type: "POST",
             dataType: 'json',
             delay: 250,
@@ -340,7 +340,7 @@ $(document).ready(function() {
 <script>
 $(document).ready(function() {
     $.ajax({
-        url: "<?php echo base_url('admin_ctrl/load_company'); ?>",
+        url: "<?php echo base_url('Admin_ctrl/load_company'); ?>",
         type: "GET",
         dataType: "json",
         success: function(data) {
@@ -364,7 +364,7 @@ $(document).ready(function() {
 
     <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
 
-        <form method="post" action="<?= base_url('admin_ctrl/delete_schedule') ?>">
+        <form method="post" action="<?= base_url('Admin_ctrl/delete_schedule') ?>">
 
             <div class="modal-content">
 

@@ -52,7 +52,7 @@
 
             <a href="">
 
-              <img src="<?php echo base_url()."assets/"; ?>logo/company_logo.PNG" style="width: 100%; height: auto;" alt="Tabler" class="navbar-brand-image me-2">
+              <img src="<?php echo base_url()."assets/"; ?>logo/company_logo.png" style="width: 100%; height: auto;" alt="Tabler" class="navbar-brand-image me-2">
 
             </a>
 
@@ -244,7 +244,7 @@
 
             <div>
 
-              <img src="<?php echo base_url()."assets/"; ?>logo/hris_mainlogo.PNG" style="width: 40px; height: auto;" alt="Tabler" class="navbar-brand-image me-2">Human Resource Information System
+              <img src="<?php echo base_url()."assets/"; ?>logo/hris_mainlogo.png" style="width: 40px; height: auto;" alt="Tabler" class="navbar-brand-image me-2">Human Resource Information System
 
             </div>
 

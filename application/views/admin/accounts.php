@@ -177,12 +177,12 @@
                                                                     ?>
                                         
                                                                     <a href="#" class="btn btn-ghost-azure openManageAuth"
-   data-userauth-id="<?= $data['userauth_id']; ?>"
-   data-name="<?= $data['name']; ?>"
-   data-role="<?= $data['role']; ?>"
-   data-status="<?= $data['status']; ?>"
-   data-bs-toggle="modal"
-   data-bs-target="#ManageAuth">
+                                                                        data-userauth-id="<?= $data['userauth_id']; ?>"
+                                                                        data-name="<?= $data['name']; ?>"
+                                                                        data-role="<?= $data['role']; ?>"
+                                                                        data-status="<?= $data['status']; ?>"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#ManageAuth">
                                                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-settings"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                                                         <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"></path>
                                                                         <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"></path>
@@ -236,7 +236,7 @@
 <div class="modal fade" id="ManageAuth" tabindex="-1" aria-labelledby="ManageAuthLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form method="post" action="<?= base_url('admin_ctrl/update_auth') ?>">
+      <form method="post" action="<?= base_url('Admin_ctrl/update_auth') ?>">
         <div class="modal-header">
           <h5 class="modal-title" id="ManageAuthLabel">Manage Account</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

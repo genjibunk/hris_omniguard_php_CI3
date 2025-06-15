@@ -1,5 +1,5 @@
 <?php
-class staff_model extends CI_Model{
+class Staff_model extends CI_Model{
 
     public function __construct()
     {
