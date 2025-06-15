@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class auth_ctrl extends CI_Controller {
+class Auth_ctrl extends CI_Controller {
 
 	public function __construct() 
 	{
@@ -18,7 +18,7 @@ class auth_ctrl extends CI_Controller {
 		$this->session->sess_destroy();
 		
 
-        $this->load->view('auth/signin');
+        $this->load->view('Auth/Signin');
 
 		
 
@@ -49,16 +49,16 @@ class auth_ctrl extends CI_Controller {
 
 					$id = $user->userauth_id;
 					
-					$data['open_information_employee_data'] = $this->admin_model->open_information_employee_data($id);
-					$data['punchinout'] = $this->staff_model->punchinout($id);
+					$data['open_information_employee_data'] = $this->Admin_model->open_information_employee_data($id);
+					$data['punchinout'] = $this->Staff_model->punchinout($id);
 
 					if ($user->role === 'Admin') 
 
 					{
 
-						$this->load->view('components/navbar',$data);
-						$this->load->view('admin/home');
-						$this->load->view('components/footer');
+						$this->load->view('Components/Navbar',$data);
+						$this->load->view('Admin/Home');
+						$this->load->view('Components/Footer');
 
 					}
 
@@ -67,8 +67,8 @@ class auth_ctrl extends CI_Controller {
 					{
 						
 						$this->load->view('components/topbar',$data);
-						$this->load->view('staff/home');
-						$this->load->view('components/footer');
+						$this->load->view('Staff/Home');
+						$this->load->view('Components/Footer');
 
 					} 
 
@@ -76,8 +76,8 @@ class auth_ctrl extends CI_Controller {
 
 					{
 						$this->load->view('components/topbar',$data);
-						$this->load->view('staff/home');
-						$this->load->view('components/footer');
+						$this->load->view('Staff/Home');
+						$this->load->view('Components/Footer');
 
 					} 
 
@@ -85,7 +85,7 @@ class auth_ctrl extends CI_Controller {
 
 					{
 						$this->session->set_flashdata('error', 'Access denied for role: ' . $user->role);
-						$this->load->view('auth/signin');
+						$this->load->view('Auth/Signin');
 						return;
 					}
 
@@ -101,7 +101,7 @@ class auth_ctrl extends CI_Controller {
 			$this->session->set_flashdata('error', 'User not found.');
 		}
 
-		$this->load->view('auth/signin');
+		$this->load->view('Auth/Signin');
 	}
 
 
@@ -110,7 +110,7 @@ class auth_ctrl extends CI_Controller {
     {
 
 		$this->session->sess_destroy();
-        $this->load->view('auth/signin');
+        $this->load->view('Auth/Signin');
 
     }
 
@@ -123,17 +123,17 @@ class auth_ctrl extends CI_Controller {
 		{
 
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-        	$this->load->view('auth/signin');
+        	$this->load->view('Auth/Signin');
 			return;
 
     	}
 
 		$id = $this->session->userdata('userid');
-		$data['open_information_employee_data'] = $this->admin_model->open_information_employee_data($id);
+		$data['open_information_employee_data'] = $this->Admin_model->open_information_employee_data($id);
 
-		$this->load->view('components/navbar',$data);
-    	$this->load->view('admin/home');
-    	$this->load->view('components/footer');
+		$this->load->view('Components/Navbar',$data);
+    	$this->load->view('Admin/Home');
+    	$this->load->view('Components/Footer');
 		
 		
 	}
@@ -145,7 +145,7 @@ class auth_ctrl extends CI_Controller {
 		{
 
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-        	$this->load->view('auth/signin');
+        	$this->load->view('Auth/Signin');
 			return;
 
     	}
@@ -167,7 +167,7 @@ class auth_ctrl extends CI_Controller {
 
 		$user_id = $this->session->userdata('userid');
 		
-		$expected = $this->staff_model->get_location_by_user_id($user_id);
+		$expected = $this->Staff_model->get_location_by_user_id($user_id);
 
 		if (!$expected) {
 

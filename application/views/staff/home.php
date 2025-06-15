@@ -29,7 +29,7 @@
 
                     <div class="col-sm-12 col-lg-6">
 
-                        <a href="<?php echo base_url('satnd_n5gw');?>" style="text-decoration: none; color: inherit;">
+                        <a href="<?php echo base_url('Satnd_n5gw');?>" style="text-decoration: none; color: inherit;">
 
                             <div class="card card-sm">
 
@@ -65,7 +65,7 @@
 
                     <div class="col-sm-12 col-lg-6">
 
-                        <a href="<?php echo base_url('sroster_k0jb');?>" style="text-decoration: none; color: inherit;">
+                        <a href="<?php echo base_url('Sroster_k0jb');?>" style="text-decoration: none; color: inherit;">
 
                             <div class="card card-sm">
 
@@ -110,7 +110,7 @@
 
                     <div class="col-sm-12 col-lg-6">
 
-                        <a href="<?php echo base_url('stokenreq_m4tz');?>" style="text-decoration: none; color: inherit;">
+                        <a href="<?php echo base_url('Stokenreq_m4tz');?>" style="text-decoration: none; color: inherit;">
 
                             <div class="card card-sm">
 
@@ -149,7 +149,7 @@
 
                     <div class="col-sm-12 col-lg-6">
 
-                        <a href="<?php echo base_url('slip_j4qg');?>" style="text-decoration: none; color: inherit;">
+                        <a href="<?php echo base_url('Slip_j4qg');?>" style="text-decoration: none; color: inherit;">
 
                             <div class="card card-sm">
 
@@ -196,7 +196,7 @@
 
                     <div class="col-sm-6 col-lg-6">
 
-                        <a href="<?php echo base_url('sopen_z3bt');?>" style="text-decoration: none; color: inherit;">
+                        <a href="<?php echo base_url('Sopen_z3bt');?>" style="text-decoration: none; color: inherit;">
 
                             <div class="card card-sm">
 

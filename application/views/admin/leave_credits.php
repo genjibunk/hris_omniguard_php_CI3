@@ -82,7 +82,7 @@
 
                                     <div class="mt-3">
 
-                                        <a href="<?php echo base_url();?>base_8nvp" class="btn btn-orange active">Back</a>
+                                        <a href="<?php echo base_url();?>Base_8nvp" class="btn btn-orange active">Back</a>
 
                                         <a href="" class="btn btn-primary active" data-bs-toggle="modal" data-bs-target="#modal-team">Set Credits</a>
 

@@ -82,7 +82,7 @@
 
                                     <div class="mt-3">
 
-                                        <a href="<?php echo base_url();?>base_8nvp" class="btn btn-orange active">Back</a>
+                                        <a href="<?php echo base_url();?>Base_8nvp" class="btn btn-orange active">Back</a>
 
                                     </div>
 
@@ -258,7 +258,7 @@
             const comment = document.getElementById('declineComment').value.trim();
             if (comment === '') {
                 alert('Please provide a reason for declining.');
-                event.preventDefault(); // Cancel form submission
+                event.preventDefault();
                 return false;
             }
         }

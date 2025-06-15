@@ -82,7 +82,7 @@
 
                                     <div class="mt-3">
 
-                                        <a href="<?php echo base_url();?>info_a7xk" class="btn btn-primary active">Go back</a>
+                                        <a href="<?php echo base_url();?>Info_a7xk" class="btn btn-primary active">Go back</a>
 
                                     </div>
 
@@ -95,7 +95,7 @@
 
                                     <div class="col-12">
 
-                                        <form method="post" action="<?= base_url('init_r0kc') ?>" enctype="multipart/form-data">
+                                        <form method="post" action="<?= base_url('Init_r0kc') ?>" enctype="multipart/form-data">
                  
                                             <div class="mb-3">
 

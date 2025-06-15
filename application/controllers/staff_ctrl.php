@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class staff_ctrl extends CI_Controller {
+class Staff_ctrl extends CI_Controller {
 
     public function __construct() 
 	{
@@ -17,7 +17,7 @@ class staff_ctrl extends CI_Controller {
         if (!$this->session->userdata('logged_in')) 
         {
             $this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-            $this->load->view('auth/signin');
+            $this->load->view('Auth/Signin');
             return;
         }
 
@@ -64,7 +64,7 @@ class staff_ctrl extends CI_Controller {
 		{
 
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-        	$this->load->view('auth/signin');
+        	$this->load->view('Auth/Signin');
 			return;
 
     	}
@@ -94,7 +94,7 @@ class staff_ctrl extends CI_Controller {
 		if (!$this->session->userdata('logged_in')) 
 		{
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-			$this->load->view('auth/signin');
+			$this->load->view('Auth/Signin');
 			return;
 		}
 
@@ -103,9 +103,9 @@ class staff_ctrl extends CI_Controller {
 		$data['open_information_employee_data'] = $this->staff_model->open_information_employee_data($id);
         $data['punchinout'] = $this->staff_model->punchinout($id);
 
-		$this->load->view('components/topbar',$data);
-		$this->load->view('staff/home');
-		$this->load->view('components/footer');
+		$this->load->view('Components/Topbar',$data);
+		$this->load->view('Staff/Home');
+		$this->load->view('Components/Footer');
 	}
 
     public function attendance()
@@ -113,7 +113,7 @@ class staff_ctrl extends CI_Controller {
 		if (!$this->session->userdata('logged_in')) 
 		{
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-			$this->load->view('auth/signin');
+			$this->load->view('Auth/Signin');
 			return;
 		}
 
@@ -123,9 +123,9 @@ class staff_ctrl extends CI_Controller {
         $data['attendance'] = $this->staff_model->attendance($id);
         $data['punchinout'] = $this->staff_model->punchinout($id);
 
-		$this->load->view('components/topbar',$data);
-		$this->load->view('staff/attendance', $data);
-		$this->load->view('components/footer');
+		$this->load->view('Components/Topbar',$data);
+		$this->load->view('Staff/Attendance', $data);
+		$this->load->view('Components/Footer');
 
     
 	}
@@ -135,7 +135,7 @@ class staff_ctrl extends CI_Controller {
 		if (!$this->session->userdata('logged_in')) 
 		{
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-			$this->load->view('auth/signin');
+			$this->load->view('Auth/Signin');
 			return;
 		}
 
@@ -145,9 +145,9 @@ class staff_ctrl extends CI_Controller {
         $data['schedule'] = $this->staff_model->schedule($id);
         $data['punchinout'] = $this->staff_model->punchinout($id);
 
-		$this->load->view('components/topbar',$data);
-		$this->load->view('staff/schedule', $data);
-		$this->load->view('components/footer');
+		$this->load->view('Components/Topbar',$data);
+		$this->load->view('Staff/Schedule', $data);
+		$this->load->view('Components/Footer');
 
     
 	}
@@ -157,7 +157,7 @@ class staff_ctrl extends CI_Controller {
 		if (!$this->session->userdata('logged_in')) 
 		{
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-			$this->load->view('auth/signin');
+			$this->load->view('Auth/Signin');
 			return;
 		}
 
@@ -167,9 +167,9 @@ class staff_ctrl extends CI_Controller {
         $data['leaverequest'] = $this->staff_model->leave_request($id);
         $data['punchinout'] = $this->staff_model->punchinout($id);
 
-		$this->load->view('components/topbar',$data);
-		$this->load->view('staff/leave_request', $data);
-		$this->load->view('components/footer');
+		$this->load->view('Components/Topbar',$data);
+		$this->load->view('Staff/Leave_request', $data);
+		$this->load->view('Components/Footer');
 
     
 	}
@@ -183,7 +183,7 @@ class staff_ctrl extends CI_Controller {
         } else {
             $this->session->set_flashdata('error', 'Failed to delete leave request.');
         }
-        redirect('stokenreq_m4tz');
+        redirect('Stokenreq_m4tz');
     }
 
     public function add_leaverequest()
@@ -191,7 +191,7 @@ class staff_ctrl extends CI_Controller {
         if (!$this->session->userdata('logged_in')) 
 		{
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-			$this->load->view('auth/signin');
+			$this->load->view('Auth/Signin');
 			return;
 		}
 
@@ -206,7 +206,7 @@ class staff_ctrl extends CI_Controller {
 
         $this->db->insert('leaverequest', $data);
         $this->session->set_flashdata('success', 'New leave request submitted.');
-        redirect('stokenreq_m4tz');
+        redirect('Stokenreq_m4tz');
         
     }
 
@@ -218,7 +218,7 @@ class staff_ctrl extends CI_Controller {
         if (!$this->session->userdata('logged_in')) 
 		{
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-			$this->load->view('auth/signin');
+			$this->load->view('Auth/Signin');
 			return;
 		}
         $data = [
@@ -232,7 +232,7 @@ class staff_ctrl extends CI_Controller {
         $this->db->insert('leaverequest', $data);
 
         $this->session->set_flashdata('success', 'Leave request submitted successfully.');
-        redirect('stokenreq_m4tz');
+        redirect('Stokenreq_m4tz');
 
     }
 
@@ -241,7 +241,7 @@ class staff_ctrl extends CI_Controller {
 		if (!$this->session->userdata('logged_in')) 
 		{
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-			$this->load->view('auth/signin');
+			$this->load->view('Auth/Signin');
 			return;
 		}
 
@@ -250,9 +250,9 @@ class staff_ctrl extends CI_Controller {
 		$data['open_information_employee_data'] = $this->staff_model->open_information_employee_data($id);
         $data['punchinout'] = $this->staff_model->punchinout($id);
 
-		$this->load->view('components/topbar',$data);
-		$this->load->view('staff/profile', $data);
-		$this->load->view('components/footer');
+		$this->load->view('Components/Topbar',$data);
+		$this->load->view('Staff/Profile', $data);
+		$this->load->view('Components/Footer');
 
     
 	}
@@ -264,7 +264,7 @@ class staff_ctrl extends CI_Controller {
 		{
 
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-        	$this->load->view('auth/signin');
+        	$this->load->view('Auth/Signin');
 			return;
 
     	}
@@ -343,7 +343,7 @@ class staff_ctrl extends CI_Controller {
 		if (!$this->session->userdata('logged_in')) 
 		{
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-			$this->load->view('auth/signin');
+			$this->load->view('Auth/Signin');
 			return;
 		}
 
@@ -352,9 +352,9 @@ class staff_ctrl extends CI_Controller {
 		$data['open_information_employee_data'] = $this->staff_model->open_information_employee_data($id);
         $data['punchinout'] = $this->staff_model->punchinout($id);
 
-		$this->load->view('components/topbar',$data);
-		$this->load->view('staff/payslip');
-		$this->load->view('components/footer');
+		$this->load->view('Components/Topbar',$data);
+		$this->load->view('Staff/Payslip');
+		$this->load->view('Components/Footer');
 
     
 	}

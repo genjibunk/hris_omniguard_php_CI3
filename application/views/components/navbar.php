@@ -64,7 +64,7 @@
 
               <li class="nav-item">
 
-                <a class="nav-link" href="<?php echo base_url();?>base_8nvp" >
+                <a class="nav-link" href="<?php echo base_url();?>Base_8nvp" >
 
                   <span class="nav-link-icon d-md-none d-lg-inline-block">
 
@@ -102,37 +102,37 @@
 
                 <div class="dropdown-menu">
 
-                  <a class="dropdown-item" href="<?php echo base_url();?>info_a7xk">
+                  <a class="dropdown-item" href="<?php echo base_url();?>Info_a7xk">
 
                     Information
 
                   </a>
 
-                  <a class="dropdown-item" href="<?php echo base_url();?>tokenreq_m4tz">
+                  <a class="dropdown-item" href="<?php echo base_url();?>Tokenreq_m4tz">
 
                     Leave Requests
 
                   </a>
 
-                  <a class="dropdown-item" href="<?php echo base_url();?>token_m4tz">
+                  <a class="dropdown-item" href="<?php echo base_url();?>Token_m4tz">
 
                     Leave Credits
 
                   </a>
 
-                  <a class="dropdown-item" href="<?php echo base_url();?>atnd_n5gw">
+                  <a class="dropdown-item" href="<?php echo base_url();?>Atnd_n5gw">
 
                     Attendance
 
                   </a>
 
-                  <a class="dropdown-item" href="<?php echo base_url();?>roster_k0jb">
+                  <a class="dropdown-item" href="<?php echo base_url();?>Roster_k0jb">
 
                     Schedule
 
                   </a>
 
-                  <a class="dropdown-item" href="<?php echo base_url();?>accounts_j8vq">
+                  <a class="dropdown-item" href="<?php echo base_url();?>Accounts_j8vq">
 
                     Accounts
 
@@ -144,7 +144,7 @@
 
               <li class="nav-item">
 
-                <a class="nav-link" href="<?php echo base_url();?>cmpy_k5hc" >
+                <a class="nav-link" href="<?php echo base_url();?>Cmpy_k5hc" >
 
                   <span class="nav-link-icon d-md-none d-lg-inline-block">
 
@@ -164,7 +164,7 @@
 
               <li class="nav-item">
 
-                <a class="nav-link" href="<?php echo base_url();?>base_8nvp" >
+                <a class="nav-link" href="<?php echo base_url();?>Base_8nvp" >
 
                   <span class="nav-link-icon d-md-none d-lg-inline-block">
 
@@ -184,7 +184,7 @@
 
               <li class="nav-item">
 
-                <a class="nav-link" href="<?php echo base_url();?>base_8nvp" >
+                <a class="nav-link" href="<?php echo base_url();?>Base_8nvp" >
 
                   <span class="nav-link-icon d-md-none d-lg-inline-block">
 

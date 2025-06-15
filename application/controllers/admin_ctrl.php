@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class admin_ctrl extends CI_Controller {
+class Admin_ctrl extends CI_Controller {
 
     public function __construct() 
 	{
@@ -19,16 +19,16 @@ class admin_ctrl extends CI_Controller {
 		{
 
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-        	$this->load->view('auth/signin');
+        	$this->load->view('Auth/Signin');
 			return;
 
     	}
 
-        $data['information'] = $this->admin_model->information_employee_data();
+        $data['information'] = $this->Admin_model->information_employee_data();
 
-		$this->load->view ('components/navbar');
-		$this->load->view ('admin/information', $data);
-		$this->load->view ('components/footer');
+		$this->load->view ('Components/Navbar');
+		$this->load->view ('Admin/Information', $data);
+		$this->load->view ('Components/Footer');
 	}
 
     public function view_add_information()
@@ -38,14 +38,14 @@ class admin_ctrl extends CI_Controller {
 		{
 
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-        	$this->load->view('auth/signin');
+        	$this->load->view('Auth/Signin');
 			return;
 
     	}
 
-		$this->load->view ('components/navbar');
-		$this->load->view ('admin/add_information');
-		$this->load->view ('components/footer');
+		$this->load->view ('Components/Navbar');
+		$this->load->view ('Admin/Add_information');
+		$this->load->view ('Components/Footer');
 	}
 
 	public function add_employee()
@@ -55,7 +55,7 @@ class admin_ctrl extends CI_Controller {
 		{
 
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-        	$this->load->view('auth/signin');
+        	$this->load->view('Auth/Signin');
 			return;
 
     	}
@@ -98,7 +98,7 @@ class admin_ctrl extends CI_Controller {
 
 				$this->db->trans_rollback();
 				$this->session->set_flashdata('error', $this->upload->display_errors());
-				redirect('info_a7xk');
+				redirect('Info_a7xk');
 				return;
 			}
 
@@ -139,7 +139,7 @@ class admin_ctrl extends CI_Controller {
 			$this->session->set_flashdata('success', 'Employee and user credentials successfully created.');
 		}
 
-		redirect('info_a7xk');
+		redirect('Info_a7xk');
 		
 	}
 
@@ -150,7 +150,7 @@ class admin_ctrl extends CI_Controller {
 		{
 
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-        	$this->load->view('auth/signin');
+        	$this->load->view('Auth/Signin');
 			return;
 
     	}
@@ -158,12 +158,12 @@ class admin_ctrl extends CI_Controller {
 		$decoded_employee_data_id = base64_decode($encrypted_employee_data_id);
         $id = $this->encryption->decrypt($decoded_employee_data_id);
 		
-		$data['open_information_employee_data'] = $this->admin_model->open_information_employee_data($id);
+		$data['open_information_employee_data'] = $this->Admin_model->open_information_employee_data($id);
 		$data['encrypted_employee_data_id'] = $id;
 
-		$this->load->view ('components/navbar');
-		$this->load->view ('admin/open_information', $data);
-		$this->load->view ('components/footer');
+		$this->load->view ('Components/Navbar');
+		$this->load->view ('admin/Open_information', $data);
+		$this->load->view ('Components/Footer');
 	}
 
 	public function update_employee()
@@ -173,7 +173,7 @@ class admin_ctrl extends CI_Controller {
 		{
 
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-        	$this->load->view('auth/signin');
+        	$this->load->view('Auth/Signin');
 			return;
 
     	}
@@ -235,7 +235,7 @@ class admin_ctrl extends CI_Controller {
 				$data['photo'] = $upload_data['file_name'];
 			} else {
 				$this->session->set_flashdata('error', 'Photo upload failed: ' . $this->upload->display_errors());
-				redirect('info_a7xk');
+				redirect('Info_a7xk');
 				return;
 			}
 		}
@@ -249,7 +249,7 @@ class admin_ctrl extends CI_Controller {
 			$this->session->set_flashdata('error', 'Failed to update employee.');
 		}
 
-		redirect('info_a7xk');
+		redirect('Info_a7xk');
 	}
 
 	public function leavecredits()
@@ -259,16 +259,16 @@ class admin_ctrl extends CI_Controller {
 		{
 
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-        	$this->load->view('auth/signin');
+        	$this->load->view('Auth/Signin');
 			return;
 
     	}
 
-		$data['leavecredits'] = $this->admin_model->leavecredits();
+		$data['leavecredits'] = $this->Admin_model->leavecredits();
 
-		$this->load->view ('components/navbar');
-		$this->load->view ('admin/leave_credits', $data);
-		$this->load->view ('components/footer');
+		$this->load->view ('Components/Navbar');
+		$this->load->view ('Admin/Leave_credits', $data);
+		$this->load->view ('Components/Footer');
 	}
 
 	public function insert_leavecredits_for_all()
@@ -278,7 +278,7 @@ class admin_ctrl extends CI_Controller {
 		{
 
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-        	$this->load->view('auth/signin');
+        	$this->load->view('Auth/Signin');
 			return;
 
     	}
@@ -330,7 +330,7 @@ class admin_ctrl extends CI_Controller {
 			$this->session->set_flashdata('warning', "$skipped duplicate entries were skipped.");
 		}
 
-		redirect('token_m4tz');
+		redirect('Token_m4tz');
 	}
 
 	public function update_or_delete()
@@ -340,7 +340,7 @@ class admin_ctrl extends CI_Controller {
 		{
 
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-        	$this->load->view('auth/signin');
+        	$this->load->view('Auth/Signin');
 			return;
 
     	}
@@ -369,7 +369,7 @@ class admin_ctrl extends CI_Controller {
 			$this->session->set_flashdata('success', 'Leave credit deleted.');
 		}
 
-		redirect('token_m4tz');
+		redirect('Token_m4tz');
 	}
 
 	public function leaverequest()
@@ -379,16 +379,16 @@ class admin_ctrl extends CI_Controller {
 		{
 
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-        	$this->load->view('auth/signin');
+        	$this->load->view('Auth/Signin');
 			return;
 
     	}
 
-		$data['leaverequest'] = $this->admin_model->leaverequest();
+		$data['leaverequest'] = $this->Admin_model->leaverequest();
 
-		$this->load->view ('components/navbar');
-		$this->load->view ('admin/leave_request', $data);
-		$this->load->view ('components/footer');
+		$this->load->view ('Components/Navbar');
+		$this->load->view ('Admin/Leave_request', $data);
+		$this->load->view ('Components/Footer');
 	}
 
 	public function leaverequest_status() 
@@ -398,7 +398,7 @@ class admin_ctrl extends CI_Controller {
 		{
 
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-        	$this->load->view('auth/signin');
+        	$this->load->view('Auth/Signin');
 			return;
 
     	}
@@ -443,7 +443,7 @@ class admin_ctrl extends CI_Controller {
 			$this->session->set_flashdata('error', 'Invalid action specified.');
 		}
 
-		redirect('tokenreq_m4tz');
+		redirect('Tokenreq_m4tz');
 	}
 
 	public function companies()
@@ -453,16 +453,16 @@ class admin_ctrl extends CI_Controller {
 		{
 
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-        	$this->load->view('auth/signin');
+        	$this->load->view('Auth/Signin');
 			return;
 
     	}
 
-		$data['companies'] = $this->admin_model->companies();
+		$data['companies'] = $this->Admin_model->companies();
 
-		$this->load->view ('components/navbar');
-		$this->load->view ('admin/companies', $data);
-		$this->load->view ('components/footer');
+		$this->load->view ('Components/Navbar');
+		$this->load->view ('Admin/Companies', $data);
+		$this->load->view ('Components/Footer');
 	}
 
 	public function add_company()
@@ -472,7 +472,7 @@ class admin_ctrl extends CI_Controller {
 		{
 
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-        	$this->load->view('auth/signin');
+        	$this->load->view('Auth/Signin');
 			return;
 
     	}
@@ -490,7 +490,7 @@ class admin_ctrl extends CI_Controller {
 
 		$this->db->insert('companies', $data);
 		$this->session->set_flashdata('success', 'Company added successfully!');
-		redirect('cmpy_k5hc');
+		redirect('Cmpy_k5hc');
 	}
 
 	public function update_company()
@@ -500,7 +500,7 @@ class admin_ctrl extends CI_Controller {
 		{
 
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-        	$this->load->view('auth/signin');
+        	$this->load->view('Auth/Signin');
 			return;
 
     	}
@@ -520,7 +520,7 @@ class admin_ctrl extends CI_Controller {
 		$this->db->update('companies', $data);
 
 		$this->session->set_flashdata('success', 'Company updated successfully.');
-		redirect('cmpy_k5hc');
+		redirect('Cmpy_k5hc');
 	}
 
 	public function clients($CID)
@@ -530,7 +530,7 @@ class admin_ctrl extends CI_Controller {
 		{
 
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-        	$this->load->view('auth/signin');
+        	$this->load->view('Auth/Signin');
 			return;
 
     	}
@@ -538,12 +538,12 @@ class admin_ctrl extends CI_Controller {
 		$decoded_CID = base64_decode($CID);
         $id = $this->encryption->decrypt($decoded_CID);
 
-		$data['clients'] = $this->admin_model->clients($id);
+		$data['clients'] = $this->Admin_model->clients($id);
 		$data['client_id'] = $id;
 
-		$this->load->view ('components/navbar');
-		$this->load->view ('admin/clients',$data);
-		$this->load->view ('components/footer');
+		$this->load->view ('Components/Navbar');
+		$this->load->view ('Admin/Clients',$data);
+		$this->load->view ('Components/Footer');
 	}
 
 	public function insert_client()
@@ -553,7 +553,7 @@ class admin_ctrl extends CI_Controller {
 		{
 
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-        	$this->load->view('auth/signin');
+        	$this->load->view('Auth/Signin');
 			return;
 
     	}
@@ -573,7 +573,7 @@ class admin_ctrl extends CI_Controller {
 
 		$this->db->insert('clients', $clients_data);
 		$this->session->set_flashdata('success', 'Company added successfully!');
-		redirect('cmpy_k5hc');
+		redirect('Cmpy_k5hc');
 
 	}
 
@@ -584,16 +584,16 @@ class admin_ctrl extends CI_Controller {
 		{
 
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-        	$this->load->view('auth/signin');
+        	$this->load->view('Auth/Signin');
 			return;
 
     	}
 
-		$data['attendance'] = $this->admin_model->attendance();
+		$data['attendance'] = $this->Admin_model->attendance();
 
-		$this->load->view ('components/navbar');
-		$this->load->view ('admin/attendance', $data);
-		$this->load->view ('components/footer');
+		$this->load->view ('Components/Navbar');
+		$this->load->view ('Admin/Attendance', $data);
+		$this->load->view ('Components/Footer');
 	}
 
 	public function attendance_data($encrypted_employee_data_id)
@@ -601,18 +601,18 @@ class admin_ctrl extends CI_Controller {
 		if (!$this->session->userdata('logged_in')) 
 		{
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-			$this->load->view('auth/signin');
+			$this->load->view('Auth/Signin');
 			return;
 		}
 
 		$decoded_id = base64_decode($encrypted_employee_data_id);
 		$id = $this->encryption->decrypt($decoded_id);
 
-		$data['attendance_data'] = $this->admin_model->attendance_data($id);
+		$data['attendance_data'] = $this->Admin_model->attendance_data($id);
 
-		$this->load->view('components/navbar');
-		$this->load->view('admin/attendance_data', $data);
-		$this->load->view('components/footer');
+		$this->load->view('Components/Navbar');
+		$this->load->view('Admin/Attendance_data', $data);
+		$this->load->view('Components/Footer');
 	}
 
 	public function schedule()
@@ -620,15 +620,15 @@ class admin_ctrl extends CI_Controller {
 		if (!$this->session->userdata('logged_in')) 
 		{
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-			$this->load->view('auth/signin');
+			$this->load->view('Auth/Signin');
 			return;
 		}
 
-		$data['schedule'] = $this->admin_model->schedule();
+		$data['schedule'] = $this->Admin_model->schedule();
 
-		$this->load->view('components/navbar');
-		$this->load->view('admin/schedule', $data);
-		$this->load->view('components/footer');
+		$this->load->view('Components/Navbar');
+		$this->load->view('Admin/Schedule', $data);
+		$this->load->view('Components/Footer');
 	}
 
 	public function search_employees()
@@ -638,14 +638,14 @@ class admin_ctrl extends CI_Controller {
 		{
 
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-        	$this->load->view('auth/signin');
+        	$this->load->view('Auth/Signin');
 			return;
 
     	}
 
 		$term = $this->input->post('term');
 
-		$results = $this->admin_model->search_employees($term);
+		$results = $this->Admin_model->search_employees($term);
 
 		$formatted_results = [];
 
@@ -665,12 +665,12 @@ class admin_ctrl extends CI_Controller {
 		{
 
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-        	$this->load->view('auth/signin');
+        	$this->load->view('Auth/Signin');
 			return;
 
     	}
 		
-		$results = $this->admin_model->get_all_company();
+		$results = $this->Admin_model->get_all_company();
 
 		$formatted_results = [];
 
@@ -691,7 +691,7 @@ class admin_ctrl extends CI_Controller {
 		{
 
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-        	$this->load->view('auth/signin');
+        	$this->load->view('Auth/Signin');
 			return;
 
     	}
@@ -718,7 +718,7 @@ class admin_ctrl extends CI_Controller {
 				'punchout' => $time_out,
 			];
 
-			if ($this->admin_model->insert_schedule($data)) {
+			if ($this->Admin_model->insert_schedule($data)) {
 				$inserted++;
 			} else {
 				$skipped++;
@@ -738,7 +738,7 @@ class admin_ctrl extends CI_Controller {
 			}
 		}
 
-		redirect('roster_k0jb');
+		redirect('Roster_k0jb');
 	}
 
 
@@ -749,7 +749,7 @@ class admin_ctrl extends CI_Controller {
 		{
 
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-        	$this->load->view('auth/signin');
+        	$this->load->view('Auth/Signin');
 			return;
 
     	}
@@ -765,7 +765,7 @@ class admin_ctrl extends CI_Controller {
 			$this->session->set_flashdata('error', 'Failed to delete schedule.');
 		}
 
-		redirect('roster_k0jb');
+		redirect('Roster_k0jb');
 	}
 
 	public function accounts()
@@ -773,15 +773,15 @@ class admin_ctrl extends CI_Controller {
 		if (!$this->session->userdata('logged_in')) 
 		{
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-			$this->load->view('auth/signin');
+			$this->load->view('Auth/Signin');
 			return;
 		}
 
-		$data['accounts'] = $this->admin_model->accounts();
+		$data['accounts'] = $this->Admin_model->accounts();
 
-		$this->load->view('components/navbar');
-		$this->load->view('admin/accounts', $data);
-		$this->load->view('components/footer');
+		$this->load->view('Components/Navbar');
+		$this->load->view('Admin/Accounts', $data);
+		$this->load->view('Components/Footer');
 	}
 
 	public function update_auth() 
@@ -789,7 +789,7 @@ class admin_ctrl extends CI_Controller {
 		if (!$this->session->userdata('logged_in')) 
 		{
 			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
-			$this->load->view('auth/signin');
+			$this->load->view('Auth/Signin');
 			return;
 		}
 		
@@ -804,7 +804,7 @@ class admin_ctrl extends CI_Controller {
 		]);
 
 		$this->session->set_flashdata('success', 'User updated successfully.');
-		redirect('accounts_j8vq');
+		redirect('Accounts_j8vq');
 	}
 
 

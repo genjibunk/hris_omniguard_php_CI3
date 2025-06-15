@@ -71,7 +71,7 @@
                 <?php endif; ?>
             </script>
 
-            <form method="post" action="<?php echo site_url('auth4r9x'); ?>">
+            <form method="post" action="<?php echo site_url('Auth4r9x'); ?>">
               <div class="mb-3">
                 <label class="form-label">Username</label>
                 <input type="text" class="form-control" name="username" placeholder="your@email.com" autocomplete="off">

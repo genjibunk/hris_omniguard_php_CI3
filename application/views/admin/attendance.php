@@ -83,7 +83,7 @@
 
                                     <div class="mt-3">
 
-                                        <a href="<?php echo base_url();?>base_8nvp" class="btn btn-orange active">Back</a>
+                                        <a href="<?php echo base_url();?>Base_8nvp" class="btn btn-orange active">Back</a>
 
                                     </div>
 
@@ -157,7 +157,7 @@
                                                                     
                                                                     ?>
                                         
-                                                                    <a href="<?php echo site_url("atndfile_n5gw/$encrypted_employee_data_id"); ?>" class="btn btn-ghost-azure">
+                                                                    <a href="<?php echo site_url("Atndfile_n5gw/$encrypted_employee_data_id"); ?>" class="btn btn-ghost-azure">
                                                                         <svg  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-folder">
                                                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                                                             <path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"></path>

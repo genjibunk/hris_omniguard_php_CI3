@@ -81,9 +81,9 @@
 
                                     <div class="mt-3">
 
-                                        <a href="<?php echo base_url();?>base_8nvp" class="btn btn-orange active">Back</a>
+                                        <a href="<?php echo base_url();?>Base_8nvp" class="btn btn-orange active">Back</a>
 
-                                        <a href="<?php echo base_url();?>view_add_v3sw" class="btn btn-primary active">New Employee</a>
+                                        <a href="<?php echo base_url();?>View_add_v3sw" class="btn btn-primary active">New Employee</a>
 
                                     </div>
 
@@ -238,7 +238,7 @@
                                                                     
                                                                     ?>
                                         
-                                                                    <a class="btn btn-ghost-azure" href="<?php echo site_url("open_z3bt/$encrypted_employee_data_id"); ?>" class="status status-blue ms-auto">
+                                                                    <a class="btn btn-ghost-azure" href="<?php echo site_url("Open_z3bt/$encrypted_employee_data_id"); ?>" class="status status-blue ms-auto">
 
                                                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"></path><path d="M16 5l3 3"></path></svg>
 

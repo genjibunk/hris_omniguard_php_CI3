@@ -58,7 +58,7 @@
 
                                     <div class="mt-3">
 
-                                        <a href="<?php echo base_url();?>sbase_8nvp" class="btn btn-orange active">Back</a>
+                                        <a href="<?php echo base_url();?>Sbase_8nvp" class="btn btn-orange active">Back</a>
 
                                         <a href="" class="btn btn-primary active" data-bs-toggle="modal" data-bs-target="#modal-leave">New Request</a>
 

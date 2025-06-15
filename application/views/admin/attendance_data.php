@@ -82,7 +82,7 @@
 
                                     <div class="mt-3">
 
-                                        <a href="<?php echo base_url();?>atnd_n5gw" class="btn btn-orange active">Back</a>
+                                        <a href="<?php echo base_url();?>Atnd_n5gw" class="btn btn-orange active">Back</a>
 
                                     </div>
 
