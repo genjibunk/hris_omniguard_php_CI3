@@ -100,11 +100,11 @@ class Staff_ctrl extends CI_Controller {
 
         $id = $this->session->userdata('userid');
 
-		$data['open_information_employee_data'] = $this->staff_model->open_information_employee_data($id);
-        $data['punchinout'] = $this->staff_model->punchinout($id);
-
+		$data['open_information_employee_data'] = $this->Staff_model->open_information_employee_data($id);
+        $data['punchinout'] = $this->Staff_model->punchinout($id);
+		$data['announcement'] = $this->Admin_model->announcement();
 		$this->load->view('Components/Topbar',$data);
-		$this->load->view('Staff/Home');
+		$this->load->view('Staff/Home',$data);
 		$this->load->view('Components/Footer');
 	}
 
@@ -119,9 +119,9 @@ class Staff_ctrl extends CI_Controller {
 
         $id = $this->session->userdata('userid');
 
-		$data['open_information_employee_data'] = $this->staff_model->open_information_employee_data($id);
-        $data['attendance'] = $this->staff_model->attendance($id);
-        $data['punchinout'] = $this->staff_model->punchinout($id);
+		$data['open_information_employee_data'] = $this->Staff_model->open_information_employee_data($id);
+        $data['attendance'] = $this->Staff_model->attendance($id);
+        $data['punchinout'] = $this->Staff_model->punchinout($id);
 
 		$this->load->view('Components/Topbar',$data);
 		$this->load->view('Staff/Attendance', $data);
@@ -141,9 +141,9 @@ class Staff_ctrl extends CI_Controller {
 
         $id = $this->session->userdata('userid');
 
-		$data['open_information_employee_data'] = $this->staff_model->open_information_employee_data($id);
-        $data['schedule'] = $this->staff_model->schedule($id);
-        $data['punchinout'] = $this->staff_model->punchinout($id);
+		$data['open_information_employee_data'] = $this->Staff_model->open_information_employee_data($id);
+        $data['schedule'] = $this->Staff_model->schedule($id);
+        $data['punchinout'] = $this->Staff_model->punchinout($id);
 
 		$this->load->view('Components/Topbar',$data);
 		$this->load->view('Staff/Schedule', $data);
@@ -163,9 +163,9 @@ class Staff_ctrl extends CI_Controller {
 
         $id = $this->session->userdata('userid');
 
-		$data['open_information_employee_data'] = $this->staff_model->open_information_employee_data($id);
-        $data['leaverequest'] = $this->staff_model->leave_request($id);
-        $data['punchinout'] = $this->staff_model->punchinout($id);
+		$data['open_information_employee_data'] = $this->Staff_model->open_information_employee_data($id);
+        $data['leaverequest'] = $this->Staff_model->leave_request($id);
+        $data['punchinout'] = $this->Staff_model->punchinout($id);
 
 		$this->load->view('Components/Topbar',$data);
 		$this->load->view('Staff/Leave_request', $data);
@@ -178,7 +178,7 @@ class Staff_ctrl extends CI_Controller {
 
     {
         $id = $this->input->post('leaverequest_id');
-        if ($this->staff_model->delete_leaverequest($id)) {
+        if ($this->Staff_model->delete_leaverequest($id)) {
             $this->session->set_flashdata('success', 'Leave request deleted successfully.');
         } else {
             $this->session->set_flashdata('error', 'Failed to delete leave request.');
@@ -247,8 +247,8 @@ class Staff_ctrl extends CI_Controller {
 
         $id = $this->session->userdata('userid');
 
-		$data['open_information_employee_data'] = $this->staff_model->open_information_employee_data($id);
-        $data['punchinout'] = $this->staff_model->punchinout($id);
+		$data['open_information_employee_data'] = $this->Staff_model->open_information_employee_data($id);
+        $data['punchinout'] = $this->Staff_model->punchinout($id);
 
 		$this->load->view('Components/Topbar',$data);
 		$this->load->view('Staff/Profile', $data);
@@ -349,8 +349,8 @@ class Staff_ctrl extends CI_Controller {
 
         $id = $this->session->userdata('userid');
 
-		$data['open_information_employee_data'] = $this->staff_model->open_information_employee_data($id);
-        $data['punchinout'] = $this->staff_model->punchinout($id);
+		$data['open_information_employee_data'] = $this->Staff_model->open_information_employee_data($id);
+        $data['punchinout'] = $this->Staff_model->punchinout($id);
 
 		$this->load->view('Components/Topbar',$data);
 		$this->load->view('Staff/Payslip');
@@ -358,6 +358,40 @@ class Staff_ctrl extends CI_Controller {
 
     
 	}
+
+	public function change_password()
+	{
+		if (!$this->session->userdata('logged_in')) 
+
+		{
+
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+        	$this->load->view('Auth/Signin');
+			return;
+
+    	}
+		
+		$userauth_id = $this->session->userdata('userid');
+		$new_password = $this->input->post('new_password');
+
+		if (!$userauth_id || !$new_password) {
+			show_error("Invalid request", 400);
+		}
+
+		// Hash the new password
+		$hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+
+		// Update in database
+		$this->db->where('userauth_id', $userauth_id);
+		$this->db->update('userauth', ['password_hash' => $hashed_password]);
+
+		// Optionally, set flash message
+		$this->session->set_flashdata('success', 'Password changed successfully!');
+
+		$this->session->sess_destroy();
+        $this->load->view('Auth/Signin');
+	}
+
 
 
 

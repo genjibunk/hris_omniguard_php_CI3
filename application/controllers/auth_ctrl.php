@@ -17,10 +17,9 @@ class Auth_ctrl extends CI_Controller {
 
 		$this->session->sess_destroy();
 		
-
+		$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
         $this->load->view('Auth/Signin');
-
-		
+		return;
 
     }
 
@@ -51,13 +50,15 @@ class Auth_ctrl extends CI_Controller {
 					
 					$data['open_information_employee_data'] = $this->Admin_model->open_information_employee_data($id);
 					$data['punchinout'] = $this->Staff_model->punchinout($id);
+					$data['announcement'] = $this->Admin_model->announcement();
+					$data['counts'] = $this->Admin_model->getEmployeeCounts();
 
 					if ($user->role === 'Admin') 
 
 					{
 
 						$this->load->view('Components/Navbar',$data);
-						$this->load->view('Admin/Home');
+						$this->load->view('Admin/Home',$data);
 						$this->load->view('Components/Footer');
 
 					}
@@ -66,8 +67,8 @@ class Auth_ctrl extends CI_Controller {
 
 					{
 						
-						$this->load->view('components/topbar',$data);
-						$this->load->view('Staff/Home');
+						$this->load->view('Components/Topbar',$data);
+						$this->load->view('Staff/Home',$data);
 						$this->load->view('Components/Footer');
 
 					} 
@@ -75,8 +76,8 @@ class Auth_ctrl extends CI_Controller {
 					elseif ($user->role === 'Guard') 
 
 					{
-						$this->load->view('components/topbar',$data);
-						$this->load->view('Staff/Home');
+						$this->load->view('Components/topbar',$data);
+						$this->load->view('Staff/Home',$data);
 						$this->load->view('Components/Footer');
 
 					} 
@@ -109,6 +110,16 @@ class Auth_ctrl extends CI_Controller {
 	public function signout()
     {
 
+		if (!$this->session->userdata('logged_in')) 
+
+		{
+
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+        	$this->load->view('Auth/Signin');
+			return;
+
+    	}
+
 		$this->session->sess_destroy();
         $this->load->view('Auth/Signin');
 
@@ -130,9 +141,10 @@ class Auth_ctrl extends CI_Controller {
 
 		$id = $this->session->userdata('userid');
 		$data['open_information_employee_data'] = $this->Admin_model->open_information_employee_data($id);
+		$data['announcement'] = $this->Admin_model->announcement();
 
 		$this->load->view('Components/Navbar',$data);
-    	$this->load->view('Admin/Home');
+    	$this->load->view('Admin/Home',$data);
     	$this->load->view('Components/Footer');
 		
 		

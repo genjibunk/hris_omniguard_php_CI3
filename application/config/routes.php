@@ -49,33 +49,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'auth_ctrl/signin';
+$route['default_controller'] = 'Auth_ctrl/signin';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 // admin
-$route['auth4r9x'] = 'auth_ctrl/do_signin';
-$route['dismiss_1vqn'] = 'auth_ctrl/signout';
-$route['base_8nvp'] = 'auth_ctrl/goto_home';
-$route['info_a7xk'] = 'admin_ctrl/information';
-$route['view_add_v3sw'] = 'admin_ctrl/view_add_information';
-$route['init_r0kc'] = 'admin_ctrl/add_employee';
-$route['open_z3bt/(:any)'] = 'admin_ctrl/open_information/$1';
-$route['alter_z3bt'] = 'admin_ctrl/update_employee';
-$route['token_m4tz'] = 'admin_ctrl/leavecredits';
-$route['tokenreq_m4tz'] = 'admin_ctrl/leaverequest';
-$route['cmpy_k5hc'] = 'admin_ctrl/companies';
-$route['clients_m9xp/(:any)'] = 'admin_ctrl/clients/$1';
-$route['atnd_n5gw'] = 'admin_ctrl/attendance';
-$route['atndfile_n5gw/(:any)'] = 'admin_ctrl/attendance_data/$1';
-$route['roster_k0jb'] = 'admin_ctrl/schedule';
-$route['accounts_j8vq'] = 'admin_ctrl/accounts';
+$route['Auth4r9x'] = 'Auth_ctrl/do_signin';
+$route['Dismiss_1vqn'] = 'Auth_ctrl/signout';
+$route['Base_8nvp'] = 'Auth_ctrl/goto_home';
+$route['Info_a7xk'] = 'Admin_ctrl/information';
+$route['View_add_v3sw'] = 'Admin_ctrl/view_add_information';
+$route['Init_r0kc'] = 'Admin_ctrl/add_employee';
+$route['Open_z3bt/(:any)'] = 'Admin_ctrl/open_information/$1';
+$route['Alter_z3bt'] = 'Admin_ctrl/update_employee';
+$route['Token_m4tz'] = 'Admin_ctrl/leavecredits';
+$route['Tokenreq_m4tz'] = 'Admin_ctrl/leaverequest';
+$route['Cmpy_k5hc'] = 'Admin_ctrl/companies';
+$route['Clients_m9xp/(:any)'] = 'Admin_ctrl/clients/$1';
+$route['Atnd_n5gw'] = 'Admin_ctrl/attendance';
+$route['Atndfile_n5gw/(:any)'] = 'Admin_ctrl/attendance_data/$1';
+$route['Roster_k0jb'] = 'Admin_ctrl/schedule';
+$route['Accounts_j8vq'] = 'Admin_ctrl/accounts';
 
 // staff
-$route['sbase_8nvp'] = 'staff_ctrl/goto_home';
-$route['satnd_n5gw'] = 'staff_ctrl/attendance';
-$route['sroster_k0jb'] = 'staff_ctrl/schedule';
-$route['stokenreq_m4tz'] = 'staff_ctrl/leave_request';
-$route['sopen_z3bt'] = 'staff_ctrl/profile';
-$route['slip_j4qg'] = 'staff_ctrl/payslip';
+$route['Sbase_8nvp'] = 'Staff_ctrl/goto_home';
+$route['Satnd_n5gw'] = 'Staff_ctrl/attendance';
+$route['Sroster_k0jb'] = 'Staff_ctrl/schedule';
+$route['Stokenreq_m4tz'] = 'Staff_ctrl/leave_request';
+$route['Sopen_z3bt'] = 'Staff_ctrl/profile';
+$route['Slip_j4qg'] = 'Staff_ctrl/payslip';
 

@@ -35,7 +35,7 @@
         <div class="card card-md">
           <div class="card-body">
             <a href="#" class="navbar-brand navbar-brand-autodark d-flex align-items-center text-decoration-none">
-            <img src="assets/logo/hris_mainlogo.png" style="width: 60px; height: auto; min-w-[60px]" alt="Tabler" class="navbar-brand-image me-2">
+            <img src="<?php echo base_url()."assets/"; ?>logo/hris_mainlogo.png" style="width: 60px; height: auto; min-w-[60px]" class="navbar-brand-image me-2">
 
             Human Resource Information System
        

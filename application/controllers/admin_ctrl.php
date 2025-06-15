@@ -12,6 +12,21 @@ class Admin_ctrl extends CI_Controller {
             
     }
 
+	public function add_announcement()
+	{
+		$description = $this->input->post('description');
+
+		$data = [
+			'description' => $description
+		];
+
+		$this->db->insert('announcement', $data);
+
+		$this->session->set_flashdata('success', 'Announcement posted!');
+		redirect('Base_8nvp');
+	}
+
+
 	public function information()
 	{
         if (!$this->session->userdata('logged_in')) 
@@ -162,7 +177,7 @@ class Admin_ctrl extends CI_Controller {
 		$data['encrypted_employee_data_id'] = $id;
 
 		$this->load->view ('Components/Navbar');
-		$this->load->view ('admin/Open_information', $data);
+		$this->load->view ('Admin/Open_information', $data);
 		$this->load->view ('Components/Footer');
 	}
 
@@ -806,6 +821,26 @@ class Admin_ctrl extends CI_Controller {
 		$this->session->set_flashdata('success', 'User updated successfully.');
 		redirect('Accounts_j8vq');
 	}
+
+	public function reset_password()
+	{
+		$userauth_id = $this->input->post('userauth_id');
+
+		if (!$userauth_id) {
+			show_error('Invalid request');
+			return;
+		}
+
+		// Hash the default password '12345'
+		$hashed = password_hash('12345', PASSWORD_DEFAULT);
+
+		// Update the password in the database
+		$this->db->where('userauth_id', $userauth_id);
+		$this->db->update('userauth', ['password_hash' => $hashed]);
+
+		echo json_encode(['status' => 'success']);
+	}
+
 
 
 

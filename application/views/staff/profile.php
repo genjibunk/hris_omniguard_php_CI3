@@ -84,6 +84,10 @@
 
                                         <a href="<?php echo base_url();?>Sbase_8nvp" class="btn btn-primary active">Go back</a>
 
+                                        <a href="#" class="btn btn-warning active" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+                                            Change Password
+                                        </a>
+
                                     </div>
 
                                     </br>
@@ -395,4 +399,28 @@
     </div>
 
 </div>
+
+<!-- Change Password Modal -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <form id="changePasswordForm" method="post" action="<?= base_url('Staff_ctrl/change_password') ?>">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Change Password</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="new_password" class="form-label">New Password</label>
+            <input type="password" name="new_password" id="new_password" class="form-control" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-warning">Update Password</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
 <script src="<?php echo base_url()."assets/"; ?>dist/js/ph-address-selector.js"></script>

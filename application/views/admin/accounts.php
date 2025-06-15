@@ -126,6 +126,7 @@
                                                         
                                                             <th>Name</th>
                                                             <th>System Role</th>
+                                                            <th>Account Status</th>
 
                                                             <th></th>
 
@@ -165,8 +166,11 @@
                                                                     }
                                                                     ?>
                                                                     <span class="badge <?php echo $badge_class; ?> me-1"></span> <?php echo htmlspecialchars($role); ?>
+                                                                    
 
                                                                 </td>
+
+                                                                <td><?php echo $data['status']; ?></td>
                                                                 
                                                                 <td class="text-end">
 
@@ -190,7 +194,17 @@
                                                                     Manage
                                                                     </a>
 
-                                                                </td> 
+                                                                    <a href="#" class="btn btn-ghost-red openManageAuth" data-userauth-id="<?= $data['userauth_id']; ?>">
+                                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-restore">
+                                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                                            <path d="M3.06 13a9 9 0 1 0 .49 -4.087"></path>
+                                                                            <path d="M3 4.001v5h5"></path>
+                                                                            <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                                                                        </svg>
+                                                                    Reset Password
+                                                                    </a>
+
+                                                                </td>
 
                                                             </tr>
                                                         <?php endforeach; ?>
@@ -292,6 +306,30 @@ $(document).on('click', '.openManageAuth', function () {
 
 
 </script>
+
+<script>
+$(document).ready(function () {
+    $('.openManageAuth.btn-ghost-red').click(function (e) {
+        e.preventDefault();
+        const userId = $(this).data('userauth-id');
+
+        if (confirm("Are you sure you want to reset this user's password to 12345?")) {
+            $.ajax({
+                url: '<?= base_url("admin_ctrl/reset_password") ?>',
+                method: 'POST',
+                data: { userauth_id: userId },
+                success: function (response) {
+                    alert("Password has been reset to 12345.");
+                },
+                error: function () {
+                    alert("Failed to reset password.");
+                }
+            });
+        }
+    });
+});
+</script>
+
 
 
 <script src="<?php echo base_url()."assets/"; ?>dist/js/search.js" defer></script>

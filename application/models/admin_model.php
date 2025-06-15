@@ -7,6 +7,31 @@ class Admin_model extends CI_Model{
        
     }
 
+    public function getEmployeeCounts()
+    {
+        $this->db->select("
+            COUNT(employee_data.UserID) AS total_employees,
+            COUNT(CASE WHEN userauth.status = 'inactive' THEN 1 END) AS inactive_employees,
+            COUNT(CASE WHEN userauth.status = 'active' THEN 1 END) AS active_employees
+        ")
+        ->from('employee_data')
+        ->join('userauth', 'employee_data.UserID = userauth.userauth_id');
+
+        $query = $this->db->get();
+        return $query->row_array();
+    }
+
+    public function announcement()
+    {
+        $query = $this->db
+            ->select('*')
+            ->from('announcement')
+            ->order_by('announcement_id', 'DESC')
+            ->LIMIT(1)
+            ->get();
+        return $query->row_array();
+    }
+
     public function information_employee_data()
     {
 

@@ -100,9 +100,9 @@ $query_builder = TRUE;
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
-	'username' => 'u209700209_hrms',
-	'password' => 'YFGJLXZ9pm?!',
-	'database' => 'u209700209_hrms',
+	'username' => 'u209700209_hrsyncdb',
+	'password' => 'YFGJLXZ9pm?',
+	'database' => 'u209700209_hrsyncdb',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
@@ -118,4 +118,3 @@ $db['default'] = array(
 	'failover' => array(),
 	'save_queries' => TRUE
 );
-// $

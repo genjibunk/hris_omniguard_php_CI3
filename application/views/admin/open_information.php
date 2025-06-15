@@ -82,7 +82,7 @@
 
                                     <div class="mt-3">
 
-                                        <a href="<?php echo base_url();?>info_a7xk" class="btn btn-primary active">Go back</a>
+                                        <a href="<?php echo base_url();?>Info_a7xk" class="btn btn-primary active">Go back</a>
 
                                     </div>
 
@@ -448,4 +448,7 @@
     </div>
 
 </div>
-<script src="<?php echo base_url()."assets/"; ?>dist/js/ph-address-selector.js"></script>
+<script>
+    const baseUrl = "<?= base_url(); ?>";
+</script>
+<script src="<?= base_url('assets/dist/js/ph-address-selector.js'); ?>"></script>
