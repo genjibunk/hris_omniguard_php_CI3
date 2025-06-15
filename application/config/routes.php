@@ -76,4 +76,5 @@ $route['sbase_8nvp'] = 'staff_ctrl/goto_home';
 $route['satnd_n5gw'] = 'staff_ctrl/attendance';
 $route['sroster_k0jb'] = 'staff_ctrl/schedule';
 $route['stokenreq_m4tz'] = 'staff_ctrl/leave_request';
+$route['sopen_z3bt'] = 'staff_ctrl/profile';
 

@@ -1,9 +1,21 @@
 <script>
-$(document).ready(function() {
-    <?php if ($this->session->flashdata('success')): ?>
-        toastr.success("<?= $this->session->flashdata('success') ?>");
-    <?php endif; ?>
-});
+    $(document).ready(function() {
+        <?php if ($this->session->flashdata('success')): ?>
+            toastr.success("<?= $this->session->flashdata('success') ?>");
+        <?php endif; ?>
+
+        <?php if ($this->session->flashdata('error')): ?>
+            toastr.error("<?= $this->session->flashdata('error') ?>");
+        <?php endif; ?>
+
+        <?php if ($this->session->flashdata('warning')): ?>
+            toastr.warning("<?= $this->session->flashdata('warning') ?>");
+        <?php endif; ?>
+
+        <?php if ($this->session->flashdata('info')): ?>
+            toastr.info("<?= $this->session->flashdata('info') ?>");
+        <?php endif; ?>
+    });
 </script>
 <div class="page-body">
 
@@ -180,28 +192,32 @@ $(document).ready(function() {
 
                     <div class="col-sm-6 col-lg-6">
 
-                        <div class="card card-sm">
+                        <a href="<?php echo base_url('sopen_z3bt');?>" style="text-decoration: none; color: inherit;">
 
-                            <div class="card-body">
+                            <div class="card card-sm">
 
-                                <div class="row align-items-center">
+                                <div class="card-body">
 
-                                    <div class="col-auto">
+                                    <div class="row align-items-center">
 
-                                        <span class="bg-orange text-white avatar">
+                                        <div class="col-auto">
 
-                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-circle-caret-up">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                <path d="M17 3.34a10 10 0 1 1 -15 8.66l.005 -.324a10 10 0 0 1 14.995 -8.336m-4.293 5.953a1 1 0 0 0 -1.414 0l-3 3a1 1 0 0 0 .707 1.707h6c.217 0 .433 -.07 .613 -.21l.094 -.083a1 1 0 0 0 0 -1.414z"></path>
-                                            </svg>
+                                            <span class="bg-orange text-white avatar">
 
-                                        </span>
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-circle-caret-up">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <path d="M17 3.34a10 10 0 1 1 -15 8.66l.005 -.324a10 10 0 0 1 14.995 -8.336m-4.293 5.953a1 1 0 0 0 -1.414 0l-3 3a1 1 0 0 0 .707 1.707h6c.217 0 .433 -.07 .613 -.21l.094 -.083a1 1 0 0 0 0 -1.414z"></path>
+                                                </svg>
 
-                                    </div>
+                                            </span>
 
-                                    <div class="col">
+                                        </div>
 
-                                        <div class="font-weight-medium">My Profile</div>
+                                        <div class="col">
+
+                                            <div class="font-weight-medium">My Profile</div>
+
+                                        </div>
 
                                     </div>
 
@@ -209,7 +225,7 @@ $(document).ready(function() {
 
                             </div>
 
-                        </div>
+                        </a>
 
                     </div>
 

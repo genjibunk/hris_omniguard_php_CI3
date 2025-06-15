@@ -1,11 +1,21 @@
 <script>
-<?php if ($this->session->flashdata('success')): ?>
-    toastr.success("<?= $this->session->flashdata('success'); ?>");
-<?php endif; ?>
+    $(document).ready(function() {
+        <?php if ($this->session->flashdata('success')): ?>
+            toastr.success("<?= $this->session->flashdata('success') ?>");
+        <?php endif; ?>
 
-<?php if ($this->session->flashdata('warning')): ?>
-    toastr.warning("<?= $this->session->flashdata('warning'); ?>");
-<?php endif; ?>
+        <?php if ($this->session->flashdata('error')): ?>
+            toastr.error("<?= $this->session->flashdata('error') ?>");
+        <?php endif; ?>
+
+        <?php if ($this->session->flashdata('warning')): ?>
+            toastr.warning("<?= $this->session->flashdata('warning') ?>");
+        <?php endif; ?>
+
+        <?php if ($this->session->flashdata('info')): ?>
+            toastr.info("<?= $this->session->flashdata('info') ?>");
+        <?php endif; ?>
+    });
 </script>
 
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />

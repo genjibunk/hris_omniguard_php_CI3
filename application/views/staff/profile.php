@@ -34,7 +34,7 @@
                     Overview
                     </div>
                     <h2 class="page-title">
-                    Employee Records / Information / Add New <!-- <?php echo $this->session->userdata('userid'); ?>-->
+                    Employee Records / Information / Information Data <!-- <?php echo $this->session->userdata('userid'); ?>-->
                     </h2>
 
                 </div>
@@ -72,17 +72,17 @@
 
                                 <div class="col-10">
 
-                                    <h3 class="h1">New Employee</h3>
+                                    <h3 class="h1">Information Data</h3>
 
                                     <div class="markdown text-secondary">
 
-                                        An employee who has recently joined the organization and is starting their assigned duties.
+                                        Foundational data that supports analysis, reporting, and strategic decisions.
 
                                     </div>
 
                                     <div class="mt-3">
 
-                                        <a href="<?php echo base_url();?>info_a7xk" class="btn btn-primary active">Go back</a>
+                                        <a href="<?php echo base_url();?>sbase_8nvp" class="btn btn-primary active">Go back</a>
 
                                     </div>
 
@@ -91,32 +91,43 @@
                                 </div>
 
                                 <!-- Details -->
-                                     
 
                                     <div class="col-12">
 
-                                        <form method="post" action="<?= base_url('init_r0kc') ?>" enctype="multipart/form-data">
-                 
+                                        <form method="post" enctype="multipart/form-data" action="<?php echo base_url('staff_ctrl/update_employee'); ?>">
+
+                                            <input type="hidden" name="employee_id" value="<?php echo $open_information_employee_data['employee_data_id']; ?>">
+
+                                            <?php 
+                                            
+                                            $existingPhoto = !empty($open_information_employee_data['photo']) ? base_url('uploads/photos/' . $open_information_employee_data['photo']) : '';
+                                            ?>
+
                                             <div class="mb-3">
-
                                                 <label class="form-label required">Photo</label>
-                                                <input type="file" class="form-control" name="photo" id="photoInput" accept="image/*" required>
+                                                <input type="file" class="form-control" name="photo" id="photoInput" accept="image/*" >
+
+                                                <?php if (!empty($open_information_employee_data['photo'])): ?>
+                                                    <small>Current file: <?php echo htmlspecialchars($open_information_employee_data['photo']); ?></small>
+                                                <?php endif; ?>
+
                                                 <div class="mt-3">
-                                                    <img id="photoPreview" src="#" alt="Photo Preview" class="img-thumbnail" style="display: none; max-width: 200px;">
+                                                    <img id="photoPreview" 
+                                                        src="<?php echo !empty($open_information_employee_data['photo']) ? base_url('uploads/photos/' . $open_information_employee_data['photo']) : '#'; ?>" 
+                                                        alt="Photo Preview" 
+                                                        class="img-thumbnail" 
+                                                        style="<?php echo !empty($open_information_employee_data['photo']) ? 'display: block; max-width: 200px;' : 'display: none;'; ?>">
                                                 </div>
-
-                                                <button type="button" id="removePhotoBtn" class="btn btn-outline-danger mt-2" style="display: none;">Remove Photo</button>
-
                                             </div>
 
-                                            <script>
 
+                                            <script>
                                                 const photoInput = document.getElementById('photoInput');
                                                 const photoPreview = document.getElementById('photoPreview');
                                                 const removePhotoBtn = document.getElementById('removePhotoBtn');
 
                                                 photoInput.addEventListener('change', function (event) {
-                                                     const file = event.target.files[0];
+                                                    const file = event.target.files[0];
 
                                                     if (file && file.type.startsWith('image/')) {
                                                         const reader = new FileReader();
@@ -125,72 +136,18 @@
                                                             photoPreview.style.display = 'block';
                                                             removePhotoBtn.style.display = 'inline-block';
                                                         };
-                                                         reader.readAsDataURL(file);
+                                                        reader.readAsDataURL(file);
                                                     } else {
                                                         resetPhotoInput();
                                                     }
                                                 });
 
-                                                removePhotoBtn.addEventListener('click', function () {
-                                                    resetPhotoInput();
-                                                });
-
-                                                function resetPhotoInput() {
-                                                    photoInput.value = '';
-                                                    photoPreview.src = '#';
-                                                    photoPreview.style.display = 'none';
-                                                    removePhotoBtn.style.display = 'none';
-                                                }
-
+                                                
                                             </script>
 
-                                            <fieldset class="form-fieldset">
-
                                                 <div class="mb-3">
 
-                                                    <label class="form-label required">Position</label>
-                                                    <select class="form-select" name="position" required>
-                                                        <option value="Admin">Admin</option>
-                                                        <option value="Staff">Staff</option>
-                                                        <option value="Guard">Guard</option>
-                                                    </select>
-
-                                                </div>
-
-                                                <div class="mb-3">
-
-                                                    <label class="form-label required">First name</label>
-                                                    <input type="text" class="form-control" name="first_name" required/>
-                                                    
-                                                </div>
-
-                                                <div class="mb-3">
-
-                                                    <label class="form-label required">Middle name</label>
-                                                    <input type="text" class="form-control" name="middle_name" required/>
-                                                    
-                                                </div>
-
-                                                <div class="mb-3">
-
-                                                    <label class="form-label required">Last name</label>
-                                                    <input type="text" class="form-control" name="last_name" required/>
-
-                                                </div>
-
-                                                <div class="mb-3">
-
-                                                    <label class="form-label required">Gender</label>
-                                                    <select class="form-select" name="gender" required>
-                                                        <option value="Male">Male</option>
-                                                        <option value="Female">Female</option>
-                                                    </select>
-
-                                                </div>
-
-                                                <div class="mb-3">
-
-                                                    <label class="col-3 col-form-label required" for="datepicker-icon-prepend">Birthday</label>
+                                                    <label class="col-3 col-form-label" for="datepicker-icon-prepend">Birthday</label>
 
                                                     <div class="col">
 
@@ -216,7 +173,7 @@
                                                                 placeholder="Select a date" 
                                                                 id="datepicker-icon-prepend" 
                                                                 name="datepicker-icon-prepend" 
-                                                                required>
+                                                                >
                                                         </div>
 
                                                     </div>
@@ -236,6 +193,7 @@
                                                         name="age-display" 
                                                         readonly
                                                         required
+                                                        value="<?php echo $open_information_employee_data['age']; ?>"
 
                                                     >
                                                        
@@ -291,7 +249,7 @@
                                                 <div class="mb-3">
 
                                                     <label class="form-label required">Contact No.</label>
-                                                    <input type="number" class="form-control" name="contact_number" required/>
+                                                    <input type="number" class="form-control" name="contact_number" value="<?php echo $open_information_employee_data['contact_number']; ?>" required/>
 
                                                 </div>
 
@@ -299,25 +257,20 @@
 
                                                     <label class="form-label required">Marital Status</label>
                                                     <select class="form-select" name="marital_status" required>
-                                                        <option value="Single">Single</option>
-                                                        <option value="Married">Married</option>
-                                                        <option value="Divorce">Divorce</option>
-                                                        <option value="Widowed">Widowed</option>
+                                                        <option value="Single" <?php echo ($open_information_employee_data['marital_status'] == 'Single') ? 'selected' : ''; ?>>Single</option>
+                                                        <option value="Married" <?php echo ($open_information_employee_data['marital_status'] == 'Married') ? 'selected' : ''; ?>>Married</option>
+                                                        <option value="Divorce" <?php echo ($open_information_employee_data['marital_status'] == 'Divorce') ? 'selected' : ''; ?>>Divorce</option>
+                                                        <option value="Widowed" <?php echo ($open_information_employee_data['marital_status'] == 'Widowed') ? 'selected' : ''; ?>>Widowed</option>
                                                     </select>
+
+
 
                                                 </div>
 
                                                 <div class="mb-3">
 
                                                     <label class="form-label required">Spouse / Emergency Contact</label>
-                                                    <input type="text" class="form-control" name="spouse_name" required/>
-
-                                                </div>
-
-                                                <div class="mb-3">
-
-                                                    <label class="form-label required">Date Hired</label>
-                                                    <input type="date" class="form-control" name="date_hired" required/>
+                                                    <input type="text" class="form-control" name="spouse_name" value="<?php echo $open_information_employee_data['spouse_name']; ?>" required/>
 
                                                 </div>
 
@@ -327,7 +280,9 @@
 
                                                     <div class="col">
 
-                                                        <select class="form-control form-select" id="region" name="region" required></select>
+                                                        <select class="form-control form-select" id="region" name="region" required>
+                                                            
+                                                        </select>
 
                                                     </div>
 
@@ -368,10 +323,11 @@
                                                     </div>
 
                                                 </div>
-                                                <input type="hidden" id="region-text" name="region_name" />
-                                                <input type="hidden" id="province-text" name="province_name" />
-                                                <input type="hidden" id="city-text" name="city_name" />
-                                                <input type="hidden" id="barangay-text" name="barangay_name" />
+                                                <input type="hidden" id="region-text" name="region_name" value="<?php echo $open_information_employee_data['region']; ?>" />
+                                                <input type="hidden" id="province-text" name="province_name" value="<?php echo $open_information_employee_data['province']; ?>" />
+                                                <input type="hidden" id="city-text" name="city_name" value="<?php echo $open_information_employee_data['city']; ?>" />
+                                                <input type="hidden" id="barangay-text" name="barangay_name" value="<?php echo $open_information_employee_data['brgy']; ?>" />
+
                                                 <div class="mb-3 row">
 
                                                     <label class="col-3 col-form-label required">Street</label>
@@ -386,6 +342,7 @@
                                                             placeholder="Street"
                                                             readonly
                                                             required
+                                                            value="<?php echo $open_information_employee_data['street']; ?>"
                                                         >
 
                                                      </div>
@@ -399,45 +356,23 @@
 
                                                     <div class="col">
                                         
-                                                        <textarea class="form-control" rows="5" id="full-address" name="full-address" readonly></textarea>
+                                                        <textarea class="form-control" rows="5" id="full-address" name="full-address" readonly>
+                                                            <?php echo $open_information_employee_data['region'] . ' ' . $open_information_employee_data['province'] . ' ' . $open_information_employee_data['city'] . ' ' . $open_information_employee_data['brgy'] . ' ' . $open_information_employee_data['street']; ?>
+                                                        </textarea>
 
                                                     </div>
 
-                                                </div> 
+                                                </div>
 
                                                 <div class="card-footer text-end">
 
-                                                    <button type="submit" class="btn bg-green-lt">Add New</button>
+                                                    <button type="submit" class="btn bg-green-lt">Update</button>
 
                                                 </div>
 
                                             </fieldset>
 
                                         </form>
-
-                                        <script>
-                                            $(document).ready(function () {
-                                                <?php if ($this->session->flashdata('success')): ?>
-                                                    toastr.options = {
-                                                        "positionClass": "toast-top-right",
-                                                        "timeOut": "5000",
-                                                        "closeButton": true,
-                                                        "progressBar": true
-                                                    };
-                                                    toastr.success("<?php echo $this->session->flashdata('success'); ?>");
-                                                <?php endif; ?>
-
-                                                <?php if ($this->session->flashdata('error')): ?>
-                                                    toastr.options = {
-                                                        "positionClass": "toast-top-right",
-                                                        "timeOut": "5000",
-                                                        "closeButton": true,
-                                                        "progressBar": true
-                                                    };
-                                                    toastr.error("<?php echo $this->session->flashdata('error'); ?>");
-                                                <?php endif; ?>
-                                            });
-                                        </script>
 
                                     </div>
             

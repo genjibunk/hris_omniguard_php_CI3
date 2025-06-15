@@ -187,6 +187,13 @@ class staff_ctrl extends CI_Controller {
 
     public function add_leaverequest()
     {
+        if (!$this->session->userdata('logged_in')) 
+		{
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+			$this->load->view('auth/signin');
+			return;
+		}
+
         $data = [
             'employee_data_id' => $this->input->post('employee_data_id'),
             'leavetype'        => $this->input->post('leavetype'),
@@ -198,11 +205,14 @@ class staff_ctrl extends CI_Controller {
 
         $this->db->insert('leaverequest', $data);
         $this->session->set_flashdata('success', 'New leave request submitted.');
-        redirect('stokenreq_m4tz'); // Update this as needed
+        redirect('stokenreq_m4tz');
+        
     }
 
 
-    public function insert_leave_request() {
+    public function insert_leave_request()
+
+    {
     $data = [
         'lr_employee_data_id'  => $this->session->userdata('userid'),
         'leavetype'         => $this->input->post('leave_type'),
@@ -214,8 +224,111 @@ class staff_ctrl extends CI_Controller {
     $this->db->insert('leaverequest', $data);
 
     $this->session->set_flashdata('success', 'Leave request submitted successfully.');
-    redirect('stokenreq_m4tz'); // Replace with actual route
-}
+    redirect('stokenreq_m4tz');
+
+    }
+
+    public function profile()
+	{
+		if (!$this->session->userdata('logged_in')) 
+		{
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+			$this->load->view('auth/signin');
+			return;
+		}
+
+        $id = $this->session->userdata('userid');
+
+		$data['open_information_employee_data'] = $this->staff_model->open_information_employee_data($id);
+
+
+		$this->load->view('components/topbar',$data);
+		$this->load->view('staff/profile', $data);
+		$this->load->view('components/footer');
+
+    
+	}
+
+    public function update_employee()
+	{
+		if (!$this->session->userdata('logged_in')) 
+
+		{
+
+			$this->session->set_flashdata('session_expired', 'Session has expired. Please log in again.');
+        	$this->load->view('auth/signin');
+			return;
+
+    	}
+
+		$id = $this->input->post('employee_id');
+
+		$this->db->select('photo');
+		$this->db->where('employee_data_id', $id);
+		$employee = $this->db->get('employee_data')->row();
+
+		function random_string($length = 6) {
+			$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+			$charactersLength = strlen($characters);
+			$randomString = '';
+			for ($i = 0; $i < $length; $i++) {
+				$randomString .= $characters[rand(0, $charactersLength - 1)];
+			}
+			return $randomString;
+		}
+		$randomStr = random_string();
+
+		$config['upload_path'] = './uploads/photos/';
+		$config['allowed_types'] = 'jpg|jpeg|png|gif';
+		$config['max_size'] = 10240;
+		$config['overwrite'] = true;
+		$config['file_name'] = 'employee_'.$randomStr.$id.$randomStr;
+
+		$this->load->library('upload', $config);
+
+		$data = [
+			'age' => $this->input->post('age-display'),
+			'contact_number' => $this->input->post('contact_number'),
+			'marital_status' => $this->input->post('marital_status'),
+			'spouse_name' => $this->input->post('spouse_name'),
+			'date_hired' => $this->input->post('date_hired'),
+			'region' => $this->input->post('region_name'),
+			'province' => $this->input->post('province_name'),
+			'city' => $this->input->post('city_name'),
+			'brgy' => $this->input->post('barangay_name'),
+			'street' => $this->input->post('Street'),
+		];
+
+		if (!empty($_FILES['photo']['name'])) {
+
+			if (!empty($employee->photo)) {
+				$old_file = FCPATH . 'uploads/photos/' . $employee->photo;
+				if (file_exists($old_file)) {
+					unlink($old_file);
+				}
+			}
+
+			if ($this->upload->do_upload('photo')) {
+				$upload_data = $this->upload->data();
+				$data['photo'] = $upload_data['file_name'];
+			} else {
+				$this->session->set_flashdata('error', 'Photo upload failed: ' . $this->upload->display_errors());
+				redirect('info_a7xk');
+				return;
+			}
+		}
+
+		$this->db->where('employee_data_id', $id);
+		$updated = $this->db->update('employee_data', $data);
+
+		if ($updated) {
+			$this->session->set_flashdata('success', 'Employee updated successfully!');
+		} else {
+			$this->session->set_flashdata('error', 'Failed to update employee.');
+		}
+
+		redirect('sopen_z3bt');
+	}
 
 
 

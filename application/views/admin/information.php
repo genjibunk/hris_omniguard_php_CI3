@@ -1,13 +1,21 @@
 <script>
-$(document).ready(function() {
-    <?php if ($this->session->flashdata('success')): ?>
-        toastr.success("<?= $this->session->flashdata('success') ?>");
-    <?php endif; ?>
+    $(document).ready(function() {
+        <?php if ($this->session->flashdata('success')): ?>
+            toastr.success("<?= $this->session->flashdata('success') ?>");
+        <?php endif; ?>
 
-    <?php if ($this->session->flashdata('error')): ?>
-        toastr.error("<?= $this->session->flashdata('error') ?>");
-    <?php endif; ?>
-});
+        <?php if ($this->session->flashdata('error')): ?>
+            toastr.error("<?= $this->session->flashdata('error') ?>");
+        <?php endif; ?>
+
+        <?php if ($this->session->flashdata('warning')): ?>
+            toastr.warning("<?= $this->session->flashdata('warning') ?>");
+        <?php endif; ?>
+
+        <?php if ($this->session->flashdata('info')): ?>
+            toastr.info("<?= $this->session->flashdata('info') ?>");
+        <?php endif; ?>
+    });
 </script>
 <div class="page">
 
