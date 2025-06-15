@@ -17,6 +17,10 @@
         <?php endif; ?>
     });
 </script>
+
+<script>
+    const baseUrl = "<?= base_url(); ?>";
+</script>
 <div class="page">
 
     <div class="page-wrapper">
@@ -289,4 +293,4 @@
 
 </div>
 
-<script src="<?php echo base_url()."assets/"; ?>dist/js/search.js" defer></script>
+<script src="<?php echo base_url()."assets/"; ?>dist/js/ph-address-selector.js"></script>

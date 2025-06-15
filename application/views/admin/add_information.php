@@ -18,9 +18,6 @@
     });
 </script>
 
-<script>
-    const baseUrl = "<?= base_url(); ?>";
-</script>
 
 <div class="page">
 
@@ -464,4 +461,6 @@
     </div>
 
 </div>
-<script src="assets/dist/js/ph-address-selector.js"></script>
+
+<script src="<?php echo base_url()."assets/"; ?>dist/js/ph-address-selector.js"></script>
+<script src="<?php echo base_url()."assets/"; ?>dist/js/search.js" defer></script>

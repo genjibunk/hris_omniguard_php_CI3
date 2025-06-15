@@ -13,7 +13,7 @@ var my_handlers = {
 
         // Fetch provinces if a valid region is selected
         if (region_code) {
-            $.getJSON('assets/dist/ph-json/province.json', function(data) {
+            $.getJSON('/assets/dist/ph-json/province.json', function(data) {
                 var filtered = data.filter(value => value.region_code == region_code);
                 filtered.sort((a, b) => a.province_name.localeCompare(b.province_name));
 
@@ -41,7 +41,7 @@ var my_handlers = {
 
         // Fetch cities if a valid province is selected
         if (province_code) {
-            $.getJSON('assets/dist/ph-json/city.json', function(data) {
+            $.getJSON('/assets/dist/ph-json/city.json', function(data) {
                 var filtered = data.filter(value => value.province_code == province_code);
                 filtered.sort((a, b) => a.city_name.localeCompare(b.city_name));
 
@@ -68,7 +68,7 @@ var my_handlers = {
 
         // Fetch barangays if a valid city is selected
         if (city_code) {
-            $.getJSON('assets/dist/ph-json/barangay.json', function(data) {
+            $.getJSON('/assets/dist/ph-json/barangay.json', function(data) {
                 var filtered = data.filter(value => value.city_code == city_code);
                 filtered.sort((a, b) => a.brgy_name.localeCompare(b.brgy_name));
 
